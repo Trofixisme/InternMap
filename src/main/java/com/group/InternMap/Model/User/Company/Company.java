@@ -2,12 +2,8 @@ package com.group.InternMap.Model.User.Company;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 
 
 @Entity
@@ -17,15 +13,17 @@ public class Company {
     private Long id;
 
     private String industry;
+
+    @Column(nullable = false)
     private String name;
     private String websiteURL;
-    private String location;
+    private String locationOfHQ;
 
     @ManyToMany(mappedBy = "companies")
     private List<Recruiter> recruiters = new ArrayList<>();
 
-    public String getLocation() {
-        return location;
+    public String getLocationOfHQ() {
+        return locationOfHQ;
     }
 
     public Long getId() {

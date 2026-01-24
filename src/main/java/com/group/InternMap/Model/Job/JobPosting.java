@@ -4,11 +4,9 @@ import com.group.InternMap.Model.User.Application;
 import com.group.InternMap.Model.User.Company.Recruiter;
 import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.UUID;
 
 @Entity
 public class JobPosting {
@@ -16,15 +14,19 @@ public class JobPosting {
     @Id
     private Long id;
     private String jobDescription;
+
+    @Column(nullable = false)
     private Date datePosted = Date.from(Instant.now());
     private String jobRequirements;
-    private String jobName;
-    private String companyName;
 
-    @ManyToOne @JoinColumn(name = "recruiter_id")
+    @Column(nullable = false)
+    private String jobName;
+
+    @ManyToOne @JoinColumn(name = "recruiter_id", referencedColumnName = "id")
     private Recruiter recruiter;
 
-    private ArrayList<Application> application = new ArrayList<>();
+    //TODO: establish the relationship between
+    private ArrayList<Application> applications = new ArrayList<>();
 
     public void setJobDescription(String jobDescription) {
         this.jobDescription = jobDescription;
@@ -42,11 +44,7 @@ public class JobPosting {
         this.jobName = jobName;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public Date getDatePosted() {
+    public Date getPostingDate() {
         return datePosted;
     }
 
@@ -87,28 +85,23 @@ public class JobPosting {
         }
     }
 
-    public void setApplication(Application application) {
-        this.application.add(application);
-    }
-
-    public ArrayList<Application> viewApplications() {
-       return application;
+    public void addApplication(Application application) {
+        this.applications.add(application);
     }
 
     public void setRecruiter(Recruiter recruiter) {
         this.recruiter = recruiter;
     }
 
-    public String getCompanyName() {return  companyName;}
     public ArrayList<Application> getApplication() {
-        return application;
+        return applications;
     }
 
     public void deleteApplication(Application application) {
-        this.application.remove(application);
+        this.applications.remove(application);
     }
 
     public void setApplication(ArrayList<Application> application) {
-        this.application = application;
+        this.applications = application;
     }
 }

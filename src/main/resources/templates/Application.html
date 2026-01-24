@@ -36,7 +36,7 @@
 
     <div th:if="${jobPosting != null}">
         <h3 style="display: flex; justify-content: center">Applying for: <span th:text="${jobPosting.jobName}" style="justify-content: center">Job Title</span></h3>
-        <p style="display: flex; justify-content: center; padding-bottom: 30px">Posted: on <span th:text="${jobPosting.datePosted}">Date</span></p>
+        <p style="display: flex; justify-content: center; padding-bottom: 30px">Posted: on <span th:text="${jobPosting.postingDate}">Date</span></p>
     </div>
 <form th:action="@{/application/save(jobId=${jobId})}"
       th:object="${applicationandCVDTO}"

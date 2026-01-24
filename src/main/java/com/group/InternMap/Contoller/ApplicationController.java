@@ -132,7 +132,7 @@ public class ApplicationController {
             Application application=applicationandCVDTO.getApplication();
             application.setCv(user.getCv());
             applicationandCVDTO.setStudent(user);
-            jobPosting.setApplication(application);
+            jobPosting.addApplication(application);
             allApplications.add(application);
             redirectAttributes.addFlashAttribute("message", "Application saved successfully");
             return "redirect:/JobPostings";

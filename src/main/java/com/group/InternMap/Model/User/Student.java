@@ -11,30 +11,6 @@ public class Student extends User {
     private String studentMajor;
     private String faculty;
     private CV cv;
-    public Student(){
-        super();
-        this.role = UserRole.STUDENT;
-    }
-
-    //students attributes
-    public Student(String fName, String lName, String email,  String plainPassword, UserRole role,
-                   int graduatingYear, String uniName, String studentMajor, String department) {
-
-        super(fName, lName,  email, plainPassword,role);
-        this.graduatingYear = graduatingYear;
-        this.uniName = uniName;
-        this.studentMajor = studentMajor;
-        this.faculty = department;
-    }
-
-    public Student(String UUID, String fName, String lName, String email,  String plainPassword, UserRole role,
-                   int graduatingYear, String uniName, String studentMajor, String department) {
-        super(UUID ,fName, lName,  email, plainPassword,role);
-        this.graduatingYear = graduatingYear;
-        this.uniName = uniName;
-        this.studentMajor = studentMajor;
-        this.faculty = department;
-    }
 
     public int getGraduatingYear() {
         return graduatingYear;

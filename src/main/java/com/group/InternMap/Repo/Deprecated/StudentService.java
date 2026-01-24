@@ -8,6 +8,8 @@ import com.group.InternMap.Repo.RepositoryAccessors;
 import com.group.InternMap.Services.FilePaths;
 import com.group.InternMap.Services.UserService;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import static com.group.InternMap.Repo.RepositoryAccessors.allApplications;
@@ -40,6 +42,7 @@ public class StudentService extends UserService implements FilePaths {
     }
 
     public List<JobPosting> findJobpostingByType(PostingType type) {
-        return RepositoryAccessors.allJobPostings.stream().filter(job -> job.getJobPostingType().equals(type)).collect(Collectors.toList());
+//        return RepositoryAccessors.allJobPostings.stream().filter(job -> job.getJobPostingType().equals(type)).collect(Collectors.toList());
+        return new ArrayList<>();
     }
 }

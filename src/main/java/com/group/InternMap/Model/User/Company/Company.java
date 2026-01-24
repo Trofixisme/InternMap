@@ -1,44 +1,39 @@
 package com.group.InternMap.Model.User.Company;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-@SuppressWarnings("unused")
-public class Company implements Serializable {
 
-    private UUID companyID;
+@Entity
+public class Company {
+
+    @Id
+    private Long id;
 
     private String industry;
     private String name;
-    private String websiteURL = "";
-    private ArrayList<Recruiter> recruiters = new ArrayList<>();
-//    private ArrayList<String> location = new ArrayList<>();
+    private String websiteURL;
     private String location;
 
-    public Company() {
-        companyID = UUID.randomUUID();
-//        this.name = "Unnamed Company";
-    }
-
-    @SuppressWarnings("all")
-    public Company(String industry, String name, String websiteURL,
-                   ArrayList<String> location) {
-        if (companyID == null) companyID = UUID.randomUUID();
-        this.industry = industry;
-        this.name = name;
-        this.websiteURL = websiteURL;
-    }
-    public Company(String companyUUID ,String industry, String name, String websiteURL,
-                   ArrayList<String> location, Recruiter... recruiters) throws MalformedURLException {
-        this(industry, name, websiteURL, location); // must be first
-        this.companyID = UUID.fromString(companyUUID); // assign after
-    }
+    @ManyToMany(mappedBy = "companies")
+    private List<Recruiter> recruiters = new ArrayList<>();
 
     public String getLocation() {
         return location;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getIndustry() {
@@ -61,46 +56,17 @@ public class Company implements Serializable {
         return websiteURL;
     }
 
-    public void setCompanyID(UUID companyID) {
-        this.companyID = companyID;
-    }
-
     public void setWebsiteURL(String websiteURL) {
             if (websiteURL == null || websiteURL.isBlank()) return;
             this.websiteURL = websiteURL;
     }
 
-    public UUID getCompanyID() {
-        return companyID;
-    }
-
-    public void addRecruiter(Recruiter recruiter) {
-        if (recruiter == null) return;
-        if (!recruiters.contains(recruiter)) recruiters.add(recruiter);
-    }
-
-    public void removeRecruiter(Recruiter recruiter) {
-        recruiters.remove(recruiter);
-    }
-
-    @Override
-    public String toString() {
-        return "Company{" +
-                "id=" + companyID +
-                ", name='" + name + '\'' +
-                ", recruiterCount=" + recruiters.size() + // Just print count, not the list
-                '}';
-    }
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Company company = (Company) o;
-        return Objects.equals(companyID, company.companyID);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(companyID);
-    }
+//    public void addRecruiter(Recruiter recruiter) {
+//        if (recruiter == null) return;
+//        if (!recruiters.contains(recruiter)) recruiters.add(recruiter);
+//    }
+//
+//    public void removeRecruiter(Recruiter recruiter) {
+//        recruiters.remove(recruiter);
+//    }
 }

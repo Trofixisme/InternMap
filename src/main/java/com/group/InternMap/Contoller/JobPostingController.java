@@ -85,9 +85,9 @@ public String AddJobPostingForm(Model model, HttpSession session) {
     JobPosting jobPosting = new JobPosting();
 
     // IMPORTANT: Initialize all nested objects
-    jobPosting.setFullTime(new FullTime());
-    jobPosting.setInternship(new Internship());
-    jobPosting.setFreeLanceProject(new FreeLanceProject());
+//    jobPosting.setFullTime(new FullTime());
+//    jobPosting.setInternship(new Internship());
+//    jobPosting.setFreeLanceProject(new FreeLanceProject());
 
     jobPosting.setRecruiter(recruiter);
     model.addAttribute("jobPosting", jobPosting);
@@ -105,16 +105,16 @@ public String AddJobPostingForm(Model model, HttpSession session) {
 
         try {
 
-            if (jobPosting.getJobPostingType() == PostingType.FullTime) {
-                jobPosting.setInternship(null);
-                jobPosting.setFreeLanceProject(null);
-            } else if (jobPosting.getJobPostingType() == PostingType.Internship) {
-                jobPosting.setFullTime(null);
-                jobPosting.setFreeLanceProject(null);
-            } else if (jobPosting.getJobPostingType() == PostingType.FreeLanceProject) {
-                jobPosting.setFullTime(null);
-                jobPosting.setInternship(null);
-            }
+//            if (jobPosting.getJobPostingType() == PostingType.FullTime) {
+//                jobPosting.setInternship(null);
+//                jobPosting.setFreeLanceProject(null);
+//            } else if (jobPosting.getJobPostingType() == PostingType.Internship) {
+//                jobPosting.setFullTime(null);
+//                jobPosting.setFreeLanceProject(null);
+//            } else if (jobPosting.getJobPostingType() == PostingType.FreeLanceProject) {
+//                jobPosting.setFullTime(null);
+//                jobPosting.setInternship(null);
+//            }
             jobPosting.setRecruiter(recruiter);
             allJobPostings.add(jobPosting);
 

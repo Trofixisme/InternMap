@@ -47,7 +47,7 @@ public class RecruiterService extends UserService {
 
         // Debug: print all companies
         RepositoryAccessors.allCompanies.forEach(c -> {
-            System.out.println("Company ID: " + c.getCompanyID() + ", Name: " + c.getName());
+//            System.out.println("Company ID: " + c.getCompanyID() + ", Name: " + c.getName());
         });
 
         for (Company c : RepositoryAccessors.allCompanies) {
@@ -59,7 +59,7 @@ public class RecruiterService extends UserService {
 
 
         return RepositoryAccessors.allCompanies.stream()
-                .filter(c -> c.getCompanyID().toString().equals(companyId))
+//                .filter(c -> c.getCompanyID().toString().equals(companyId))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Company not found: " + companyId));
     }
@@ -70,7 +70,7 @@ public class RecruiterService extends UserService {
         Company company = CompanyService.findByName(companyId);
 
         recruiter.addCompany(company);
-        eventPublisher.publishEvent(new RecruiterAddedEvent(recruiter.getUserID(), company.getCompanyID().toString()));
+//        eventPublisher.publishEvent(new RecruiterAddedEvent(recruiter.getUserID(), company.getCompanyID().toString()));
     }
 
 //    public List<Company> viewAllCompanies() throws Exception {

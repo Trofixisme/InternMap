@@ -1,28 +1,27 @@
 package com.group.InternMap.Model.User.Company;
 
 import com.group.InternMap.Model.User.User;
-import com.group.InternMap.Model.User.UserRole;
-import java.io.Serializable;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.List;
 
-public class Recruiter extends User implements Serializable {
+@Entity
+public class Recruiter extends User {
+    @Id
+    private Long id;
     private String title;
-    private ArrayList<Company> companies = new ArrayList<>();
 
-    public Recruiter() {
-        super();
-        this.role = UserRole.RECRUITER;
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "recruiters_companies", joinColumns = @JoinColumn(name = "recruiter_id"), inverseJoinColumns = @JoinColumn(name = "company_id"))
+    private List<Company> companies = new ArrayList<>();
+
+    public Long getId() {
+        return id;
     }
 
-    public Recruiter(String fName, String lName, String email, String plainPassword, UserRole role, String title) {
-        super(fName, lName, email, plainPassword,role);
-        this.title = title;
-    }
-
-    public Recruiter(String recruiterID, String fName, String lName, String email, String plainPassword, UserRole role,String title) {
-        super(recruiterID, fName, lName, email, plainPassword,role);
-        this.title = title;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -41,24 +40,11 @@ public class Recruiter extends User implements Serializable {
         companies.remove(company);
     }
 
-    public ArrayList<Company> getCompanies() {
+    public List<Company> getCompanies() {
         return companies;
     }
 
-    public void setCompanies(ArrayList<Company> companies) {
+    public void setCompanies(List<Company> companies) {
         this.companies = companies;
-    }
-
-    @Override
-    public String toString() {
-        return "Recruiter{" +
-                "id=" + getUserID() +
-                ", companyIds=" + (companies != null && !companies.isEmpty() ?
-                companies.stream()
-                        .filter(Objects::nonNull) // Filter out any null companies
-                        .map(Company::getCompanyID)
-                        .toList() :
-                "[]") +
-                "}";
     }
 }

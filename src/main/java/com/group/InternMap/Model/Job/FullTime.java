@@ -1,27 +1,15 @@
 package com.group.InternMap.Model.Job;
 
 import com.group.InternMap.Model.User.Company.Company;
-import java.io.Serializable;
+import jakarta.persistence.*;
 
-@SuppressWarnings("unused")
-public class FullTime  implements Serializable {
+@Entity
+public class FullTime extends JobPosting {
+
     private String benefits;
+
+    @ManyToOne //@JoinColumn(name = "companyID", referencedColumnName = "id")
     private Company company;
-
-    public FullTime() {
-    }
-
-    public FullTime(String JobDescription, String JobRequirements, String JobTitle, PostingType jobPostingType, String benefits, Company company) {
-        this.benefits = benefits;
-        this.company=new Company();
-    }
-
-    public FullTime(String fullTimeID ,String JobDescription,  String JobRequirements, String JobTitle, PostingType jobPostingType,String benefits,Company company) {
-
-        this.benefits = benefits;
-        this.company=company;
-    }
-
 
     public String getBenefits() {
         return benefits;
@@ -29,12 +17,5 @@ public class FullTime  implements Serializable {
 
     public void setBenefits(String benefits) {
         this.benefits = benefits;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString()
-                + benefits + '|'
-                + company.toString() + '|';
     }
 }

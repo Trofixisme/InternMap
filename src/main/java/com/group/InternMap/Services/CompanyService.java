@@ -27,7 +27,7 @@ public class CompanyService {
         String companyId = event.getCompanyId();
         Recruiter recruiter =recruiterService.findRecruiterById(recruiterId);
         Company company = recruiterService.findCompanyById(companyId);
-        company.addRecruiter(recruiter);
+//        company.addRecruiter(recruiter);
         System.out.println("Company updated after recruiter was added.");
     }
 

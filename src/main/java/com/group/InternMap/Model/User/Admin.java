@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Admin extends User implements Serializable {
 
-    public  Admin(){
+    public Admin(){
         super();
         this.role = UserRole.ADMIN;
     }

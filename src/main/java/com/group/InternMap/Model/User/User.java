@@ -1,15 +1,20 @@
 //Created by Ziad on 28/10/2025
 
 package com.group.InternMap.Model.User;
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.util.UUID;
-
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "Users")
 public class User implements Serializable {
 
     private String plainPassword;
     private String fname;
     private String lname;
     private String email;
+    @Id
     private final UUID userID;
     protected UserRole role;
 

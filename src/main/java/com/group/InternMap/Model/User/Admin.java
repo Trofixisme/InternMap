@@ -1,7 +1,9 @@
 package com.group.InternMap.Model.User;
 
-import java.io.Serializable;
+import jakarta.persistence.Entity;
 
+import java.io.Serializable;
+@Entity
 public class Admin extends User implements Serializable {
 
     public Admin(){

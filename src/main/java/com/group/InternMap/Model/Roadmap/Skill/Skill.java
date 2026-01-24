@@ -2,23 +2,26 @@
 
 package com.group.InternMap.Model.Roadmap.Skill;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
+@Entity
 public class Skill implements Serializable {
-
-    private final UUID skillsId;
+    @Id
+    private long id;
 
     private String name;
     private final ArrayList<URL> resourceLinks = new ArrayList<>();
 
     private String description;
-
+    public Skill() {
+    }
     public Skill(String name, String description, List<URL> links) {
-        this.skillsId = UUID.randomUUID();
         this.name = name;
         this.description = description;
 
@@ -28,7 +31,6 @@ public class Skill implements Serializable {
     }
 
     public Skill(String skillsId, String name, String description, List<URL> links) {
-        this.skillsId = UUID.fromString(skillsId);
         this.name = name;
         this.description = description;
 
@@ -37,8 +39,8 @@ public class Skill implements Serializable {
         }
     }
 
-    public String getSkillsId() {
-        return skillsId.toString();
+    public long getSkillsId() {
+        return id;
     }
 
     public String getName() {

@@ -22,8 +22,11 @@ public class JobPosting {
     @Column(nullable = false)
     private String jobName;
 
-    @ManyToOne @JoinColumn(name = "recruiter_id", referencedColumnName = "id")
-    private Recruiter recruiter;
+//    @ManyToOne @JoinColumn(name = "recruiter_id", referencedColumnName = "id")
+//    private Recruiter recruiter;
+@ManyToOne
+@JoinColumn(name = "recruiter_id")
+private Recruiter recruiter;
 
     //TODO: establish the relationship between
     private ArrayList<Application> applications = new ArrayList<>();

@@ -3,11 +3,13 @@ package com.group.InternMap.Model.Roadmap.Skill;
 import com.group.InternMap.Repo.Deprecated.RoadmapProgression;
 import com.group.InternMap.Model.Roadmap.Status;
 import com.group.InternMap.Model.User.Student;
+import jakarta.persistence.Entity;
 
 import java.time.Instant;
 import java.util.Date;
 
 @SuppressWarnings({"all"})
+@Entity
 public class UserSkillStatus implements java.io.Serializable {
 
     private Skill skill;

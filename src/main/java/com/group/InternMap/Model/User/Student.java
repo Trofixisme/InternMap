@@ -6,13 +6,16 @@ import java.util.Calendar;
 
 @Entity
 public class Student extends User {
+
     private int graduatingYear = Calendar.getInstance().get(Calendar.YEAR) + 1;
     private String uniName;
     private String studentMajor;
     private String faculty;
     private CV cv;
+
     public Student(){
     }
+
     public Student(Long id, String fName, String lName, String email, String plainPassword, int graduatingYear, String uniName, String studentMajor, String faculty,CV cv) {
         super(id, fName, lName, email, plainPassword);
         this.graduatingYear = graduatingYear;

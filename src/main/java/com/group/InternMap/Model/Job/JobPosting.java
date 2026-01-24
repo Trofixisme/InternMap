@@ -4,12 +4,13 @@ import com.group.InternMap.Model.User.Application;
 import com.group.InternMap.Model.User.Company.Recruiter;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
-public class JobPosting {
+public class JobPosting implements Serializable {
 
     @Id @GeneratedValue
     private Long id;

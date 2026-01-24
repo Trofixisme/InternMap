@@ -3,23 +3,22 @@
 package com.group.InternMap.Model.Roadmap;
 
 import com.group.InternMap.Model.Roadmap.Skill.Skill;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-@SuppressWarnings("unused")
 @Entity
 public class RoadmapModule implements Serializable {
-    @Id
-    private  Long ID;
+
+    @Id @GeneratedValue
+    private Long id;
     private String name;
     private String description;
+
     @ManyToMany
+    @JoinTable(name = "roadmap_module_skills", joinColumns = @JoinColumn(name = "roadmap_module_id"), inverseJoinColumns = @JoinColumn(name = "skills_id"))
     private final ArrayList<Skill> skills = new ArrayList<>();
 
     public RoadmapModule() {
@@ -44,10 +43,6 @@ public class RoadmapModule implements Serializable {
         this(name, "Nothing to show.");
     }
 
-    public String getModuleID() {
-        return ID.toString();
-    }
-
     public String getName() {
         return name;
     }
@@ -68,6 +63,14 @@ public class RoadmapModule implements Serializable {
         else throw new RuntimeException("new description cannot be blank or null");
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void addSkills(Skill... skills) {
         this.skills.addAll(List.of(skills));
     }
@@ -76,11 +79,4 @@ public class RoadmapModule implements Serializable {
         return skills;
     }
 
-    @Override
-    public String toString() {
-        return ID + "|" +
-                name + "|" +
-                description + "|" +
-                skills + "|";
-    }
 }

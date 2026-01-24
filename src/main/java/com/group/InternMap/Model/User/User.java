@@ -1,12 +1,12 @@
 package com.group.InternMap.Model.User;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Users")
-public class User {
+public class User implements Serializable {
 
     @Column(nullable = false)
     private String plainPassword;
@@ -19,6 +19,7 @@ public class User {
 
     @Id
     private Long id;
+
     public User() {
     }
 

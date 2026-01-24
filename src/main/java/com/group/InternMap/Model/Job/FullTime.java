@@ -2,10 +2,11 @@ package com.group.InternMap.Model.Job;
 
 import com.group.InternMap.Model.User.Company.Company;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+
+import java.io.Serializable;
 
 @Entity
-public class FullTime extends JobPosting {
+public class FullTime extends JobPosting implements Serializable {
 
     @Column(nullable = false)
     private String benefits;

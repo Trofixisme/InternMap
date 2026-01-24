@@ -4,11 +4,11 @@ import com.group.InternMap.Repo.Deprecated.RoadmapProgression;
 import com.group.InternMap.Model.Roadmap.Status;
 import com.group.InternMap.Model.User.Student;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
 
-@SuppressWarnings({"all"})
-public class UserSkillStatus implements java.io.Serializable {
+public class UserSkillStatus implements Serializable {
 
     private Skill skill;
     private Student student;

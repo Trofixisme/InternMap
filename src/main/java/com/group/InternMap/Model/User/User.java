@@ -8,13 +8,13 @@ import jakarta.validation.constraints.NotNull;
 @Table(name = "Users")
 public class User {
 
-    @NotNull
+    @Column(nullable = false)
     private String plainPassword;
-    @NotNull
+    @Column(nullable = false)
     private String fName;
-    @NotNull
+    @Column(nullable = false)
     private String lName;
-    @NotNull
+    @Column(nullable = false)
     private String email;
 
     @Id

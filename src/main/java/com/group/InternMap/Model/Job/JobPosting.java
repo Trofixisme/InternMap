@@ -11,7 +11,7 @@ import java.util.Date;
 @Entity
 public class JobPosting {
 
-    @Id
+    @Id @GeneratedValue
     private Long id;
     private String jobDescription;
 

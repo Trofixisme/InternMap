@@ -11,6 +11,16 @@ public class Student extends User {
     private String studentMajor;
     private String faculty;
     private CV cv;
+    public Student(){
+    }
+    public Student(Long id, String fName, String lName, String email, String plainPassword, int graduatingYear, String uniName, String studentMajor, String faculty,CV cv) {
+        super(id, fName, lName, email, plainPassword);
+        this.graduatingYear = graduatingYear;
+        this.uniName = uniName;
+        this.studentMajor = studentMajor;
+        this.faculty = faculty;
+
+    }
 
     public int getGraduatingYear() {
         return graduatingYear;

@@ -19,6 +19,16 @@ public class User {
 
     @Id
     private Long id;
+    public User() {
+    }
+
+    public User(Long id, String fName, String lName, String email, String plainPassword) {
+        this.id = id;
+        this.fName = fName;
+        this.lName = lName;
+        this.email = email;
+        this.plainPassword = plainPassword;
+    }
 
     public String getPlainPassword() {
         return plainPassword;

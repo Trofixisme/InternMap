@@ -1,8 +1,10 @@
 package com.group.InternMap.Model.User;
 
+import jakarta.persistence.Entity;
+
 import java.util.Calendar;
 
-
+@Entity
 public class Student extends User {
     private int graduatingYear = Calendar.getInstance().get(Calendar.YEAR) + 1;
     private String uniName;

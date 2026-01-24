@@ -2,10 +2,12 @@ package com.group.InternMap.Model.User.Company;
 
 import com.group.InternMap.Model.User.User;
 import com.group.InternMap.Model.User.UserRole;
+import jakarta.persistence.Entity;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
-
+@Entity
 public class Recruiter extends User implements Serializable {
     private String title;
     private ArrayList<Company> companies = new ArrayList<>();

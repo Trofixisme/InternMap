@@ -3,19 +3,27 @@
 package com.group.InternMap.Model.Roadmap;
 
 import com.group.InternMap.Model.Roadmap.Skill.Skill;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
+@Entity
 public class RoadmapModule implements Serializable {
-
+    @Id
     private final UUID ID;
     private String name;
     private String description;
-
+    @ManyToMany
     private final ArrayList<Skill> skills = new ArrayList<>();
+
+    public RoadmapModule() {
+    }
 
     public RoadmapModule(String name, String description) {
         ID = UUID.randomUUID();

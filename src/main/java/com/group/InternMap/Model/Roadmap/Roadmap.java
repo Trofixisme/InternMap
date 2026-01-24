@@ -2,11 +2,14 @@
 
 package com.group.InternMap.Model.Roadmap;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 import java.io.Serializable;
 import java.util.*;
-
+@Entity
 public final class Roadmap implements Serializable {
-
+    @Id
     private final UUID roadmapID;
     private String name;
     private final ArrayList<RoadmapModule> roadmapModules = new ArrayList<>();

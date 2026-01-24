@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class Internship extends JobPosting {
+public class Internship extends JobPosting implements Serializable {
 
     private int duration;
 

@@ -1,13 +1,16 @@
 package com.group.InternMap.Model.User.Company;
 
+import com.group.InternMap.Model.Job.JobPosting;
 import com.group.InternMap.Model.User.User;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
-public class Recruiter extends User {
+public class Recruiter extends User implements Serializable {
 
     @Column(nullable = false)
     private String title;
@@ -38,5 +41,16 @@ public class Recruiter extends User {
 
     public void setCompanies(List<Company> companies) {
         this.companies = companies;
+    }
+
+    @OneToMany(mappedBy = "recruiter")
+    private Collection<JobPosting> jobPosting;
+
+    public Collection<JobPosting> getJobPosting() {
+        return jobPosting;
+    }
+
+    public void setJobPosting(Collection<JobPosting> jobPosting) {
+        this.jobPosting = jobPosting;
     }
 }

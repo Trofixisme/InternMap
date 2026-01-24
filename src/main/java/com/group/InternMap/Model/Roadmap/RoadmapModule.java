@@ -16,7 +16,7 @@ import java.util.UUID;
 @Entity
 public class RoadmapModule implements Serializable {
     @Id
-    private final UUID ID;
+    private  Long ID;
     private String name;
     private String description;
     @ManyToMany
@@ -26,13 +26,11 @@ public class RoadmapModule implements Serializable {
     }
 
     public RoadmapModule(String name, String description) {
-        ID = UUID.randomUUID();
         this.name = name;
         this.description = description;
     }
 
     public RoadmapModule(String name, String description, Skill... skills) {
-        ID = UUID.randomUUID();
         this.name = name;
         this.description = description;
         addSkills(skills);

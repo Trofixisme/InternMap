@@ -22,14 +22,14 @@ public class AdminService extends UserService implements FilePaths {
 
     public List<Student> findAllStudents() {
         return RepositoryAccessors.allUsers.stream()
-                .filter(u -> u.getRole() == UserRole.STUDENT)
+//                .filter(u -> u.getRole() == UserRole.STUDENT)
                 .map(u -> (Student) u)
                 .toList();
     }
 
     public List<Recruiter> findAllRecruiters() {
         return RepositoryAccessors.allUsers.stream()
-                .filter(u -> u.getRole() == UserRole.RECRUITER)
+//                .filter(u -> u.getRole() == UserRole.RECRUITER)
                 .map(u -> (Recruiter) u)
                 .toList();
     }

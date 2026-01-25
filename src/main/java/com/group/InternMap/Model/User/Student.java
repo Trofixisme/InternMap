@@ -11,19 +11,17 @@ public class Student extends User {
     private String uniName;
     private String studentMajor;
     private String faculty;
-    private CV cv;
 
-    public Student(){
-    }
-
-    public Student(Long id, String fName, String lName, String email, String plainPassword, int graduatingYear, String uniName, String studentMajor, String faculty,CV cv) {
-        super(id, fName, lName, email, plainPassword);
+    public Student(String fName, String lName, String email, String plainPassword, int graduatingYear, String uniName, String studentMajor, String faculty) {
+        super(fName, lName, email, plainPassword);
         this.graduatingYear = graduatingYear;
         this.uniName = uniName;
         this.studentMajor = studentMajor;
         this.faculty = faculty;
 
     }
+
+    public Student() {}
 
     public int getGraduatingYear() {
         return graduatingYear;
@@ -55,26 +53,5 @@ public class Student extends User {
 
     public void setFaculty(String faculty) {
         this.faculty = faculty;
-    }
-
-    public void createCV() {
-        new CV();
-    }
-
-    public CV getCv() {
-        return cv;
-    }
-
-    public void setCv(CV cv) {
-        this.cv = cv;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + '|'
-                + graduatingYear + '|'
-                + uniName + '|'
-                + studentMajor + '|'
-                + faculty + '|';
     }
 }

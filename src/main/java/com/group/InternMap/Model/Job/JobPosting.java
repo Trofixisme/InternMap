@@ -29,7 +29,7 @@ public class JobPosting implements Serializable {
 @JoinColumn(name = "recruiter_id")
 private Recruiter recruiter;
 
-    //TODO: establish the relationship between
+    @OneToMany @JoinColumn(name = "application_id", referencedColumnName = "id")
     private ArrayList<Application> applications = new ArrayList<>();
 
     public void setJobDescription(String jobDescription) {

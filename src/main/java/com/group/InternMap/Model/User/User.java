@@ -10,21 +10,22 @@ public class User implements Serializable {
 
     @Column(nullable = false)
     private String plainPassword;
+
     @Column(nullable = false)
     private String fName;
+
     @Column(nullable = false)
     private String lName;
+
     @Column(nullable = false)
     private String email;
 
     @Id @GeneratedValue
     private Long id;
 
-    public User() {
-    }
+    public User() {}
 
-    public User(Long id, String fName, String lName, String email, String plainPassword) {
-        this.id = id;
+    public User(String fName, String lName, String email, String plainPassword) {
         this.fName = fName;
         this.lName = lName;
         this.email = email;
@@ -44,6 +45,7 @@ public class User implements Serializable {
     }
 
     public void setFName(String fName) {
+        //TODO: Add some real validation
         this.fName = fName;
     }
 
@@ -52,6 +54,7 @@ public class User implements Serializable {
     }
 
     public void setLName(String lName) {
+        //TODO: Add some real validation to this one too
         this.lName = lName;
     }
 
@@ -59,14 +62,14 @@ public class User implements Serializable {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-//        if (email.contains("@") && email.contains(".")) {
-//            this.email = email;
-//        } else {
-//            //I don't think we should be throwing errors in servers,
-//            throw new IllegalArgumentException("Provided email isn't valid");
-//        }
+    public boolean setEmail(String email) {
+        //Returns a boolean value depending on whether the new email was set or not
+        if (email.contains("@") && email.contains(".")) {
+            this.email = email;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public Long getId() {

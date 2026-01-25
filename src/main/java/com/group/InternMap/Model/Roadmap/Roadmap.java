@@ -1,30 +1,22 @@
-//Created by Ziad on 30/10/2025
-
 package com.group.InternMap.Model.Roadmap;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.*;
 
 @Entity
 public final class Roadmap implements Serializable {
+
     @Id @GeneratedValue
-    private long id;
+    private Long id;
     private String name;
-    private final ArrayList<RoadmapModule> roadmapModules = new ArrayList<>();
 
-    public Roadmap() {
+    //TODO: Revise this relationship and correct it if needed
+    @OneToMany @JoinColumn(name = "roadmap_id")
+    private ArrayList<RoadmapModule> roadmapModules = new ArrayList<>();
 
-    }
-
-    public Roadmap(String roadmapID, String name, RoadmapModule... modules) {
-        this.name = name;
-        if (modules != null)
-            addModules(modules);
-    }
+    public Roadmap() {}
 
     public Roadmap(String name, RoadmapModule... modules) {
         this.name = name;
@@ -45,10 +37,6 @@ public final class Roadmap implements Serializable {
         name = newName;
     }
 
-    public long getId() {
-        return id;
-    }
-
    public void addModules(RoadmapModule... modules) {
         roadmapModules.addAll(List.of(modules));
     }
@@ -57,11 +45,16 @@ public final class Roadmap implements Serializable {
         return roadmapModules;
     }
 
-    @Override
-    public String toString() {
-        return  id + "|" +
-                name + "|" +
-                roadmapModules.toString()  + "|";
+    public Long getId() {
+        return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return name + "|" + roadmapModules.toString()  + "|";
+    }
 }

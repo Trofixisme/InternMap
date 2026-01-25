@@ -26,18 +26,19 @@ public class StudentRepository extends BaseRepository {
             throw new IllegalArgumentException("Invalid line format (" + parts.length + " fields): " + line);
         }
 
-        return new Student(
-                parts[0],          // UUID
-                parts[1],          // First name
-                parts[2],          // Last name
-                parts[3],          // Email
-                parts[4],          // Password
-                UserRole.valueOf(parts[5]),//if enum
-                Integer.parseInt(parts[6]),//if integer
-                parts[7],
-                parts[8],
-                parts[9]
-        );
+//        return new Student(
+//                parts[0],          // UUID
+//                parts[1],          // First name
+//                parts[2],          // Last name
+//                parts[3],          // Email
+//                parts[4],          // Password
+//                UserRole.valueOf(parts[5]),//if enum
+//                Integer.parseInt(parts[6]),//if integer
+//                parts[7],
+//                parts[8],
+//                parts[9]
+//        );
+        return null;
     }
 
 

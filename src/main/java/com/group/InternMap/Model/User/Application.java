@@ -1,31 +1,42 @@
 package com.group.InternMap.Model.User;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
-import java.util.UUID;
 
-public class Application implements Serializable,Comparable<Application> {
+@Entity
+public class Application implements Serializable, Comparable<Application> {
 
-    private UUID applicationID = UUID.randomUUID();
-    private String fname;
-    private String lname;
+    @Id @GeneratedValue
+    private Long id;
+
+    @Column(nullable = false)
+    private String fName;
+
+    @Column(nullable = false)
+    private String lName;
+
+    @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String phoneNumber;
-    private CV cv;
-    private Date applicationDate=Date.from(Instant.now());;
 
-    public Application() {
-        this.applicationID = UUID.randomUUID();
-        this.applicationDate = new Date(); // Fix
-    }
+    @Column(nullable = false)
+    private Date applicationDate = Date.from(Instant.now());
 
-    public Application(String fName, String lName, String email, String phoneNumber,CV cv) {
-        this.fname = fName;
-        this.lname = lName;
+    @ManyToOne @JoinColumn(name = "student_id", referencedColumnName = "id")
+    Student student;
+
+    public Application() {}
+
+    public Application(String fName, String lName, String email, String phoneNumber) {
+        this.fName = fName;
+        this.lName = lName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.cv =cv;
         this.applicationDate = new Date();
     }
 
@@ -37,28 +48,20 @@ public class Application implements Serializable,Comparable<Application> {
         this.applicationDate = applicationDate;
     }
 
-    public String getApplicationID() {
-        return applicationID.toString();
+    public String getFName() {
+        return fName;
     }
 
-    public void setApplicationID(UUID applicationID) {
-        this.applicationID = applicationID;
+    public void setFName(String fName) {
+        this.fName = fName;
     }
 
-    public String getFname() {
-        return fname;
+    public String getLName() {
+        return lName;
     }
 
-    public void setFname(String fname) {
-        this.fname = fname;
-    }
-
-    public String getLname() {
-        return lname;
-    }
-
-    public void setLname(String lname) {
-        this.lname = lname;
+    public void setLName(String lName) {
+        this.lName = lName;
     }
 
     public String getPhoneNumber() {
@@ -67,14 +70,6 @@ public class Application implements Serializable,Comparable<Application> {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public CV getCv() {
-        return cv;
-    }
-
-    public void setCv(CV cv) {
-        this.cv = cv;
     }
 
     public String getEmail() {

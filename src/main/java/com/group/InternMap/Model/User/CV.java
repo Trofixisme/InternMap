@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 public class CV implements Serializable {
+
     private UUID cvId;
     private Student student;
     private String description;

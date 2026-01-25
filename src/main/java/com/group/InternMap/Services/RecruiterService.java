@@ -116,8 +116,8 @@ public class RecruiterService extends UserService {
 
             if (searchQuery != null && !searchQuery.isBlank()) {
                 matches |= app.getEmail().toLowerCase(Locale.ROOT).contains(searchQuery.toLowerCase(Locale.ROOT));
-                matches |= app.getFname().toLowerCase(Locale.ROOT).contains(searchQuery.toLowerCase(Locale.ROOT));
-                matches |= app.getLname().toLowerCase(Locale.ROOT).contains(searchQuery.toLowerCase(Locale.ROOT));
+                matches |= app.getFName().toLowerCase(Locale.ROOT).contains(searchQuery.toLowerCase(Locale.ROOT));
+                matches |= app.getLName().toLowerCase(Locale.ROOT).contains(searchQuery.toLowerCase(Locale.ROOT));
             }
             return matches;
         }).toList();

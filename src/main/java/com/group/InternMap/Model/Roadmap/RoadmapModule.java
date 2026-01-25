@@ -21,8 +21,7 @@ public class RoadmapModule implements Serializable {
     @JoinTable(name = "roadmap_module_skills", joinColumns = @JoinColumn(name = "roadmap_module_id"), inverseJoinColumns = @JoinColumn(name = "skills_id"))
     private final ArrayList<Skill> skills = new ArrayList<>();
 
-    public RoadmapModule() {
-    }
+    public RoadmapModule() {}
 
     public RoadmapModule(String name, String description) {
         this.name = name;

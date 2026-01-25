@@ -15,6 +15,7 @@ public class AdminRespository extends BaseRepository {
     User parseObject(String line) {
         String[] parts=line.split("\\|");
 
-        return new Admin(parts[1],parts[2], parts[3], parts[4], UserRole.ADMIN);
+//        return new Admin(parts[1],parts[2], parts[3], parts[4], UserRole.ADMIN);
+        return null;
     }
 }

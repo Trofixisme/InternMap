@@ -31,15 +31,12 @@ public class Company implements Serializable {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getIndustry() {
         return industry;
     }
 
     public void setIndustry(String industry) {
+        //TODO: Also add validation
         this.industry = industry;
     }
 
@@ -48,6 +45,7 @@ public class Company implements Serializable {
     }
 
     public void setName(String name) {
+        //TODO: Add validation
         this.name = name;
     }
 
@@ -56,6 +54,7 @@ public class Company implements Serializable {
     }
 
     public void setWebsiteURL(String websiteURL) {
+        //TODO: Add validation here
             if (websiteURL == null || websiteURL.isBlank()) return;
             this.websiteURL = websiteURL;
     }

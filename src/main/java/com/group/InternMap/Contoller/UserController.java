@@ -71,7 +71,7 @@ public class UserController {
             if (UserService.isEmailValid(user.getEmail())) {
                 userService.register(user);
                 if (company != null) {
-//                    recruiterService.addCompanyToRecruiter(user.getUserID(), company.getName());
+                    recruiterService.addCompanyToRecruiter(user.getUserID(), company.getName());
                     System.out.println(allCompanies);
                     System.out.println(allUsers);
                 }

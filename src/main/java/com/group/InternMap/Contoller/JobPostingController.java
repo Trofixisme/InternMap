@@ -166,8 +166,8 @@ public String AddJobPostingForm(Model model, HttpSession session) {
         if (recruiter == null) {
             return "redirect:/login";
         }
-//        List<JobPosting> myJobs = jobPostingService.getJobPostingsByRecruiterId(recruiter.getUserID());
-//        model.addAttribute("myJobs", myJobs);
+        List<JobPosting> myJobs = jobPostingService.getJobPostingsByRecruiterId(recruiter.getUserID());
+        model.addAttribute("myJobs", myJobs);
         return "recruiter-jobpostings";
     }
 

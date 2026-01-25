@@ -130,6 +130,7 @@ public class ApplicationController {
 
             }
             Application application=applicationandCVDTO.getApplication();
+            application.setCv(user.getCv());
             applicationandCVDTO.setStudent(user);
             jobPosting.addApplication(application);
             allApplications.add(application);

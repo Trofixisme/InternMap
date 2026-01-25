@@ -31,13 +31,10 @@ abstract class FileManager {
     protected static <T> void writeList(String fileName, List<T> items) throws Exception {
         try (FileOutputStream stream = new FileOutputStream(fileName);
              ObjectOutputStream objectStream = new ObjectOutputStream(stream)) {
+
             objectStream.writeObject(items != null ? new ArrayList<>(items) : new ArrayList<T>());
         }
- catch(Exception e){
-System.out.println("Error writing to file: " + e.getMessage());
-            throw e; // Re-throw the exception for further handling if needed
- }   
-        }
+    }
 
     protected static <T> ArrayList<T> read(Class<T> type, String fileName) throws Exception {
         try (FileInputStream stream = new FileInputStream(fileName);
@@ -48,27 +45,27 @@ System.out.println("Error writing to file: " + e.getMessage());
         }
     }
 
-    // private static final class RepositoryTest {
+    private static final class RepositoryTest {
 
-    //     static void main() throws Exception {
-    //         String filePath = "data/test.txt";
+        static void main() throws Exception {
+            String filePath = "data/test.txt";
 
-    //         // Write 2 Skills
-    //         write(filePath,
-    //                 new Skill("Swift Student Challenge", "Empty", new ArrayList<>(List.of(new URL("https://developer.apple.com")))),
-    //                 new Skill("Swift Student Challenge 2", "Empty", new ArrayList<>(List.of(new URL("https://www.apple.com/iphone-17/")))));
+            // Write 2 Skills
+            write(filePath,
+                    new Skill("Swift Student Challenge", "Empty", new ArrayList<>(List.of(new URL("https://developer.apple.com")))),
+                    new Skill("Swift Student Challenge 2", "Empty", new ArrayList<>(List.of(new URL("https://www.apple.com/iphone-17/")))));
 
-    //         System.out.println(read(Skill.class, filePath));  // Prints both skills
+            System.out.println(read(Skill.class, filePath));  // Prints both skills
 
-    //         // Overwrite with 3 Students
-    //         write(filePath,
-    //                 new Student("Ziad", "Ali", "ziad@example.com", "password123", UserRole.STUDENT, 2024, "Cairo University", "Computer Science", "FCAI"),
-    //                 new Student("Alice", "Smith", "alice@example.com", "securePass", UserRole.STUDENT, 2025, "MIT", "Software Engineering", "Engineering"),
-    //                 new Student("Bob", "Jones", "bob@example.com", "bobPass", UserRole.STUDENT, 2023, "Stanford", "Data Science", "Mathematics"),
-    //                 new Student("hi","lol","lold@gmail.com","ofhdsj",UserRole.STUDENT,2023, "Stanford", "Data Science", "Mathematics")
-    //         );
+            // Overwrite with 3 Students
+            write(filePath,
+                    new Student("Ziad", "Ali", "ziad@example.com", "password123", UserRole.STUDENT, 2024, "Cairo University", "Computer Science", "FCAI"),
+                    new Student("Alice", "Smith", "alice@example.com", "securePass", UserRole.STUDENT, 2025, "MIT", "Software Engineering", "Engineering"),
+                    new Student("Bob", "Jones", "bob@example.com", "bobPass", UserRole.STUDENT, 2023, "Stanford", "Data Science", "Mathematics"),
+                    new Student("hi","lol","lold@gmail.com","ofhdsj",UserRole.STUDENT,2023, "Stanford", "Data Science", "Mathematics")
+            );
 
-    //         System.out.println(read(Student.class, filePath));  // Prints 3 students
-    //     }
-    // }
+            System.out.println(read(Student.class, filePath));  // Prints 3 students
+        }
+    }
 }

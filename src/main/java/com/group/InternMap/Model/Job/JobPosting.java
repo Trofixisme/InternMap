@@ -8,8 +8,10 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class JobPosting implements Serializable {
 
     @Id @GeneratedValue
@@ -23,14 +25,12 @@ public class JobPosting implements Serializable {
     @Column(nullable = false)
     private String jobName;
 
-//    @ManyToOne @JoinColumn(name = "recruiter_id", referencedColumnName = "id")
-//    private Recruiter recruiter;
-@ManyToOne
-@JoinColumn(name = "recruiter_id")
-private Recruiter recruiter;
+    @ManyToOne
+    @JoinColumn(name = "recruiter_id")
+    private Recruiter recruiter;
 
-    @OneToMany @JoinColumn(name = "application_id", referencedColumnName = "id")
-    private ArrayList<Application> applications = new ArrayList<>();
+    @OneToMany @JoinColumn(name = "job_posting_id", referencedColumnName = "id")
+    private List<Application> applications = new ArrayList<>();
 
     public void setJobDescription(String jobDescription) {
         this.jobDescription = jobDescription;
@@ -97,7 +97,7 @@ private Recruiter recruiter;
         this.recruiter = recruiter;
     }
 
-    public ArrayList<Application> getApplication() {
+    public List<Application> getApplication() {
         return applications;
     }
 

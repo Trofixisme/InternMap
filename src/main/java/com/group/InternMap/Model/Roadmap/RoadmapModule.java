@@ -19,7 +19,7 @@ public class RoadmapModule implements Serializable {
 
     @ManyToMany
     @JoinTable(name = "roadmap_module_skills", joinColumns = @JoinColumn(name = "roadmap_module_id"), inverseJoinColumns = @JoinColumn(name = "skills_id"))
-    private final ArrayList<Skill> skills = new ArrayList<>();
+    private final List<Skill> skills = new ArrayList<>();
 
     public RoadmapModule() {}
 
@@ -74,7 +74,7 @@ public class RoadmapModule implements Serializable {
         this.skills.addAll(List.of(skills));
     }
 
-    public ArrayList<Skill> getAllSkills() {
+    public List<Skill> getAllSkills() {
         return skills;
     }
 

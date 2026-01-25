@@ -19,7 +19,7 @@ public class Skill implements Serializable {
     private Long id;
 
     private String name;
-    private final ArrayList<URL> resourceLinks = new ArrayList<>();
+    private final List<URL> resourceLinks = new ArrayList<>();
 
     private String description;
 
@@ -46,7 +46,7 @@ public class Skill implements Serializable {
         this.resourceLinks.addAll(List.of(resourceLinks));
     }
 
-    public ArrayList<URL> getResourceLinks() {
+    public List<URL> getResourceLinks() {
         return resourceLinks;
     }
 

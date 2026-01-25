@@ -1,26 +1,30 @@
 package com.group.InternMap.Model.Roadmap.Skill;
 
-import com.group.InternMap.Repo.Deprecated.RoadmapProgression;
 import com.group.InternMap.Model.Roadmap.Status;
 import com.group.InternMap.Model.User.Student;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
 
-@SuppressWarnings({"all"})
 @Entity
-public class UserSkillStatus implements java.io.Serializable {
+public class UserSkillStatus implements Serializable {
 
+    @Id @GeneratedValue
+    private Long id;
+
+    @ManyToOne @JoinColumn(name = "skill_id")
     private Skill skill;
+
+    @ManyToOne @JoinColumn(name = "student_id")
     private Student student;
 
+    @Enumerated
     private Status status;
-    private Date lastModified = Date.from(Instant.now());
 
-    protected RoadmapProgression roadmapProgressionDelegate;
+    private Date lastModified;
 
-    //MARK: Constructors
     public UserSkillStatus(Skill skill, Student student, Status status) {
         this.skill = skill;
         this.student = student;
@@ -31,28 +35,39 @@ public class UserSkillStatus implements java.io.Serializable {
         this(skill, student, Status.NOT_STARTED);
     }
 
-    //MARK: Getters and Setters
-    public Date getLastModified() { return lastModified; }
+    public UserSkillStatus() {}
 
-    public void setLastModified(Date newLastModifiedTime) {
-        if (newLastModifiedTime.getTime() < lastModified.getTime()) {
-         throw new RuntimeException("You cannot change the last modified date to a time that is before the current last modified date");
-        } else {
-            lastModified = newLastModifiedTime;
-        }
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+        updateLastModified();
+    }
+
+    public Date getLastModified() {
+        return lastModified;
     }
 
     public void setStatus(Status status) {
         this.status = status;
-        if (roadmapProgressionDelegate != null) {
-            roadmapProgressionDelegate.updateCompletionPercentage();
-        }
+        updateLastModified();
     }
 
-    public Status getStatus() { return status; }
+    public Status getStatus() {
+        return status;
+    }
 
-    //MARK: Methods
-    public void setDelegate(RoadmapProgression roadmapProgressionDelegate) {
-        this.roadmapProgressionDelegate = roadmapProgressionDelegate;
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public void updateLastModified() {
+        lastModified = Date.from(Instant.now());
     }
 }

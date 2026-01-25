@@ -1,8 +1,6 @@
 package com.group.InternMap.Model.Job;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-
 import java.io.Serializable;
 
 @Entity

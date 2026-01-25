@@ -12,9 +12,9 @@ public final class Roadmap implements Serializable {
     private Long id;
     private String name;
 
-    //TODO: Revise this relationship and correct it if needed
-    @OneToMany @JoinColumn(name = "roadmap_id")
-    private ArrayList<RoadmapModule> roadmapModules = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "roadmaps_modules", joinColumns = @JoinColumn(name = "roadmap_id"), inverseJoinColumns = @JoinColumn(name = "roadmap_module_id"))
+    private List<RoadmapModule> roadmapModules = new ArrayList<>();
 
     public Roadmap() {}
 
@@ -41,7 +41,7 @@ public final class Roadmap implements Serializable {
         roadmapModules.addAll(List.of(modules));
     }
 
-    public ArrayList<RoadmapModule> getAllModules() {
+    public List<RoadmapModule> getAllModules() {
         return roadmapModules;
     }
 

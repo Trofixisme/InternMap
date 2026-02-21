@@ -16,24 +16,15 @@ public class AdminRespository extends BaseRepository {
         String[] parts=line.split("\\|");
 
 //        return new Admin(parts[1],parts[2], parts[3], parts[4], UserRole.ADMIN);
+        int hello = 1;
+        int hello2 = 1;
+        int hello3 = 1;
+        int hello4 = 1;
+        int hello5 = 1;
+        int hello6 = 1;
+        int hello7 = 1;
+        int hello8 = 1;
+
         return null;
-
-        //dsajdioa
-        //dsajdioa\n
-        //dsajdioa\n//dsajdioa\nv
-
-        //dsajdioa\
-                //dsajdioa\n
-                //dsajdioa\n//dsajdioa\n
-        //dsajdioa\
-        //dsajdioa\
-        //dsajdioa\
-        //dsajdioa\
-        //dsajdioa\
-        //dsajdioa\
-        //dsajdioa\
-        //dsajdioa\
-        //dsajdioa\
-        //dsajdioa\
     }
 }

@@ -24,6 +24,7 @@ public class AdminRespository extends BaseRepository {
         int hello6 = 1;
         int hello7 = 1;
         int hello8 = 1;
+        int hello9 = 1;
 
         return null;
     }

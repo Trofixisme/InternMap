@@ -27,7 +27,7 @@ public class Application implements Serializable, Comparable<Application> {
     @Column(nullable = false)
     private Date applicationDate = Date.from(Instant.now());
 
-    @ManyToOne @JoinColumn(name = "student_id", referencedColumnName = "id")
+    @ManyToOne //@JoinColumn(name = "student_id", referencedColumnName = "id")
     Student student;
 
     public Application() {}

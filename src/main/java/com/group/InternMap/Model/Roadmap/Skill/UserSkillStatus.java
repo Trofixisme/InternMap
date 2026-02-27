@@ -14,10 +14,10 @@ public class UserSkillStatus implements Serializable {
     @Id @GeneratedValue
     private Long id;
 
-    @ManyToOne @JoinColumn(name = "skill_id")
+    @ManyToOne //@JoinColumn(name = "skill_id")
     private Skill skill;
 
-    @ManyToOne @JoinColumn(name = "student_id")
+    @ManyToOne //@JoinColumn(name = "student_id")
     private Student student;
 
     @Enumerated

@@ -35,7 +35,7 @@ public class RoadmapModuleSkill {
     }
 
     // Convert to actual models
-    public Roadmap toRoadmap() {
+    public Roadmap toRoadmap() throws MalformedURLException {
         Roadmap roadmap = new Roadmap(this.roadmapName);
 
         for (ModuleData moduleData : this.modules) {
@@ -45,15 +45,10 @@ public class RoadmapModuleSkill {
             );
 
             for (SkillData skillData : moduleData.getSkills()) {
-                List<URL> urls = new ArrayList<>();
+                List<String> urls = new ArrayList<>();
                 for (String link : skillData.getLinks()) {
-                    if (link != null && !link.trim().isEmpty()) {
-                        try {
-                            urls.add(new URL(link));
-                        } catch (MalformedURLException e) {
-                            // Log or handle invalid URL
-                            System.err.println("Invalid URL: " + link);
-                        }
+                    if (link != null) {
+                        urls.add(link);
                     }
                 }
                 Skill skill = new Skill(

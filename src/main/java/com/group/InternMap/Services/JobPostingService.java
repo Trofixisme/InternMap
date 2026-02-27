@@ -43,9 +43,9 @@ public List<JobPosting> getJobPostingsByRecruiterId(UUID recruiterId) throws Exc
 
     return allJobPostings.stream()
             .peek(job -> System.out.println("Job Recruiter: " +
-                    (job.getRecruiter() == null ? "null" : job.getRecruiter().getUserID())))
+                    (job.getRecruiter() == null ? "null" : job.getRecruiter().getId())))
             .filter(job -> job.getRecruiter() != null)
-            .filter(job -> recruiterId.equals(job.getRecruiter().getUserID()))
+            .filter(job -> recruiterId.equals(job.getRecruiter().getId()))
             .collect(Collectors.toList());
 }
 

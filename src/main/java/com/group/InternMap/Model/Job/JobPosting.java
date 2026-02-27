@@ -26,10 +26,9 @@ public class JobPosting implements Serializable {
     private String jobName;
 
     @ManyToOne
-    @JoinColumn(name = "recruiter_id")
     private Recruiter recruiter;
 
-    @OneToMany @JoinColumn(name = "job_posting_id", referencedColumnName = "id")
+    @OneToMany
     private List<Application> applications = new ArrayList<>();
 
     public void setJobDescription(String jobDescription) {

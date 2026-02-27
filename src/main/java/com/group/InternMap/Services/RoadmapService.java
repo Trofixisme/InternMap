@@ -12,13 +12,13 @@ public class RoadmapService {
         }
 
         return RepositoryAccessors.allRoadmaps.stream()
-                .filter(r -> r.getRoadmapID().equals(roadmapId.toString()))
+                .filter(r -> r.getId().equals(roadmapId.toString()))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Roadmap not found: " + roadmapId));
 
     }
 
     public void deleteById(UUID id) {
-          RepositoryAccessors.allRoadmaps.removeIf(r -> r.getRoadmapID().equals(id.toString()));
+          RepositoryAccessors.allRoadmaps.removeIf(r -> r.getId().equals(id.toString()));
     }
 }

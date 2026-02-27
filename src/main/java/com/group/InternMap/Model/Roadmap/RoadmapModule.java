@@ -18,7 +18,7 @@ public class RoadmapModule implements Serializable {
     private String description;
 
     @ManyToMany
-    @JoinTable(name = "roadmap_module_skills", joinColumns = @JoinColumn(name = "roadmap_module_id"), inverseJoinColumns = @JoinColumn(name = "skills_id"))
+    //@JoinTable(name = "roadmap_module_skills", joinColumns = @JoinColumn(name = "roadmap_module_id"), inverseJoinColumns = @JoinColumn(name = "skills_id"))
     private final List<Skill> skills = new ArrayList<>();
 
     public RoadmapModule() {}

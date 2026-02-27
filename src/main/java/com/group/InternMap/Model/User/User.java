@@ -2,11 +2,15 @@ package com.group.InternMap.Model.User;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "Users")
+
 public class User implements Serializable {
+
+    @Column(name = "role")
+    private Short role;
 
     @Column(nullable = false)
     private String plainPassword;
@@ -30,6 +34,15 @@ public class User implements Serializable {
         this.lName = lName;
         this.email = email;
         this.plainPassword = plainPassword;
+    }
+
+    public Short getRole() {
+        return role;
+    }
+
+    public User setRole(Short role) {
+        this.role = role;
+        return this;
     }
 
     public String getPlainPassword() {

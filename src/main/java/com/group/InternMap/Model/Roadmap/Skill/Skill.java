@@ -2,9 +2,7 @@
 
 package com.group.InternMap.Model.Roadmap.Skill;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.net.URL;
@@ -19,11 +17,13 @@ public class Skill implements Serializable {
     private Long id;
 
     private String name;
-    private final List<URL> resourceLinks = new ArrayList<>();
+
+    @ElementCollection
+    private final List<String> resourceLinks = new ArrayList<>();
 
     private String description;
 
-    public Skill(String name, String description, List<URL> links) {
+    public Skill(String name, String description, List<String> links) {
         this.name = name;
         this.description = description;
 
@@ -42,11 +42,11 @@ public class Skill implements Serializable {
         name = newName;
     }
 
-    public void addURLs(URL... resourceLinks) {
+    public void addURLs(String... resourceLinks) {
         this.resourceLinks.addAll(List.of(resourceLinks));
     }
 
-    public List<URL> getResourceLinks() {
+    public List<String> getResourceLinks() {
         return resourceLinks;
     }
 

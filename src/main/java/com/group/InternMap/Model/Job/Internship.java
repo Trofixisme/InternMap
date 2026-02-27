@@ -10,7 +10,7 @@ public class Internship extends JobPosting implements Serializable {
 
     private int duration;
 
-    @ManyToOne @JoinColumn(name = "companyID", referencedColumnName = "id")
+    @ManyToOne //@JoinColumn(name = "companyID", referencedColumnName = "id")
     private Company company;
 
     public int getDuration() {

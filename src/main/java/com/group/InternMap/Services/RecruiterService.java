@@ -35,7 +35,7 @@ public class RecruiterService extends UserService {
         return RepositoryAccessors.allUsers.stream()
                 .filter(u -> u instanceof Recruiter)
                 .map(u -> (Recruiter) u)
-                .filter(r -> r.getUserID().equals(recruiterId))
+                .filter(r -> r.getId().equals(recruiterId))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Recruiter not found: " + recruiterId));
     }

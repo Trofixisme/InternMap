@@ -86,7 +86,7 @@ public class UserService implements FilePaths {
         try {
             List<User> users = repo.findAll();
             for (User u : users) {
-                if (u.getUserID().toString().equals(id)) {
+                if (u.getId().toString().equals(id)) {
                     return u;
                 }
             }

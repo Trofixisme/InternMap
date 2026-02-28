@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import java.io.Serializable;
 
 @Entity
-public class FreeLanceProject extends JobPosting implements Serializable {
+public class FreelanceProject extends JobPosting implements Serializable {
 
     private double Duration;
     private int Payout;

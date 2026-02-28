@@ -1,4 +1,4 @@
-package com.group.InternMap.Contoller;
+package com.group.InternMap.Controller;
 
 import com.group.InternMap.Dto.ApplicationandCVDTO;
 import com.group.InternMap.Model.Job.JobPosting;
@@ -73,7 +73,6 @@ public class ApplicationController {
                 System.out.println(existingCV);
 //                allUsers.add(student);
             } else {
-                cv.setStudent(student);
                 student.setCv(cv);
 //                allUsers.add(student);
             }
@@ -129,8 +128,8 @@ public class ApplicationController {
                 return "redirect:/JobPostings";
 
             }
-            Application application=applicationandCVDTO.getApplication();
-            application.setCv(user.getCv());
+            Application application = applicationandCVDTO.getApplication();
+//            application.setCv(user.getCv());
             applicationandCVDTO.setStudent(user);
             jobPosting.addApplication(application);
             allApplications.add(application);

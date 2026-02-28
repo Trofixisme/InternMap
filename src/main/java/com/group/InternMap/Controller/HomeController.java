@@ -1,4 +1,4 @@
-package com.group.InternMap.Contoller;
+package com.group.InternMap.Controller;
 
 import com.group.InternMap.Model.Roadmap.Roadmap;
 import com.group.InternMap.Model.User.Admin;
@@ -7,7 +7,6 @@ import com.group.InternMap.Model.User.Student;
 import com.group.InternMap.Model.User.User;
 import com.group.InternMap.Services.UserService;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.boot.actuate.web.exchanges.HttpExchange;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

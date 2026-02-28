@@ -58,4 +58,12 @@ public class Student extends User implements Serializable {
     public void setFaculty(String faculty) {
         this.faculty = faculty;
     }
+
+    public CV getCv() {
+        return cv;
+    }
+
+    public void setCv(CV cv) {
+        this.cv = cv;
+    }
 }

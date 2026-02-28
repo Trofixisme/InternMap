@@ -1,4 +1,4 @@
-package com.group.InternMap.Contoller;
+package com.group.InternMap.Controller;
 
 import com.group.InternMap.Dto.RecruiterRegistrationDTO;
 import com.group.InternMap.Model.User.Admin;

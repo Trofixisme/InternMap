@@ -1,4 +1,4 @@
-package com.group.InternMap.Contoller;
+package com.group.InternMap.Controller;
 
 import com.group.InternMap.Dto.RoadmapModuleSkill;
 import com.group.InternMap.Model.Roadmap.Roadmap;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.MalformedURLException;
 import java.util.UUID;
 
 
@@ -58,7 +59,7 @@ public class RoadmapController {
     }
 
     @PostMapping("/new")
-    public String createRoadmap(@ModelAttribute("roadmap") RoadmapModuleSkill dto, HttpSession session) {
+    public String createRoadmap(@ModelAttribute("roadmap") RoadmapModuleSkill dto, HttpSession session) throws MalformedURLException {
         if (session.getAttribute("loggedInUser") == null || !(session.getAttribute("loggedInUser") instanceof Admin admin)) {
             return "redirect:/login";
         }

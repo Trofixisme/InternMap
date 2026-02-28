@@ -40,6 +40,10 @@ public class Application implements Serializable, Comparable<Application> {
         this.applicationDate = new Date();
     }
 
+    public Long getApplicationID() {
+        return id;
+    }
+
     public Date getApplicationDate() {
         return applicationDate;
     }

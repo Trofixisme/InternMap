@@ -1,6 +1,7 @@
 package com.group.InternMap.Model.User;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -12,6 +13,9 @@ public class Student extends User implements Serializable {
     private String uniName;
     private String studentMajor;
     private String faculty;
+
+    @OneToOne
+    CV cv;
 
     public Student(String fName, String lName, String email, String plainPassword, int graduatingYear, String uniName, String studentMajor, String faculty) {
         super(fName, lName, email, plainPassword);

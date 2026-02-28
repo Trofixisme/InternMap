@@ -1,6 +1,7 @@
 package com.group.InternMap.Model.Job;
 
 import com.group.InternMap.Model.User.Application;
+import com.group.InternMap.Model.User.Company.Company;
 import com.group.InternMap.Model.User.Company.Recruiter;
 import jakarta.persistence.*;
 
@@ -27,6 +28,9 @@ public class JobPosting implements Serializable {
 
     @ManyToOne
     private Recruiter recruiter;
+
+    @ManyToOne
+    private Company company;
 
     @OneToMany
     private List<Application> applications = new ArrayList<>();
@@ -106,5 +110,9 @@ public class JobPosting implements Serializable {
 
     public void setApplication(ArrayList<Application> application) {
         this.applications = application;
+    }
+
+    public Company getCompany() {
+        return company;
     }
 }

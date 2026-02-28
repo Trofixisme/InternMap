@@ -27,10 +27,7 @@ public class RecruiterService extends UserService {
     public RecruiterService(ApplicationEventPublisher eventPublisher) {
         this.eventPublisher = eventPublisher;
     }
-    public Recruiter findRecruiterById(UUID recruiterId) {
-        if (recruiterId == null ) {
-            throw new IllegalArgumentException("recruiterId must be provided");
-        }
+    public Recruiter findRecruiterById(long recruiterId) {
 
         return RepositoryAccessors.allUsers.stream()
                 .filter(u -> u instanceof Recruiter)
@@ -64,7 +61,7 @@ public class RecruiterService extends UserService {
                 .orElseThrow(() -> new RuntimeException("Company not found: " + companyId));
     }
 
-    public void addCompanyToRecruiter(UUID recruiterId, String companyId) throws Exception {
+    public void addCompanyToRecruiter(long recruiterId, String companyId) throws Exception {
 
         Recruiter recruiter = findRecruiterById(recruiterId);
         Company company = CompanyService.findByName(companyId);

@@ -73,7 +73,7 @@ public class RoadmapController {
             }
         }
 
-        return "redirect:/roadmaps/" + roadmap.getRoadmapID();
+        return "redirect:/roadmaps/" + roadmap.getId();
     }
 
     //Display form to edit roadmap

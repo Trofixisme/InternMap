@@ -1,13 +1,11 @@
 package com.group.InternMap.Services;
 
 import com.group.InternMap.Model.Job.JobPosting;
-import com.group.InternMap.Repo.BaseRepository;
 import com.group.InternMap.Repo.RepositoryAccessors;
 import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 import static com.group.InternMap.Repo.RepositoryAccessors.allJobPostings;
-import static com.group.InternMap.Services.FilePaths.jobPostingPath;
 
 @Service
 public class JobPostingService {
@@ -19,7 +17,7 @@ public class JobPostingService {
 
             if (searchQuery != null && !searchQuery.isBlank()) {
                 matches |= job.getJobName().toLowerCase(Locale.ROOT).contains(searchQuery.toLowerCase(Locale.ROOT));
-                matches |= job.getCompanyName().toLowerCase(Locale.ROOT).contains(searchQuery.toLowerCase(Locale.ROOT));
+                matches |= job.getCompany().getName().toLowerCase(Locale.ROOT).contains(searchQuery.toLowerCase(Locale.ROOT));
             }
 
             return matches;
@@ -27,31 +25,25 @@ public class JobPostingService {
     }
 
     public List<JobPosting> getAllJobPostings() throws Exception {
-      return  RepositoryAccessors.allJobPostings;
+        return  RepositoryAccessors.allJobPostings;
     }
     public JobPosting findByID(UUID jopPostingId) {
         System.out.println(jopPostingId);
 
-         return allJobPostings.stream()
+        return allJobPostings.stream()
 //                 .filter(j -> j.getJobPostingUUID().equals(jopPostingId))
-                 .findFirst().orElse(null);
+                .findFirst().orElse(null);
     }
 
-public List<JobPosting> getJobPostingsByRecruiterId(UUID recruiterId) throws Exception {
+    public List<JobPosting> getJobPostingsByRecruiterId(long recruiterId) throws Exception {
 
-    System.out.println("Looking for jobs for recruiter: " + recruiterId);
+        System.out.println("Looking for jobs for recruiter: " + recruiterId);
 
-    return allJobPostings.stream()
-            .peek(job -> System.out.println("Job Recruiter: " +
-                    (job.getRecruiter() == null ? "null" : job.getRecruiter().getId())))
-            .filter(job -> job.getRecruiter() != null)
-            .filter(job -> recruiterId.equals(job.getRecruiter().getId()))
-            .collect(Collectors.toList());
-}
-
-
-
-
-
-
+        return allJobPostings.stream()
+                .peek(job -> System.out.println("Job Recruiter: " +
+                        (job.getRecruiter() == null ? "null" : job.getRecruiter().getId())))
+                .filter(job -> job.getRecruiter() != null)
+                .filter(job -> recruiterId == job.getRecruiter().getId())
+                .collect(Collectors.toList());
+    }
 }

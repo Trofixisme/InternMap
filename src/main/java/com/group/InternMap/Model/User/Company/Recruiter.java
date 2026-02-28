@@ -15,8 +15,12 @@ public class Recruiter extends User implements Serializable {
     @Column(nullable = false)
     private String title;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+
+
+
+//    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     //@JoinTable(name = "recruiters_companies", joinColumns = @JoinColumn(name = "recruiter_id"), inverseJoinColumns = @JoinColumn(name = "company_id"))
+    @ManyToMany
     private List<Company> companies = new ArrayList<>();
 
     public String getTitle() {
@@ -53,4 +57,7 @@ public class Recruiter extends User implements Serializable {
     public void setJobPosting(Collection<JobPosting> jobPosting) {
         this.jobPosting = jobPosting;
     }
+
+
+
 }

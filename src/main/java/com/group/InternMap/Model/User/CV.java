@@ -1,19 +1,23 @@
 package com.group.InternMap.Model.User;
 
-import java.io.Serializable;
-import java.util.UUID;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
+import java.io.Serializable;
+
+@Entity
 public class CV implements Serializable {
 
-    private UUID cvId;
-    private Student student;
+    @Id @GeneratedValue
+    private long cvId;
+
     private String description;
     private String pastExperiences;
     private String projects;
 
-    public CV() {
-        this.cvId = UUID.randomUUID();
-    }
+    public CV() {}
 
     public CV(Student student, String description, String pastExperiences, String projects) {
         super();
@@ -38,7 +42,7 @@ public class CV implements Serializable {
         this.description = description;
     }
 
-    public UUID getCvId() {
+    public long getCvId() {
         return cvId;
     }
 
@@ -50,19 +54,10 @@ public class CV implements Serializable {
         this.projects = projects;
     }
 
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
     @Override
     public String toString() {
         return "CV{" +
                 "cvId=" + cvId +
-                ", student=" + student +
                 ", description='" + description + '\'' +
                 ", pastExperiences='" + pastExperiences + '\'' +
                 ", projects='" + projects + '\'' +

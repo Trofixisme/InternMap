@@ -23,7 +23,7 @@ public class CompanyService {
 
     @EventListener
     public void handleRecruiterAddedEvent(RecruiterAddedEvent event) {
-        UUID recruiterId = event.getRecruiterId();
+        long recruiterId = event.getRecruiterId();
         String companyId = event.getCompanyId();
         Recruiter recruiter =recruiterService.findRecruiterById(recruiterId);
         Company company = recruiterService.findCompanyById(companyId);

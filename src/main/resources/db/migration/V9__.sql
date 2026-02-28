@@ -14,7 +14,7 @@ CREATE TABLE recruiter_companies
 );
 
 ALTER TABLE recruiter
-    ADD CONSTRAINT FK_RECRUITER_ON_ID FOREIGN KEY (id) REFERENCES "user" (id);
+    ADD CONSTRAINT FK_RECRUITER_ON_ID FOREIGN KEY (id) REFERENCES "users" (id);
 
 ALTER TABLE recruiter_companies
     ADD CONSTRAINT fk_reccom_on_company FOREIGN KEY (companies_id) REFERENCES company (id);

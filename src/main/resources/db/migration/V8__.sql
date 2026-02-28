@@ -4,7 +4,7 @@ CONSTRAINT fk_jobposapp_on_job_posting;
 
 CREATE SEQUENCE IF NOT EXISTS user_seq START WITH 1 INCREMENT BY 50;
 
-CREATE TABLE "user"
+CREATE TABLE "users"
 (
     id             BIGINT       NOT NULL,
     role           SMALLINT,

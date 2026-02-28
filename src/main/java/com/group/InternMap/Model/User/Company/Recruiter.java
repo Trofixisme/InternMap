@@ -1,7 +1,7 @@
 package com.group.InternMap.Model.User.Company;
 
 import com.group.InternMap.Model.Job.JobPosting;
-import com.group.InternMap.Model.User.User;
+import com.group.InternMap.Model.User.Users;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-public class Recruiter extends User implements Serializable {
+public class Recruiter extends Users implements Serializable {
 
     @Column(nullable = false)
     private String title;

@@ -1,8 +1,6 @@
 package com.group.InternMap.Repo.Deprecated;
 
-import com.group.InternMap.Model.User.Company.Recruiter;
-import com.group.InternMap.Model.User.User;
-import com.group.InternMap.Model.User.UserRole;
+import com.group.InternMap.Model.User.Users;
 
 @Deprecated
 @SuppressWarnings("all")
@@ -12,7 +10,7 @@ public class RecruiterRepository extends BaseRepository {
         super("data/Users.txt");
     }
 
-    User parseObject(String line) {
+    Users parseObject(String line) {
         String[] parts = line.split("\\|", -1);
 //        return new Recruiter(parts[0], parts[1], parts[2], parts[3], parts[4], UserRole.RECRUITER, parts[6]);
 //    }
@@ -26,6 +24,6 @@ public class RecruiterRepository extends BaseRepository {
 //            repository.save(recruiter);
             System.out.println(repository.findAll());
 //        }
-        return new User();
+        return new Users();
     }
 }

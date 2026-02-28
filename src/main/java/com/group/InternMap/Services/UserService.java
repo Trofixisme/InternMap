@@ -1,7 +1,7 @@
 package com.group.InternMap.Services;
 
 import com.group.InternMap.Model.Roadmap.Roadmap;
-import com.group.InternMap.Model.User.User;
+import com.group.InternMap.Model.User.Users;
 import com.group.InternMap.Repo.BaseRepository;
 import com.group.InternMap.Repo.RepositoryAccessors;
 import org.springframework.stereotype.Service;
@@ -11,11 +11,11 @@ import java.util.List;
 //Ziad, Shimaa follow this structure for the rest of services
 @Service
 public class UserService implements FilePaths {
-    protected final BaseRepository<User> repo = new BaseRepository<>(User.class, userPath);
+    protected final BaseRepository<Users> repo = new BaseRepository<>(Users.class, userPath);
     protected final BaseRepository<Roadmap> RoadmapRepo = new BaseRepository<>(Roadmap.class, roadmapPath);
 
-    public void register(User u) throws Exception {
-        List<User> users = RepositoryAccessors.allUsers;
+    public void register(Users u) throws Exception {
+        List<Users> users = RepositoryAccessors.ALL_USERS;
 
         if (!users.contains(u)) {
             users.add(u);
@@ -41,15 +41,15 @@ public class UserService implements FilePaths {
         return true;
     }
 
-    public User login(String email, String password) throws Exception {
+    public Users login(String email, String password) throws Exception {
 
         if (email == null || password == null) {
             throw new IllegalArgumentException("Neither the email nor the password are allowed to be empty.");
         }
 
-        List<User> users = RepositoryAccessors.allUsers;
+        List<Users> users = RepositoryAccessors.ALL_USERS;
 
-        for (User u : users) {
+        for (Users u : users) {
 
             if (u.getEmail().strip().equalsIgnoreCase(email.strip())) {
 
@@ -65,10 +65,10 @@ public class UserService implements FilePaths {
     }
 
 
-    public User searchByEmail(String email) {
+    public Users searchByEmail(String email) {
         try {
-            List<User> users = RepositoryAccessors.allUsers;
-            for (User u : users) {
+            List<Users> users = RepositoryAccessors.ALL_USERS;
+            for (Users u : users) {
                 if (u.getEmail().equals(email)) {
                     return u;
                 }
@@ -82,10 +82,10 @@ public class UserService implements FilePaths {
 
 
     @SuppressWarnings("unused")
-    public User SearchbyID(String id) {
+    public Users SearchbyID(String id) {
         try {
-            List<User> users = repo.findAll();
-            for (User u : users) {
+            List<Users> users = repo.findAll();
+            for (Users u : users) {
                 if (u.getId().toString().equals(id)) {
                     return u;
                 }

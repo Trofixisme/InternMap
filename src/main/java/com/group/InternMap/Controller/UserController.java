@@ -5,7 +5,7 @@ import com.group.InternMap.Model.User.Admin;
 import com.group.InternMap.Model.User.Company.Company;
 import com.group.InternMap.Model.User.Company.Recruiter;
 import com.group.InternMap.Model.User.Student;
-import com.group.InternMap.Model.User.User;
+import com.group.InternMap.Model.User.Users;
 import com.group.InternMap.Repo.RepositoryAccessors;
 import com.group.InternMap.Services.CompanyService;
 import com.group.InternMap.Services.RecruiterService;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import static com.group.InternMap.Repo.RepositoryAccessors.allCompanies;
-import static com.group.InternMap.Repo.RepositoryAccessors.allUsers;
+import static com.group.InternMap.Repo.RepositoryAccessors.ALL_USERS;
 
 @Controller
 public class UserController {
@@ -54,7 +54,7 @@ public class UserController {
     @GetMapping("/recruiter/register")
     public String showRegisterRecruiter(Model model, RecruiterRegistrationDTO recruiterRegistrationDTO) {
         model.addAttribute("form", new RecruiterRegistrationDTO());
-        System.out.println(RepositoryAccessors.allUsers);
+        System.out.println(RepositoryAccessors.ALL_USERS);
         System.out.println(RepositoryAccessors.allCompanies);
         return "RecruiterRegister";
     }
@@ -73,7 +73,7 @@ public class UserController {
                 if (company != null) {
                     recruiterService.addCompanyToRecruiter(user.getId(), company.getName());
                     System.out.println(allCompanies);
-                    System.out.println(allUsers);
+                    System.out.println(ALL_USERS);
                 }
             }
             // exception here
@@ -126,15 +126,15 @@ public class UserController {
 
     @GetMapping("/login")
     public String showloginPage(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new Users());
         return "login";
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute("user") User user, Model model, HttpSession session) {
+    public String login(@ModelAttribute("user") Users users, Model model, HttpSession session) {
         try {
-            User authenticatedUser = userService.login(user.getEmail(), user.getPlainPassword());
-            session.setAttribute("loggedInUser", authenticatedUser);
+            Users authenticatedUsers = userService.login(users.getEmail(), users.getPlainPassword());
+            session.setAttribute("loggedInUser", authenticatedUsers);
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "login";

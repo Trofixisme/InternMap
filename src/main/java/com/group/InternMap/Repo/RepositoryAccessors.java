@@ -6,14 +6,14 @@ import com.group.InternMap.Model.Roadmap.RoadmapModule;
 import com.group.InternMap.Model.Roadmap.Skill.Skill;
 import com.group.InternMap.Model.User.Application;
 import com.group.InternMap.Model.User.Company.Company;
-import com.group.InternMap.Model.User.User;
+import com.group.InternMap.Model.User.Users;
 import com.group.InternMap.Services.FilePaths;
 
 
 import java.util.ArrayList;
 
 public final class RepositoryAccessors {
-    public static final ArrayList<User> allUsers = (ArrayList<User>) (new BaseRepository<>(User.class, FilePaths.userPath)).findAll();
+    public static final ArrayList<Users> ALL_USERS = (ArrayList<Users>) (new BaseRepository<>(Users.class, FilePaths.userPath)).findAll();
     public static final ArrayList<Company> allCompanies = (ArrayList<Company>) (new BaseRepository<>(Company.class, FilePaths.companyPath)).findAll();
     public static final ArrayList<Roadmap> allRoadmaps = (ArrayList<Roadmap>) (new BaseRepository<>(Roadmap.class, FilePaths.roadmapPath)).findAll();
     public static final ArrayList<JobPosting> allJobPostings = (ArrayList<JobPosting>) (new BaseRepository<>(JobPosting.class, FilePaths.jobPostingPath)).findAll();
@@ -24,7 +24,7 @@ public final class RepositoryAccessors {
 
     public static void saveAll() {
         try {
-            new BaseRepository<>(User.class, FilePaths.userPath).saveAll(allUsers);
+            new BaseRepository<>(Users.class, FilePaths.userPath).saveAll(ALL_USERS);
             new BaseRepository<>(Company.class, FilePaths.companyPath).saveAll(allCompanies);
             new BaseRepository<>(Roadmap.class, FilePaths.roadmapPath).saveAll(allRoadmaps);
             new BaseRepository<>(JobPosting.class, FilePaths.jobPostingPath).saveAll(allJobPostings);

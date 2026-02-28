@@ -7,7 +7,7 @@ import jakarta.persistence.Enumerated;
 import java.io.Serializable;
 
 @Entity
-public class Admin extends User implements Serializable {
+public class Admin extends Users implements Serializable {
 
     @Enumerated
     @Column(nullable = false)

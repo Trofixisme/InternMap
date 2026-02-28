@@ -4,7 +4,6 @@ import com.group.InternMap.Model.Job.JobPosting;
 import com.group.InternMap.Model.User.Application;
 import com.group.InternMap.Model.User.Company.Company;
 import com.group.InternMap.Model.User.Company.Recruiter;
-import com.group.InternMap.Repo.BaseRepository;
 import com.group.InternMap.Repo.RepositoryAccessors;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -12,8 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
-import java.util.stream.Collectors;
+
 import static com.group.InternMap.Repo.RepositoryAccessors.allApplications;
 
 @Service
@@ -29,7 +27,7 @@ public class RecruiterService extends UserService {
     }
     public Recruiter findRecruiterById(long recruiterId) {
 
-        return RepositoryAccessors.allUsers.stream()
+        return RepositoryAccessors.ALL_USERS.stream()
                 .filter(u -> u instanceof Recruiter)
                 .map(u -> (Recruiter) u)
                 .filter(r -> r.getId().equals(recruiterId))

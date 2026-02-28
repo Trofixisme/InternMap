@@ -5,7 +5,7 @@ import com.group.InternMap.Model.Job.JobPosting;
 import com.group.InternMap.Model.User.Application;
 import com.group.InternMap.Model.User.CV;
 import com.group.InternMap.Model.User.Student;
-import com.group.InternMap.Model.User.User;
+import com.group.InternMap.Model.User.Users;
 import com.group.InternMap.Services.JobPostingService;
 import com.group.InternMap.Services.RecruiterService;
 import jakarta.servlet.http.HttpSession;
@@ -31,14 +31,14 @@ public class ApplicationController {
     @GetMapping("/cv")
     public String cv(Model model, HttpSession session) {
         // Fixed: Use correct attribute name
-        User user = (User) session.getAttribute("loggedInUser");
-        if (user == null) {
+        Users users = (Users) session.getAttribute("loggedInUser");
+        if (users == null) {
             return "redirect:/login";
         }
-        if (!(user instanceof Student)) {
+        if (!(users instanceof Student)) {
             return "redirect:/profile";
         }
-        Student student = (Student) user;
+        Student student = (Student) users;
         if (student.getCv() != null) {
             model.addAttribute("cv", student.getCv());
         } else {
@@ -50,18 +50,18 @@ public class ApplicationController {
 
     @PostMapping("/cv/save")
     public String saveCV(@ModelAttribute("cv") CV cv, HttpSession session) {
-        User loggedUser = (User) session.getAttribute("loggedInUser");
+        Users loggedUsers = (Users) session.getAttribute("loggedInUser");
 
-        if (loggedUser == null) {
+        if (loggedUsers == null) {
             return "redirect:/login";
         }
 
-        if (!(loggedUser instanceof Student)) {
+        if (!(loggedUsers instanceof Student)) {
             return "redirect:/profile";
         }
 
-        Student student = (Student) loggedUser;
-        if(allUsers.contains(student)) {
+        Student student = (Student) loggedUsers;
+        if(ALL_USERS.contains(student)) {
 //            allUsers.remove(student);
             if (student.getCv() != null) {
                 System.out.println(student.getCv());

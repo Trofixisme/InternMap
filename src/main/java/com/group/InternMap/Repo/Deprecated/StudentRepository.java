@@ -1,9 +1,6 @@
 package com.group.InternMap.Repo.Deprecated;
 
-import com.group.InternMap.Model.User.Student;
-
-import com.group.InternMap.Model.User.User;
-import com.group.InternMap.Model.User.UserRole;
+import com.group.InternMap.Model.User.Users;
 
 import java.util.List;
 
@@ -18,7 +15,7 @@ public class StudentRepository extends BaseRepository {
 //                   //students attributes
 //                   int graduatingYear, StudentMajor major, StudentDepartment department,
 
-    User parseObject(String line) {
+    Users parseObject(String line) {
 
         String[] parts = line.split("\\|", -1);  // IMPORTANT: keep empty fields!
 

@@ -2,14 +2,11 @@ package com.group.InternMap.Model.User;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
-import java.util.UUID;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+public class Users implements Serializable {
 
-public class User implements Serializable {
-
-    @Column(name = "role")
     private Short role;
 
     @Column(nullable = false)
@@ -27,9 +24,9 @@ public class User implements Serializable {
     @Id @GeneratedValue
     private Long id;
 
-    public User() {}
+    public Users() {}
 
-    public User(String fName, String lName, String email, String plainPassword) {
+    public Users(String fName, String lName, String email, String plainPassword) {
         this.fName = fName;
         this.lName = lName;
         this.email = email;
@@ -40,7 +37,7 @@ public class User implements Serializable {
         return role;
     }
 
-    public User setRole(Short role) {
+    public Users setRole(Short role) {
         this.role = role;
         return this;
     }
@@ -75,13 +72,10 @@ public class User implements Serializable {
         return email;
     }
 
-    public boolean setEmail(String email) {
+    public void setEmail(String email) {
         //Returns a boolean value depending on whether the new email was set or not
         if (email.contains("@") && email.contains(".")) {
             this.email = email;
-            return true;
-        } else {
-            return false;
         }
     }
 

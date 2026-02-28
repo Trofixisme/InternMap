@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 @Entity
-public class Student extends User implements Serializable {
+public class Student extends Users implements Serializable {
 
     private int graduatingYear = Calendar.getInstance().get(Calendar.YEAR) + 1;
     private String uniName;

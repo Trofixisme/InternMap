@@ -1,12 +1,12 @@
 package com.group.InternMap.Services;
 
 import com.group.InternMap.Model.User.Company.Recruiter;
-import com.group.InternMap.Model.User.User;
+import com.group.InternMap.Model.User.Users;
 import com.group.InternMap.Repo.BaseRepository;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import com.group.InternMap.Model.User.Company.Company;
-import java.util.UUID;
+
 import static com.group.InternMap.Repo.RepositoryAccessors.allCompanies;
 import static com.group.InternMap.Services.FilePaths.userPath;
 
@@ -14,7 +14,7 @@ import static com.group.InternMap.Services.FilePaths.userPath;
 
 public class CompanyService {
 
-    protected final BaseRepository<User> repo = new BaseRepository<>(User.class, userPath);
+    protected final BaseRepository<Users> repo = new BaseRepository<>(Users.class, userPath);
     public RecruiterService recruiterService;
 
     CompanyService(RecruiterService recruiterService) {

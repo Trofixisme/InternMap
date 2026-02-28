@@ -4,8 +4,7 @@ import com.group.InternMap.Model.Job.JobPosting;
 import com.group.InternMap.Model.Roadmap.Roadmap;
 import com.group.InternMap.Model.User.Company.Recruiter;
 import com.group.InternMap.Model.User.Student;
-import com.group.InternMap.Model.User.User;
-import com.group.InternMap.Model.User.UserRole;
+import com.group.InternMap.Model.User.Users;
 import com.group.InternMap.Repo.RepositoryAccessors;
 import com.group.InternMap.Services.FilePaths;
 import com.group.InternMap.Services.UserService;
@@ -16,19 +15,19 @@ import java.util.List;
 @Deprecated
 public class AdminService extends UserService implements FilePaths {
 
-    public List<User> viewAllUsers() {
-        return RepositoryAccessors.allUsers;
+    public List<Users> viewAllUsers() {
+        return RepositoryAccessors.ALL_USERS;
     }
 
     public List<Student> findAllStudents() {
-        return RepositoryAccessors.allUsers.stream()
+        return RepositoryAccessors.ALL_USERS.stream()
 //                .filter(u -> u.getRole() == UserRole.STUDENT)
                 .map(u -> (Student) u)
                 .toList();
     }
 
     public List<Recruiter> findAllRecruiters() {
-        return RepositoryAccessors.allUsers.stream()
+        return RepositoryAccessors.ALL_USERS.stream()
 //                .filter(u -> u.getRole() == UserRole.RECRUITER)
                 .map(u -> (Recruiter) u)
                 .toList();
@@ -38,7 +37,7 @@ public class AdminService extends UserService implements FilePaths {
     //Doesn't matter which one since email is unique
     public void deleteUser(String email) {
 
-        List<User> users = RepositoryAccessors.allUsers;
+        List<Users> users = RepositoryAccessors.ALL_USERS;
         users.removeIf(u -> u.getEmail().equals(email));
     }
 

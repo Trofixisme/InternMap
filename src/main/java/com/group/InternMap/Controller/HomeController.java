@@ -4,7 +4,7 @@ import com.group.InternMap.Model.Roadmap.Roadmap;
 import com.group.InternMap.Model.User.Admin;
 import com.group.InternMap.Model.User.Company.Recruiter;
 import com.group.InternMap.Model.User.Student;
-import com.group.InternMap.Model.User.User;
+import com.group.InternMap.Model.User.Users;
 import com.group.InternMap.Services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -52,9 +52,9 @@ public class HomeController {
     public String showHomePage(Model model, ArrayList<Roadmap> roadmaps, HttpSession session) {
         System.out.println("Home page accessed, but without an active session ");
         // Retrieve the User object from the session
-        User user = (User) session.getAttribute("loggedInUser");
+        Users users = (Users) session.getAttribute("loggedInUser");
         // 2. If no user is found in the session, redirect to the login page
-        if (user == null) {
+        if (users == null) {
             return "redirect:/login";
         }
         //  Pass the user object to the Thymeleaf model for display
@@ -65,26 +65,26 @@ public class HomeController {
 
     @GetMapping("/profile")
     public String showStudentProfile(Model model, HttpSession session) {
-        User loggedUser = (User) session.getAttribute("loggedInUser");
-        if (loggedUser == null) {
+        Users loggedUsers = (Users) session.getAttribute("loggedInUser");
+        if (loggedUsers == null) {
             return "redirect:/login";
         }
 
-        model.addAttribute("user", loggedUser);
+        model.addAttribute("user", loggedUsers);
 
-        switch (loggedUser) {
+        switch (loggedUsers) {
             case Student _ -> {
-                model.addAttribute("student", (Student) loggedUser);
+                model.addAttribute("student", (Student) loggedUsers);
                 model.addAttribute("type", "student");
                 return "profile";
             }
             case Recruiter _ -> {
-                model.addAttribute("recruiter", (Recruiter) loggedUser);
+                model.addAttribute("recruiter", (Recruiter) loggedUsers);
                 model.addAttribute("type", "recruiter");
                 return "profile";
             }
             case Admin _ -> {
-                model.addAttribute("admin", (Admin) loggedUser);
+                model.addAttribute("admin", (Admin) loggedUsers);
                 model.addAttribute("type", "admin");
                 return "profile";
             }
@@ -96,7 +96,7 @@ public class HomeController {
     }
 
     @GetMapping("/roadmaps")
-    public String ViewRoadmaps(@ModelAttribute("user") User user, Model model){
+    public String ViewRoadmaps(@ModelAttribute("user") Users users, Model model){
       try {
           List<Roadmap> roadmaps = userService.viewRoadmaps();
           model.addAttribute("roadmaps", roadmaps);

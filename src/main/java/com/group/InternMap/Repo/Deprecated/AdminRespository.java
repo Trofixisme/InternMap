@@ -1,8 +1,6 @@
 package com.group.InternMap.Repo.Deprecated;
 
-import com.group.InternMap.Model.User.Admin;
-import com.group.InternMap.Model.User.User;
-import com.group.InternMap.Model.User.UserRole;
+import com.group.InternMap.Model.User.Users;
 
 @Deprecated
 public class AdminRespository extends BaseRepository {
@@ -12,7 +10,7 @@ public class AdminRespository extends BaseRepository {
     }
 
     @Override
-    User parseObject(String line) {
+    Users parseObject(String line) {
         String[] parts=line.split("\\|");
 
 //        return new Admin(parts[1],parts[2], parts[3], parts[4], UserRole.ADMIN);

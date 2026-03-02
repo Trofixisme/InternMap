@@ -1,24 +1,24 @@
 package com.group.InternMap.User;
 
-import com.group.InternMap.Roadmap.Roadmap;
 import com.group.InternMap.FilePaths;
-import com.group.InternMap.Deprecated.Repository.BaseRepository;
 import com.group.InternMap.Deprecated.Repository.RepositoryAccessors;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements FilePaths {
 
-    protected final BaseRepository<Users> repo = new BaseRepository<>(Users.class, userPath);
-    protected final BaseRepository<Roadmap> RoadmapRepo = new BaseRepository<>(Roadmap.class, roadmapPath);
+//    protected final BaseRepository<Users> repo = new BaseRepository<>(Users.class, userPath);
+//    protected final BaseRepository<Roadmap> RoadmapRepo = new BaseRepository<>(Roadmap.class, roadmapPath);
+    UserRepo userRepo;
 
     public void register(Users u) throws Exception {
-        List<Users> users = RepositoryAccessors.ALL_USERS;
-
-        if (!users.contains(u)) {
-            users.add(u);
+        List<Users> us=userRepo.findAll();
+        if (!us.contains(u)) {
+            userRepo.save(u);
         } else {
             throw new Exception("A user with these creditentials already exists.");
         }
@@ -46,13 +46,9 @@ public class UserService implements FilePaths {
         if (email == null || password == null) {
             throw new IllegalArgumentException("Neither the email nor the password are allowed to be empty.");
         }
-
-        List<Users> users = RepositoryAccessors.ALL_USERS;
-
+        List<Users> users = userRepo.findAll();
         for (Users u : users) {
-
             if (u.getEmail().strip().equalsIgnoreCase(email.strip())) {
-
                 if (u.getPlainPassword().equals(password)) {
                     return u;
                 } else if(!u.getPlainPassword().equals(password)) {
@@ -60,46 +56,20 @@ public class UserService implements FilePaths {
                 }
             }
         }
-
         throw new Exception("Couldn't find specified user.");
     }
 
 
-    public Users searchByEmail(String email) {
-        try {
-            List<Users> users = RepositoryAccessors.ALL_USERS;
-            for (Users u : users) {
-                if (u.getEmail().equals(email)) {
-                    return u;
-                }
-            }
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
+    public Optional<Users> searchByEmail(String email) {
+       return userRepo.findByEmail(email);
     }
 
-
-    @SuppressWarnings("unused")
-    public Users SearchbyID(String id) {
-        try {
-            List<Users> users = repo.findAll();
-            for (Users u : users) {
-                if (u.getId().toString().equals(id)) {
-                    return u;
-                }
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-
-
-        }
-        return null;
+    public Optional<Users> searchByID(long id) {
+        return userRepo.findById(id);
     }
-    public List<Roadmap> viewRoadmaps() {
-        return RoadmapRepo.findAll();
-    }
+//    public List<Roadmap> viewRoadmaps() {
+//        return RoadmapRepo.findAll();
+//    }
 
 }
 

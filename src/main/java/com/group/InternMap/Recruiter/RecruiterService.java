@@ -26,6 +26,7 @@ public class RecruiterService extends UserService {
     public RecruiterService(ApplicationEventPublisher eventPublisher) {
         this.eventPublisher = eventPublisher;
     }
+
     public Recruiter findRecruiterById(long recruiterId) {
 
         return RepositoryAccessors.ALL_USERS.stream()

@@ -1,5 +1,6 @@
-package com.group.InternMap.Model.User;
+package com.group.InternMap.Application;
 
+import com.group.InternMap.Student.Student;
 import jakarta.persistence.*;
 
 import java.io.Serializable;

@@ -1,7 +1,7 @@
 //package com.group.InternMap.Deprecated;
 //
 //import com.group.InternMap.Roadmap.Roadmap;
-//import com.group.InternMap.Roadmap.Skill.UserSkillStatus;
+//import com.group.InternMap.Skill.UserSkillStatus;
 //import com.group.InternMap.Roadmap.Status;
 //import com.group.InternMap.Model.User.Student;
 ////import com.group.educate.Model.User.Student.StudentMajor;

@@ -1,6 +1,6 @@
 //Created by Ziad on 30/10/2025
 
-package com.group.InternMap.Roadmap.Skill;
+package com.group.InternMap.Skill;
 
 import jakarta.persistence.*;
 

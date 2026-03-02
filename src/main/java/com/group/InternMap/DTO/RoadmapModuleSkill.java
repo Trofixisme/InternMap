@@ -2,7 +2,7 @@ package com.group.InternMap.DTO;
 
 import com.group.InternMap.Roadmap.Roadmap;
 import com.group.InternMap.Roadmap.RoadmapModule;
-import com.group.InternMap.Roadmap.Skill.Skill;
+import com.group.InternMap.Skill.Skill;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;

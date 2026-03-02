@@ -1,4 +1,4 @@
-package com.group.InternMap.Roadmap.Skill;
+package com.group.InternMap.Skill;
 
 import com.group.InternMap.Roadmap.Status;
 import com.group.InternMap.Student.Student;

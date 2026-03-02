@@ -3,7 +3,7 @@ package com.group.InternMap.Deprecated.Repository;
 import com.group.InternMap.Job.JobPosting;
 import com.group.InternMap.Roadmap.Roadmap;
 import com.group.InternMap.Roadmap.RoadmapModule;
-import com.group.InternMap.Roadmap.Skill.Skill;
+import com.group.InternMap.Skill.Skill;
 import com.group.InternMap.Application.Application;
 import com.group.InternMap.Company.Company;
 import com.group.InternMap.User.Users;

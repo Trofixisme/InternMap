@@ -1,4 +1,4 @@
-package com.group.InternMap.Roadmap.Skill;
+package com.group.InternMap.Skill;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

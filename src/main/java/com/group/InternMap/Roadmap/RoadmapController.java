@@ -2,7 +2,7 @@ package com.group.InternMap.Roadmap;
 
 import com.group.InternMap.DTO.RoadmapModuleSkill;
 import com.group.InternMap.Admin.Admin;
-import com.group.InternMap.Roadmap.Skill.Skill;
+import com.group.InternMap.Skill.Skill;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

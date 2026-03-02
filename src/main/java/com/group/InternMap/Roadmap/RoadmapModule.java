@@ -2,7 +2,7 @@
 
 package com.group.InternMap.Roadmap;
 
-import com.group.InternMap.Roadmap.Skill.Skill;
+import com.group.InternMap.Skill.Skill;
 import jakarta.persistence.*;
 
 import java.io.Serializable;

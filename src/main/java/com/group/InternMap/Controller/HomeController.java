@@ -16,14 +16,11 @@ import static com.group.InternMap.Repo.RepositoryAccessors.allRoadmaps;
 
 @Controller
 public class HomeController {
+
     private final UserService userService;
     public HomeController(UserService userService) {
         this.userService = userService;
     }
-
-
-
-
 
     @GetMapping("/")
     public String showHomePage(Model model, HttpSession session) {

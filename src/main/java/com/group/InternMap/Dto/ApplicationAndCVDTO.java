@@ -3,7 +3,8 @@ package com.group.InternMap.Dto;
 import com.group.InternMap.Model.User.Application;
 import com.group.InternMap.Model.User.Student;
 
-public class ApplicationandCVDTO {
+public class ApplicationAndCVDTO {
+
     private Application application;
     private Student student;
 

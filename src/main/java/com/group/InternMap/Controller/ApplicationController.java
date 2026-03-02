@@ -1,6 +1,6 @@
 package com.group.InternMap.Controller;
 
-import com.group.InternMap.Dto.ApplicationandCVDTO;
+import com.group.InternMap.Dto.ApplicationAndCVDTO;
 import com.group.InternMap.Model.Job.JobPosting;
 import com.group.InternMap.Model.User.Application;
 import com.group.InternMap.Model.User.CV;
@@ -21,6 +21,7 @@ import static com.group.InternMap.Repo.RepositoryAccessors.*;
 
 @Controller
 public class ApplicationController {
+
     private final RecruiterService recruiterService;
     JobPostingService jobPostingService;
     ApplicationController(JobPostingService jobPostingService, RecruiterService recruiterService){
@@ -83,7 +84,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/applications/new")
-    public String createNewApplication(@RequestParam("jobId") UUID jobPostingId, ApplicationandCVDTO applicationandCVDTO, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+    public String createNewApplication(@RequestParam("jobId") UUID jobPostingId, ApplicationAndCVDTO applicationandCVDTO, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         if (session.getAttribute("loggedInUser") == null) {
             return "redirect:/login";
         }
@@ -94,14 +95,14 @@ public class ApplicationController {
         }
 
         model.addAttribute("jobId", jobPostingId);
-        model.addAttribute("applicationandCVDTO", new ApplicationandCVDTO());
+        model.addAttribute("applicationandCVDTO", new ApplicationAndCVDTO());
         model.addAttribute("jobPosting", jobPosting); // Add job details for displaying
         return "Application";
     }
 
     @PostMapping("/application/save")
     public String saveApplication(@RequestParam("jobId") UUID jobId,
-                                  @ModelAttribute ApplicationandCVDTO applicationandCVDTO,
+                                  @ModelAttribute ApplicationAndCVDTO applicationandCVDTO,
                                   Model model, HttpSession session,
                                   RedirectAttributes redirectAttributes)  {
 

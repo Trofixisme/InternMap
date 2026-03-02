@@ -1,18 +1,18 @@
 package com.group.InternMap.Controller;
 
-import com.group.InternMap.Model.Roadmap.Roadmap;
-import com.group.InternMap.Model.User.Admin;
-import com.group.InternMap.Model.User.Company.Recruiter;
-import com.group.InternMap.Model.User.Student;
-import com.group.InternMap.Model.User.Users;
-import com.group.InternMap.Services.UserService;
+import com.group.InternMap.Roadmap.Roadmap;
+import com.group.InternMap.Admin.Admin;
+import com.group.InternMap.User.Users;
+import com.group.InternMap.Recruiter.Recruiter;
+import com.group.InternMap.User.UserService;
+import com.group.InternMap.Student.Student;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
-import static com.group.InternMap.Repo.RepositoryAccessors.allRoadmaps;
+import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allRoadmaps;
 
 @Controller
 public class HomeController {
@@ -71,17 +71,17 @@ public class HomeController {
 
         switch (loggedUsers) {
             case Student _ -> {
-                model.addAttribute("student", (Student) loggedUsers);
+                model.addAttribute("student", loggedUsers);
                 model.addAttribute("type", "student");
                 return "profile";
             }
             case Recruiter _ -> {
-                model.addAttribute("recruiter", (Recruiter) loggedUsers);
+                model.addAttribute("recruiter", loggedUsers);
                 model.addAttribute("type", "recruiter");
                 return "profile";
             }
             case Admin _ -> {
-                model.addAttribute("admin", (Admin) loggedUsers);
+                model.addAttribute("admin", loggedUsers);
                 model.addAttribute("type", "admin");
                 return "profile";
             }

@@ -1,13 +1,13 @@
 package com.group.InternMap.Controller;
 
-import com.group.InternMap.Dto.ApplicationAndCVDTO;
-import com.group.InternMap.Model.Job.JobPosting;
-import com.group.InternMap.Model.User.Application;
-import com.group.InternMap.Model.User.CV;
-import com.group.InternMap.Model.User.Student;
-import com.group.InternMap.Model.User.Users;
-import com.group.InternMap.Services.JobPostingService;
-import com.group.InternMap.Services.RecruiterService;
+import com.group.InternMap.DTO.ApplicationAndCVDTO;
+import com.group.InternMap.Job.JobPosting;
+import com.group.InternMap.Application.Application;
+import com.group.InternMap.Application.CV;
+import com.group.InternMap.User.Users;
+import com.group.InternMap.Job.JobPostingService;
+import com.group.InternMap.Recruiter.RecruiterService;
+import com.group.InternMap.Student.Student;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,11 +17,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 import java.util.UUID;
 
-import static com.group.InternMap.Repo.RepositoryAccessors.*;
+import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.*;
 
 @Controller
 public class ApplicationController {
-
     private final RecruiterService recruiterService;
     JobPostingService jobPostingService;
     ApplicationController(JobPostingService jobPostingService, RecruiterService recruiterService){
@@ -124,11 +123,12 @@ public class ApplicationController {
             JobPosting jobPosting=jobPostingService.findByID(jobId);
 
             System.out.println(jobPosting);
-            if(jobPosting==null){
+            if (jobPosting == null) {
                 redirectAttributes.addFlashAttribute("error","Job posting not found");
                 return "redirect:/JobPostings";
 
             }
+
             Application application = applicationandCVDTO.getApplication();
 //            application.setCv(user.getCv());
             applicationandCVDTO.setStudent(user);

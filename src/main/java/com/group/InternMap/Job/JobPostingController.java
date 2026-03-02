@@ -202,8 +202,8 @@ public String AddJobPostingForm(Model model, HttpSession session) {
     public String viewCV(@PathVariable("email") String email, Model model, HttpSession session) {
         try {
 //            Student retrievedStudent = (Student) new UserService().searchByEmail(email);
-            model.addAttribute("user", retrievedStudent);
-            model.addAttribute("student", retrievedStudent);
+//            model.addAttribute("user", retrievedStudent);
+//            model.addAttribute("student", retrievedStudent);
             model.addAttribute("type", "student");
             return "profile";
         } catch (Exception e) {

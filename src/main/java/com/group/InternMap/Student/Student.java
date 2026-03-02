@@ -19,8 +19,8 @@ public class Student extends Users implements Serializable {
     @OneToOne
     CV cv; // going to need a DTO
 
-    public Student(String fName, String lName, String email, String plainPassword, int graduatingYear, String uniName, String studentMajor, String faculty) {
-        super(fName, lName, email, plainPassword);
+    public Student(String firstName, String lastName, String email, String plainPassword,int graduatingYear, String uniName, String studentMajor, String faculty) {
+        super(firstName, lastName, email, plainPassword);
         this.graduatingYear = graduatingYear;
         this.uniName = uniName;
         this.studentMajor = studentMajor;

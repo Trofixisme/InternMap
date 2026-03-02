@@ -95,8 +95,8 @@ public class HomeController {
     @GetMapping("/roadmaps")
     public String ViewRoadmaps(@ModelAttribute("user") Users users, Model model){
       try {
-          List<Roadmap> roadmaps = userService.viewRoadmaps();
-          model.addAttribute("roadmaps", roadmaps);
+//          List<Roadmap> roadmaps = userService.viewRoadmaps();
+//          model.addAttribute("roadmaps", roadmaps);
           return "index";
       }
       catch(Exception e){

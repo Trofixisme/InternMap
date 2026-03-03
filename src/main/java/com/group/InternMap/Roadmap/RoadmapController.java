@@ -18,11 +18,15 @@ import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.*;
 @RequestMapping("/roadmaps")
 public class RoadmapController {
 
-    private final RoadmapService roadmapService = new RoadmapService();
+    //RoadmapService service=new RoadmapService();
+    private final RoadmapService roadmapService ;
+    public RoadmapController(RoadmapService roadmapService) {
+        this.roadmapService = roadmapService;
+    }
 
     //Display a specific roadmap with modules and skills
     @GetMapping("/{id}")
-    public String viewRoadmap(@PathVariable UUID id, Model model) {
+    public String viewRoadmap(@PathVariable long id, Model model) {
         try {
             Roadmap roadmap = roadmapService.findRoadmapbyId(id);
             int totalSkills = roadmap.getAllModules().stream()
@@ -76,7 +80,7 @@ public class RoadmapController {
 
     //Display form to edit roadmap
     @GetMapping("/{id}/edit")
-    public String editRoadmap(@PathVariable UUID id, Model model) {
+    public String editRoadmap(@PathVariable long id, Model model) {
         try {
             Roadmap roadmap = roadmapService.findRoadmapbyId(id);
             model.addAttribute("roadmap", roadmap);
@@ -96,7 +100,7 @@ public class RoadmapController {
 
     //Delete roadmap
     @PostMapping("/{id}/delete")
-    public String deleteRoadmap(@PathVariable UUID id) {
+    public String deleteRoadmap(@PathVariable long id) {
         roadmapService.deleteById(id);
         return "redirect:/roadmaps";
     }

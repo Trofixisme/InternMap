@@ -1,6 +1,7 @@
 package com.group.InternMap.Student;
 
 import com.group.InternMap.Application.CV;
+import com.group.InternMap.User.UserRole;
 import com.group.InternMap.User.Users;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
@@ -19,12 +20,14 @@ public class Student extends Users implements Serializable {
     @OneToOne
     CV cv; // going to need a DTO
 
-    public Student(String firstName, String lastName, String email, String plainPassword,int graduatingYear, String uniName, String studentMajor, String faculty) {
-        super(firstName, lastName, email, plainPassword);
+    public Student(String fName, String lName, String email, String plainPassword,int graduatingYear, String uniName, String studentMajor, String faculty) {
+        super(fName, lName, email, plainPassword);
+        this.setRole(UserRole.STUDENT.getID());
         this.graduatingYear = graduatingYear;
         this.uniName = uniName;
         this.studentMajor = studentMajor;
         this.faculty = faculty;
+
     }
 
     public Student() {}

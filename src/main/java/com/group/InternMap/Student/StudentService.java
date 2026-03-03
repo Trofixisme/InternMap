@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allApplications;
+//crud operations
+//create,read,update,delete
 
 @Service
 public class StudentService extends UserService implements FilePaths {

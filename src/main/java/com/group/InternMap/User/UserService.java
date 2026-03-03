@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+//crud operations
+//create,read,update,delete
 @Service
 public class UserService implements FilePaths {
 
@@ -16,11 +17,13 @@ public class UserService implements FilePaths {
     UserRepo userRepo;
 
     public void register(Users u) throws Exception {
-        List<Users> us=userRepo.findAll();
-        if (!us.contains(u)) {
-            userRepo.save(u);
+        List<Users> users=userRepo.findAll();
+        if (!users.contains(u)) {
+            if(isEmailValid(u.getEmail())){
+                userRepo.save(u);
+            }
         } else {
-            throw new Exception("A user with these creditentials already exists.");
+            throw new Exception("A user with these credentials already exists.");
         }
     }
 

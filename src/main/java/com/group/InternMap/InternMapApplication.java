@@ -17,7 +17,7 @@ public class InternMapApplication {
         ApplicationContext context = SpringApplication.run(InternMapApplication.class, args);
         Student U=new Student("sandra","remon","sandra@gmail.com","1234",2025,"carleton","software engineering","engineering");
         UserRepo user = context.getBean(UserRepo.class);
-        Users save = user.save(U);
+         user.save(U);
         ShutDownSaver.registerShutdownHook();
     }
 }

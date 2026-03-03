@@ -7,16 +7,16 @@ import java.io.Serializable;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Users implements Serializable {
 
-    private Short role;
+    private int role;
 
     @Column(nullable = false)
     private String plainPassword;
 
     @Column(nullable = false)
-    private String firstName;
+    private String fName;
 
     @Column(nullable = false)
-    private String lastName;
+    private String lName;
 
     @Column(nullable = false)
     private String email;
@@ -26,14 +26,14 @@ public class Users implements Serializable {
 
     public Users() {}
 
-    public Users(String firstName, String lastName, String email, String plainPassword) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Users(String fName, String lName, String email, String plainPassword) {
+        this.fName = fName;
+        this.lName = lName;
         this.email = email;
         this.plainPassword = plainPassword;
     }
 
-    public Short getRole() {
+    public int getRole() {
         return role;
     }
 
@@ -51,21 +51,21 @@ public class Users implements Serializable {
     }
 
     public String getFName() {
-        return firstName;
+        return fName;
     }
 
     public void setFName(String fName) {
         //TODO: Add some real validation
-        this.firstName = fName;
+        this.fName = fName;
     }
 
     public String getLName() {
-        return lastName;
+        return lName;
     }
 
     public void setLName(String lName) {
         //TODO: Add some real validation to this one too
-        this.lastName = lName;
+        this.lName = lName;
     }
 
     public String getEmail() {
@@ -85,5 +85,10 @@ public class Users implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 }

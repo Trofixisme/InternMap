@@ -2,6 +2,7 @@ package com.group.InternMap.Recruiter;
 
 import com.group.InternMap.Job.JobPosting;
 import com.group.InternMap.Company.Company;
+import com.group.InternMap.User.UserRole;
 import com.group.InternMap.User.Users;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,6 +24,17 @@ public class Recruiter extends Users implements Serializable {
     //@JoinTable(name = "recruiters_companies", joinColumns = @JoinColumn(name = "recruiter_id"), inverseJoinColumns = @JoinColumn(name = "company_id"))
     @ManyToMany
     private List<Company> companies = new ArrayList<>();
+
+    public Recruiter() {
+    }
+
+    public Recruiter(String fName, String lName, String email, String plainPassword, String title, List<Company> companies, Collection<JobPosting> jobPosting) {
+        super(fName, lName, email, plainPassword);
+        setRole(UserRole.RECRUITER.getID());
+        this.title = title;
+        this.companies = companies;
+        this.jobPosting = jobPosting;
+    }
 
     public String getTitle() {
         return title;

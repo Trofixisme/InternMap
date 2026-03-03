@@ -23,8 +23,6 @@ public class StudentService extends UserService implements FilePaths {
     ApplicationRepo applicationRepo;
     JobRepo jobRepo;
     public void deleteApplication(Application application) throws Exception {
-//            allApplications.remove(application);
-//            jobPosting.deleteApplication(application);
         List<Application> applicationList = applicationRepo.findAll();
         if (applicationList.contains(application)) {
             applicationRepo.delete(application);

@@ -8,6 +8,7 @@ import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allJ
 
 @Service
 public class JobPostingService {
+ JobRepo jobRepo;
 
     private final ArrayList<JobPosting> jobRepo = RepositoryAccessors.allJobPostings;
     public List<JobPosting> searchJobPostings(String searchQuery) throws Exception {
@@ -45,4 +46,32 @@ public class JobPostingService {
                 .filter(job -> recruiterId == job.getRecruiter().getId())
                 .collect(Collectors.toList());
     }
+//
+//    public List<JobPosting> findJobpostringByname(String name) throws Exception {
+////        return RepositoryAccessors.allJobPostings.stream().filter(job -> job.getJobName().equalsIgnoreCase(name)).collect(Collectors.toList());
+//        List<JobPosting> jobPostingList = jobRepo.findAll();
+//        List<JobPosting> returnedJobs = new ArrayList<>();
+//
+//        for(JobPosting jobPosting : jobPostingList){
+//            if(jobPosting.getJobName().contains(name)){
+//                returnedJobs.add(jobPosting);
+//            }
+//        }
+//        if(returnedJobs.isEmpty()){
+//            throw new Exception("There is no Job with this specification");
+//        }
+//
+//        return returnedJobs;
+//
+//    }
+
+    public List<JobPosting> getAllJobPostingsName(String name) throws Exception {
+        return  jobRepo.findJobPostingByName(name);
+    }
+
+    public List<JobPosting> findJobpostingByID(long appId) {
+        return  jobRepo.findJobPostingById(appId);
+
+    }
+
 }

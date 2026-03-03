@@ -115,4 +115,7 @@ public class JobPosting implements Serializable {
     public Company getCompany() {
         return company;
     }
+
+
+
 }

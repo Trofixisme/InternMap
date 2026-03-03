@@ -107,6 +107,7 @@ public class RecruiterService extends UserService {
     }
 
     private final ArrayList<Application> appRepo = RepositoryAccessors.allApplications;
+
     public List<Application> searchApplication(String searchQuery) throws Exception {
         return appRepo.stream().filter(app -> {
             boolean matches = false;

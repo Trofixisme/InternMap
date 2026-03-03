@@ -2,4 +2,6 @@ package com.group.InternMap.Skill;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SkillRepo extends JpaRepository<Skill, Long> {}
+public interface SkillRepo extends JpaRepository<Skill, Long> {
+
+}

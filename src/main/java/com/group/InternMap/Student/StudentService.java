@@ -20,7 +20,6 @@ import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allA
 
 @Service
 public class StudentService extends UserService implements FilePaths {
-
     ApplicationRepo applicationRepo;
     JobRepo jobRepo;
     public void deleteApplication(Application application) throws Exception {

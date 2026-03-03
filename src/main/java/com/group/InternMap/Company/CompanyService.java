@@ -14,7 +14,7 @@ import static com.group.InternMap.FilePaths.userPath;
 @Service
 
 public class CompanyService {
-
+    static CompanyRepo companyRepo; // idk why I made this static bs it is for the find myname is also static so idk ( ZIAD HELP )
     protected final BaseRepository<Users> repo = new BaseRepository<>(Users.class, userPath);
     public RecruiterService recruiterService;
 
@@ -32,11 +32,14 @@ public class CompanyService {
         System.out.println("Company updated after recruiter was added.");
     }
 
-    public static Company findByName(String companyName) throws Exception {
+    public Company findByName(String companyName) throws Exception {
         if (companyName == null || companyName.isBlank()) return null;
-        return allCompanies.stream()
-                .filter(c -> c.getName().equalsIgnoreCase(companyName))
-                .findFirst()
-                .orElseThrow(() -> new Exception("Company could not be found, please check the name again or create a new company."));
+        return companyRepo.findCompanyByName(companyName);
+
+
+//                allCompanies.stream()
+//                .filter(c -> c.getName().equalsIgnoreCase(companyName))
+//                .findFirst()
+//                .orElseThrow(() -> new Exception("Company could not be found, please check the name again or create a new company."));
     }
 }

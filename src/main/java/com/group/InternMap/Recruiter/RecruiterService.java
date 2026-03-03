@@ -17,8 +17,9 @@ import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allA
 
 @Service
 public class RecruiterService extends UserService {
-
-//    private final BaseRepository<JobPosting> jobRepo = new BaseRepository<>(JobPosting.class, jobPostingPath);
+    RecruiterRepo  recruiterRepo;
+    //CompanyRepo companyRepo;
+    //    private final BaseRepository<JobPosting> jobRepo = new BaseRepository<>(JobPosting.class, jobPostingPath);
 //    private final BaseRepository<Application> applicationRepo = new BaseRepository<>(Application.class, applicationPath);
 //    private final BaseRepository<Company> companyRepo = new BaseRepository<>(Company.class, companyPath);
     private final ApplicationEventPublisher eventPublisher;
@@ -28,13 +29,7 @@ public class RecruiterService extends UserService {
     }
 
     public Recruiter findRecruiterById(long recruiterId) {
-
-        return RepositoryAccessors.ALL_USERS.stream()
-                .filter(u -> u instanceof Recruiter)
-                .map(u -> (Recruiter) u)
-                .filter(r -> r.getId().equals(recruiterId))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Recruiter not found: " + recruiterId));
+                return recruiterRepo.findRecruiterById(recruiterId);
     }
 
     public Company findCompanyById(String companyId) {

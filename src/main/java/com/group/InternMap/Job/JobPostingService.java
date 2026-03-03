@@ -25,7 +25,7 @@ public class JobPostingService {
         return  jobRepo.findJobPostingByName(name);
     }
 
-    public List<JobPosting> findJobpostingByID(long appId) {
+    public JobPosting findJobpostingByID(long appId) {
         return  jobRepo.findJobPostingById(appId);
     }
 

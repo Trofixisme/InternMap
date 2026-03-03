@@ -10,9 +10,9 @@ import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allJ
 public class JobPostingService {
  JobRepo jobRepo;
 
-    private final ArrayList<JobPosting> jobRepo = RepositoryAccessors.allJobPostings;
+    private final ArrayList<JobPosting> jobRepoo = RepositoryAccessors.allJobPostings;
     public List<JobPosting> searchJobPostings(String searchQuery) throws Exception {
-        return jobRepo.stream().filter(job -> {
+        return jobRepoo.stream().filter(job -> {
             boolean matches = false;
 
             if (searchQuery != null && !searchQuery.isBlank()) {

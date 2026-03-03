@@ -2,6 +2,7 @@ package com.group.InternMap.User;
 
 import com.group.InternMap.FilePaths;
 import com.group.InternMap.Deprecated.Repository.RepositoryAccessors;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,10 +18,10 @@ public class UserService implements FilePaths {
     UserRepo userRepo;
 
     public void register(Users u) throws Exception {
-        List<Users> users=userRepo.findAll();
+        List<Users> users =userRepo.findAll(); // findAll() is built in JPARepository
         if (!users.contains(u)) {
             if(isEmailValid(u.getEmail())){
-                userRepo.save(u);
+                userRepo.save(u);//built in JPARepository
             }
         } else {
             throw new Exception("A user with these credentials already exists.");
@@ -44,27 +45,37 @@ public class UserService implements FilePaths {
         return true;
     }
 
-    public Users login(String email, String password) throws Exception {
-
-        if (email == null || password == null) {
-            throw new IllegalArgumentException("Neither the email nor the password are allowed to be empty.");
-        }
-        List<Users> users = userRepo.findAll();
-        for (Users u : users) {
-            if (u.getEmail().strip().equalsIgnoreCase(email.strip())) {
-                if (u.getPlainPassword().equals(password)) {
-                    return u;
-                } else if(!u.getPlainPassword().equals(password)) {
-                    throw new Exception("Provided password is incorrect.");
-                }
-            }
-        }
-        throw new Exception("Couldn't find specified user.");
+//    public Users login(String email, String password) throws Exception {
+//        if (email == null || password == null) {
+//            throw new IllegalArgumentException("Neither the email nor the password are allowed to be empty.");
+//        }
+//        List<Users> users = userRepo.findAll();
+//        for (Users u : users) {
+//            if (u.getEmail().strip().equalsIgnoreCase(email.strip())) {
+//                if (u.getPlainPassword().equals(password)) {
+//                    return u;
+//                } else if(!u.getPlainPassword().equals(password)) {
+//                    throw new Exception("Provided password is incorrect.");
+//                }
+//            }
+//        }
+//        throw new Exception("Couldn't find specified user.");
+//    }
+public Users login(String email, String password) throws Exception {
+    if (email == null || password == null) {
+        throw new IllegalArgumentException("Neither the email nor the password are allowed to be empty.");
     }
+    Users user= userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+    if (user.getPlainPassword().equals(password)) {
+        return user;
+    } else {
+        throw new Exception("Provided password is incorrect.");
+    }
+}
 
 
     public Optional<Users> searchByEmail(String email) {
-       return userRepo.findByEmail(email);
+        return userRepo.findByEmail(email);
     }
 
     public Optional<Users> searchByID(long id) {

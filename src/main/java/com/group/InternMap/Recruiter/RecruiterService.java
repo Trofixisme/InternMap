@@ -1,5 +1,6 @@
 package com.group.InternMap.Recruiter;
 
+import com.group.InternMap.Company.CompanyRepo;
 import com.group.InternMap.Job.JobPosting;
 import com.group.InternMap.Company.CompanyService;
 import com.group.InternMap.User.UserService;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allApplications;
 
 @Service
@@ -62,18 +62,11 @@ public class RecruiterService extends UserService {
     }
 
     public void addCompanyToRecruiter(long recruiterId, String companyId) throws Exception {
-
-        Recruiter recruiter = findRecruiterById(recruiterId);
-        Company company = CompanyService.findByName(companyId);
-
-        recruiter.addCompany(company);
-//        eventPublisher.publishEvent(new RecruiterAddedEvent(recruiter.getUserID(), company.getCompanyID().toString()));
+//  it was added by event publisher , causing issues
     }
-
 //    public List<Company> viewAllCompanies() throws Exception {
 //        return companyRepo.findAll();
-//    }
-//
+//   }
 //    public List<Application> viewAllApplications() throws Exception {
 //        return applicationRepo.findAll();
 //    }

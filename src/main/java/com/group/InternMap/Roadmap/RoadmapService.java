@@ -14,7 +14,7 @@ public class RoadmapService {
     }
 
     Roadmap roadmap = new Roadmap();
-    public Roadmap findRoadmapbyId(Long roadmapId) {
+    public Roadmap findRoadmapById(Long roadmapId) {
         if (roadmapId == null) {
             throw new IllegalArgumentException("Roadmap must be provided");
         } else{
@@ -35,11 +35,12 @@ public class RoadmapService {
     }
 
     //search roadmap by name
-    public Roadmap findRoadmapbyName(String roadmapName) {
+    public Roadmap findByName(String roadmapName) {
+        Roadmap roadmap;
         if (roadmapName == null) {
             throw new IllegalArgumentException("Roadmap name must be provided");
         } else{
-            Roadmap roadmap = roadmapRepo.findByName(roadmapName).orElseThrow(() -> new RuntimeException("Roadmap not found"));
+            roadmap = roadmapRepo.findByName(roadmapName).orElseThrow(() -> new RuntimeException("Roadmap not found"));
         }
         return roadmap;
     }

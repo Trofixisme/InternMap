@@ -1,38 +1,37 @@
 package com.group.InternMap.User;
 
 import com.group.InternMap.Application.Application;
-import com.group.InternMap.Recruiter.RecruiterService;
 import com.group.InternMap.Roadmap.Roadmap;
 import com.group.InternMap.Roadmap.RoadmapRepo;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
-@RestController
-@RequestMapping("/api/users")
+@Controller
 public class UserController {
 
-    private final UserService userService;
-    private final RecruiterService recruiterService;
-    private final RoadmapRepo roadmapRepo;
+    UserService userService;
+    RoadmapRepo roadmapRepo;
 
-    public UserController(RoadmapRepo roadmapRepo,UserService userService, RecruiterService recruiterService) {
+    public UserController(RoadmapRepo roadmapRepo,UserService userService) {
         this.userService = userService;
-        this.recruiterService = recruiterService;
-        this.roadmapRepo=roadmapRepo;
-    }
-    @GetMapping("/roadmaps")
-    public String ViewRoadmaps() {
-        try {
-            return roadmapRepo.findAll().toString();
-        }
-        catch(Exception e){
-            return "Failed to load roadmaps: " + e.getMessage();
-        }
+        this.roadmapRepo = roadmapRepo;
     }
 
-    //Display a specific roadmap with modules and skills
+
+    // What was even the point of this method???
+//    @GetMapping("/roadmaps")
+//    public String ViewRoadmaps() {
+//        try {
+//            return roadmapRepo.findAll().toString();
+//        }
+//        catch(Exception e){
+//            return "Failed to load roadmaps: " + e.getMessage();
+//        }
+//    }
+
+    // Display a specific roadmap with modules and skills
     @GetMapping("/{id}")
     public String viewRoadmap(@PathVariable long id, Model model) {
         try {
@@ -54,9 +53,9 @@ public class UserController {
     public String searchJobPosting(@RequestParam("searchQuery") String searchQuery, @ModelAttribute Application application, Model model, HttpSession session) {
         try {
             // Search dynamically using your service
-//            List<Application> results = recruiterService.searchApplication(searchQuery.replaceFirst(",", ""));
+            // List<Application> results = recruiterService.searchApplication(searchQuery.replaceFirst(",", ""));
             // Add search results to the model
-//            model.addAttribute("applications", results);
+            // model.addAttribute("applications", results);
             // Add the job posting object to the model so form fields keep their values
             model.addAttribute("application", application);
             model.addAttribute("jobPosting", null);
@@ -65,7 +64,6 @@ public class UserController {
         }
         return "ViewApplicationDetail";
     }
-
 
     @GetMapping("/login")
     public String showLoginPage(Model model) {

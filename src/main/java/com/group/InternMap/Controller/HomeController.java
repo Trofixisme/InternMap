@@ -4,7 +4,6 @@ import com.group.InternMap.Roadmap.Roadmap;
 import com.group.InternMap.Admin.Admin;
 import com.group.InternMap.User.Users;
 import com.group.InternMap.Recruiter.Recruiter;
-import com.group.InternMap.User.UserService;
 import com.group.InternMap.Student.Student;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -16,11 +15,6 @@ import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allR
 
 @Controller
 public class HomeController {
-
-    private final UserService userService;
-    public HomeController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping("/")
     public String showHomePage(Model model, HttpSession session) {
@@ -40,6 +34,7 @@ public class HomeController {
 
         return "index";
     }
+
     @GetMapping("/signup-choice")
     public String signupChoice() { // or whatever your object is
         return "InternMapSignUpChoice"; // Note: no .htm; extension

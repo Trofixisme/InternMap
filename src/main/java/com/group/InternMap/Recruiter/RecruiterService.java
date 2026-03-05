@@ -1,24 +1,20 @@
 package com.group.InternMap.Recruiter;
-
-import com.group.InternMap.Company.CompanyRepo;
+import com.group.InternMap.Application.ApplicationRepo;
 import com.group.InternMap.Job.JobPosting;
-import com.group.InternMap.Company.CompanyService;
+import com.group.InternMap.Job.JobRepo;
 import com.group.InternMap.User.UserService;
 import com.group.InternMap.Application.Application;
-import com.group.InternMap.Company.Company;
 import com.group.InternMap.Deprecated.Repository.RepositoryAccessors;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allApplications;
+
 
 @Service
 public class RecruiterService extends UserService {
     RecruiterRepo  recruiterRepo;
-    //CompanyRepo companyRepo;
     //    private final BaseRepository<JobPosting> jobRepo = new BaseRepository<>(JobPosting.class, jobPostingPath);
 //    private final BaseRepository<Application> applicationRepo = new BaseRepository<>(Application.class, applicationPath);
 //    private final BaseRepository<Company> companyRepo = new BaseRepository<>(Company.class, companyPath);
@@ -32,33 +28,20 @@ public class RecruiterService extends UserService {
                 return recruiterRepo.findRecruiterById(recruiterId);
     }
 
-    public Company findCompanyById(String companyId) {
-        if (companyId == null || companyId.isBlank()) {
-            throw new IllegalArgumentException("companyId must be provided");
-        }
+//    public Company findCompanyById(String companyId) {
+//        if (companyId == null || companyId.isBlank()) {
+//            throw new IllegalArgumentException("companyId must be provided");
+//        }
+//
+//    }
 
         // Debug: print all companies
-        RepositoryAccessors.allCompanies.forEach(c -> {
-//            System.out.println("Company ID: " + c.getCompanyID() + ", Name: " + c.getName());
-        });
-
-        for (Company c : RepositoryAccessors.allCompanies) {
-            System.out.println("Checking Company: " + c);
-        }
-
-        System.out.println("======================");
-        System.out.println("Company ID: " + companyId);
 
 
-        return RepositoryAccessors.allCompanies.stream()
-//                .filter(c -> c.getCompanyID().toString().equals(companyId))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Company not found: " + companyId));
-    }
 
-    public void addCompanyToRecruiter(long recruiterId, String companyId) throws Exception {
+   // public void addCompanyToRecruiter(long recruiterId, String companyId) throws Exception {
 //  it was added by event publisher , causing issues
-    }
+
 //    public List<Company> viewAllCompanies() throws Exception {
 //        return companyRepo.findAll();
 //   }
@@ -75,24 +58,20 @@ public class RecruiterService extends UserService {
 //        List<Application> applications = applicationRepo.findAll();
 //        return applications.stream().filter(app -> app.getApplicationID().equals(appId)).collect(Collectors.toList());
 //    }
+    JobRepo jobRepo;
 
     //function to display all applications for a specific jobPosting
-    public List<Application> getApplicationsByJobPosting(JobPosting jobPosting) {
-        if (jobPosting == null) {
+    public List<Application> getApplicationsByJobPostingId(Long jobPostingId) {
+        if (jobPostingId == null) {
             throw new IllegalArgumentException("Job posting cannot be null");
         }
-        List<Application> applications = jobPosting.getApplication();
-        applications.sort((a1, a2) -> a1.getApplicationDate().compareTo(a2.getApplicationDate()));
+        JobPosting joposting = jobRepo.findJobPostingById(jobPostingId);
+        List<Application> applications = joposting.getApplication();
+
         return applications;
     }
+    ApplicationRepo applicationRepo;
 
-    public static Application findByEmail(String email) throws Exception{
-        if (email == null || email.isBlank()) return null;
-        return   allApplications.stream()
-                .filter(c -> c.getEmail().equalsIgnoreCase(email))
-                .findFirst()
-                .orElseThrow(() -> new Exception("Profile could not be found, please check the name again or create a new company."));
-    }
 
     private final ArrayList<Application> appRepo = RepositoryAccessors.allApplications;
 

@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface ApplicationRepo extends JpaRepository<Application, Long> {
     List <Application> findByEmail(String email);
+
 }

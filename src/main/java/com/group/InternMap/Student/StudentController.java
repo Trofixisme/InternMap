@@ -43,6 +43,7 @@ public class StudentController {
         // Only redirect on SUCCESS
         return "redirect:/login";
     }
+
     @GetMapping("/cv")
     public String cv(Model model, HttpSession session) {
         // Fixed: Use correct attribute name

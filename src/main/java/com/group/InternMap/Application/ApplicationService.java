@@ -1,9 +1,7 @@
 package com.group.InternMap.Application;
-
 import com.group.InternMap.Job.JobPosting;
 import com.group.InternMap.Job.JobRepo;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -30,9 +28,19 @@ public class ApplicationService {
 
         return applications;
     }
-
-        public List<Application> viewAllApplications() {
+    public List<Application> viewAllApplications() {
         return applicationRepo.findAll();
+    }
+
+    public void deleteApplication(Application application) throws Exception {
+        List<Application> applicationList = applicationRepo.findAll();
+        if (applicationList.contains(application)) {
+            applicationRepo.delete(application);
+        }
+        else {
+            throw new Exception("There is no application with this specification");
+        }
+
     }
 
 

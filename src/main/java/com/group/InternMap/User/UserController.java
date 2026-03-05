@@ -1,42 +1,29 @@
 package com.group.InternMap.User;
 
-import com.group.InternMap.Admin.Admin;
 import com.group.InternMap.Application.Application;
-import com.group.InternMap.DTO.RecruiterRegistrationDTO;
-import com.group.InternMap.Company.Company;
-import com.group.InternMap.Recruiter.Recruiter;
-import com.group.InternMap.Deprecated.Repository.RepositoryAccessors;
-import com.group.InternMap.Company.CompanyService;
 import com.group.InternMap.Recruiter.RecruiterService;
 import com.group.InternMap.Roadmap.Roadmap;
 import com.group.InternMap.Roadmap.RoadmapRepo;
-import com.group.InternMap.Student.Student;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
-import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.ALL_USERS;
-import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allCompanies;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
+
     private final UserService userService;
     private final RecruiterService recruiterService;
-    private final CompanyService companyService;
     private final RoadmapRepo roadmapRepo;
 
-    public UserController(RoadmapRepo roadmapRepo,UserService userService, RecruiterService recruiterService, CompanyService companyService) {
+    public UserController(RoadmapRepo roadmapRepo,UserService userService, RecruiterService recruiterService) {
         this.userService = userService;
         this.recruiterService = recruiterService;
-        this.companyService = companyService;
         this.roadmapRepo=roadmapRepo;
     }
     @GetMapping("/roadmaps")
-    public String ViewRoadmaps() throws Exception{
+    public String ViewRoadmaps() {
         try {
             return roadmapRepo.findAll().toString();
         }
@@ -49,7 +36,7 @@ public class UserController {
     @GetMapping("/{id}")
     public String viewRoadmap(@PathVariable long id, Model model) {
         try {
-            Roadmap roadmap = roadmapService.findRoadmapById(id);
+            Roadmap roadmap = roadmapRepo.findRoadmapById(id);
             int totalSkills = roadmap.getAllModules().stream()
                     .mapToInt(module -> module.getAllSkills() != null ? module.getAllSkills().size() : 0)
                     .sum();
@@ -63,19 +50,14 @@ public class UserController {
         }
     }
 
-
-
-
-
-
     @PostMapping("/application/search")
     public String searchJobPosting(@RequestParam("searchQuery") String searchQuery, @ModelAttribute Application application, Model model, HttpSession session) {
         try {
             // Search dynamically using your service
-            List<Application> results = recruiterService.searchApplication(searchQuery.replaceFirst(",", ""));
+//            List<Application> results = recruiterService.searchApplication(searchQuery.replaceFirst(",", ""));
             // Add search results to the model
-            model.addAttribute("applications", results);
-            // Add the jobposting object to the model so form fields keep their values
+//            model.addAttribute("applications", results);
+            // Add the job posting object to the model so form fields keep their values
             model.addAttribute("application", application);
             model.addAttribute("jobPosting", null);
         } catch (Exception e) {
@@ -86,7 +68,7 @@ public class UserController {
 
 
     @GetMapping("/login")
-    public String showloginPage(Model model) {
+    public String showLoginPage(Model model) {
         model.addAttribute("user", new Users());
         return "login";
     }

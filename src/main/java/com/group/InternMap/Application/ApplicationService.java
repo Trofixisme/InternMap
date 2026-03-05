@@ -8,11 +8,14 @@ import java.util.List;
 
 @Service
 public class ApplicationService {
+
     ApplicationRepo applicationRepo;
     JobRepo jobRepo;
+
     public ApplicationService(ApplicationRepo applicationRepo) {
         this.applicationRepo = applicationRepo;
     }
+
     public List<Application> searchApplication(String studentEmail) throws Exception {
         if (studentEmail == null || studentEmail.isBlank()) return null;
         return applicationRepo.findByEmail(studentEmail);

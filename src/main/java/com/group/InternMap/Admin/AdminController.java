@@ -3,9 +3,10 @@ package com.group.InternMap.Admin;
 import com.group.InternMap.DTO.RoadmapModuleSkill;
 import com.group.InternMap.Roadmap.Roadmap;
 import com.group.InternMap.Roadmap.RoadmapModule;
-import com.group.InternMap.Skill.Skill;
+import com.group.InternMap.Roadmap.RoadmapRepo;
 import com.group.InternMap.User.UserService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +15,16 @@ import java.util.UUID;
 
 import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.*;
 
-@RestController("/api/admin")
-public class adminController {
+@Controller("/api/admin")
+public class AdminController {
+
+    RoadmapRepo roadmapRepo;
     UserService userService;
+
+    public AdminController(RoadmapRepo roadmapRepo) {
+        this.roadmapRepo = roadmapRepo;
+    }
+
     @GetMapping("/admin/register")
     public String showRegisterAdmin(Model model) {
         model.addAttribute("user", new Admin());
@@ -37,6 +45,7 @@ public class adminController {
         // Only redirect on SUCCESS
         return "redirect:/login";
     }
+
     //Display form to create a new roadmap
     @GetMapping("/new")
     public String newRoadmap(Model model, HttpSession session) {
@@ -65,18 +74,17 @@ public class adminController {
 
         for (RoadmapModule module : roadmap.getAllModules()) {
             allmodules.add(module);
-            for (Skill skill : module.getAllSkills()) {
-                allskills.add(skill);
-            }
+            allskills.addAll(module.getAllSkills());
         }
 
         return "redirect:/roadmaps/" + roadmap.getId();
     }
+
     //Display form to edit roadmap
     @GetMapping("/{id}/edit")
     public String editRoadmap(@PathVariable long id, Model model) {
         try {
-            Roadmap roadmap = roadmapService.findRoadmapById(id);
+            Roadmap roadmap = roadmapRepo.findRoadmapById(id);
             model.addAttribute("roadmap", roadmap);
             return "roadmap/form";
         } catch (Exception e) {
@@ -95,7 +103,7 @@ public class adminController {
     //Delete roadmap
     @PostMapping("/{id}/delete")
     public String deleteRoadmap(@PathVariable long id) {
-        roadmapService.deleteById(id);
+        roadmapRepo.deleteById(id);
         return "redirect:/roadmaps";
     }
 }

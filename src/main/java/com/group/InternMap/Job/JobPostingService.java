@@ -8,10 +8,6 @@ import java.util.*;
 public class JobPostingService {
     JobRepo jobRepo;
 
-    private final ArrayList<JobPosting> jobRepoo = RepositoryAccessors.allJobPostings;
-//    public List<JobPosting> searchJobPostings(String searchQuery)  {
-//    }
-
     public List<JobPosting> getAllJobPostings()  {
         return  RepositoryAccessors.allJobPostings;
     }
@@ -22,7 +18,7 @@ public class JobPostingService {
     }
 
     public List<JobPosting> getAllJobPostingsName(String name) {
-        return  jobRepo.findJobPostingByjobName(name);
+        return jobRepo.findJobPostingByJobName(name);
     }
 
     public JobPosting findJobpostingByID(long appId) {

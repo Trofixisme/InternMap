@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
-import java.util.List;
+
 import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allRoadmaps;
 
 @Controller
@@ -42,7 +42,7 @@ public class HomeController {
     }
     @GetMapping("/signup-choice")
     public String signupChoice() { // or whatever your object is
-        return "InternMapSignUpchoice"; // Note: no .htm; extension
+        return "InternMapSignUpChoice"; // Note: no .htm; extension
     }
 
     @GetMapping("/user/home")

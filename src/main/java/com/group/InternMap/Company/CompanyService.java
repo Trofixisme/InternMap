@@ -22,8 +22,8 @@ public class CompanyService {
 
     @EventListener
     public void handleRecruiterAddedEvent(RecruiterAddedEvent event) {
-        long recruiterId = event.getRecruiterId();
-        long companyId = event.getCompanyId();
+        long recruiterId = event.recruiterId();
+        long companyId = event.companyId();
         Recruiter recruiter =recruiterService.findRecruiterById(recruiterId);
         Company company = companyRepo.findCompanyById(companyId);
        // company.addRecruiter(recruiter);
@@ -34,12 +34,14 @@ public class CompanyService {
         if (companyName == null || companyName.isBlank()) return null;
         return companyRepo.findCompanyByName(companyName);
     }
+
     public Company findCompanyById(Long companyId) {
         if (companyId == null ) {
             throw new IllegalArgumentException("companyId must be provided");
         }
         return companyRepo.findCompanyById(companyId);
     }
+
     public List<Company> viewAllCompanies() throws Exception {
         return companyRepo.findAll();
      }

@@ -8,6 +8,7 @@ import com.group.InternMap.Job.JobPostingService;
 import com.group.InternMap.User.UserService;
 import com.group.InternMap.User.Users;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -15,10 +16,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.ALL_USERS;
 import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allApplications;
 
-@RestController
+@Controller
 public class StudentController {
+
     JobPostingService jobPostingService;
     UserService userService;
+
     @GetMapping("/student/register")
     public String showRegisterStudent(Model model) {
         model.addAttribute("user", new Student());
@@ -47,10 +50,10 @@ public class StudentController {
         if (users == null) {
             return "redirect:/login";
         }
-        if (!(users instanceof Student)) {
+        if (!(users instanceof Student student)) {
             return "redirect:/profile";
         }
-        Student student = (Student) users;
+
         if (student.getCv() != null) {
             model.addAttribute("cv", student.getCv());
         } else {
@@ -68,11 +71,10 @@ public class StudentController {
             return "redirect:/login";
         }
 
-        if (!(loggedUsers instanceof Student)) {
+        if (!(loggedUsers instanceof Student student)) {
             return "redirect:/profile";
         }
 
-        Student student = (Student) loggedUsers;
         if(ALL_USERS.contains(student)) {
 //            allUsers.remove(student);
             if (student.getCv() != null) {

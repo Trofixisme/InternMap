@@ -3,14 +3,15 @@ package com.group.InternMap.Recruiter;
 import com.group.InternMap.Company.Company;
 import com.group.InternMap.DTO.RecruiterRegistrationDTO;
 import com.group.InternMap.Deprecated.Repository.RepositoryAccessors;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allCompanies;
-@RestController
+
+@Controller
 public class RecruiterController {
     @GetMapping("/company/register")
     public String showRegisterCompany(Model model) {

@@ -8,8 +8,8 @@ import java.util.Optional;
 
 public interface RoadmapRepo extends JpaRepository<Roadmap, Long>{
     Optional<Roadmap> findByName(String roadmapName);
-    //Optional<Roadmap> getById(long roadmapId);
 
+    Roadmap findRoadmapById(long id);
 
     //List<Application> searchByTerm(@Param("query") String query);
 

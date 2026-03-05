@@ -19,16 +19,11 @@ public class RoadmapService {
             //this line gets roadmap if exist , if not throw exception
         }
         return roadmap;
-//        return RepositoryAccessors.allRoadmaps.stream()
-//                .filter(r -> r.getId().equals(roadmapId.toString()))
-//                .findFirst()
-//                .orElseThrow(() -> new RuntimeException("Roadmap not found: " + roadmapId));
     }
 
     public void deleteById(Long roadmapId) {
         Roadmap roadmap = roadmapRepo.findById(roadmapId).orElseThrow(() -> new RuntimeException("Roadmap not found"));
         roadmapRepo.delete(roadmap);
-          //RepositoryAccessors.allRoadmaps.removeIf(r -> r.getId().equals(id.toString()));
     }
 
     //search roadmap by name

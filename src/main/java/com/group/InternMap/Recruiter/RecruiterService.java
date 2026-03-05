@@ -8,9 +8,6 @@ import java.util.Locale;
 @Service
 public class RecruiterService extends UserService {
     RecruiterRepo  recruiterRepo;
-    //    private final BaseRepository<JobPosting> jobRepo = new BaseRepository<>(JobPosting.class, jobPostingPath);
-//    private final BaseRepository<Application> applicationRepo = new BaseRepository<>(Application.class, applicationPath);
-//    private final BaseRepository<Company> companyRepo = new BaseRepository<>(Company.class, companyPath);
     private final ApplicationEventPublisher eventPublisher;
 
     public RecruiterService(ApplicationEventPublisher eventPublisher) {

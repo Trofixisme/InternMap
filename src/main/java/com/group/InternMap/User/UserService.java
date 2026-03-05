@@ -1,22 +1,15 @@
 package com.group.InternMap.User;
-
 import com.group.InternMap.FilePaths;
-import com.group.InternMap.Deprecated.Repository.RepositoryAccessors;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 //crud operations
 //create,read,update,delete
 @Service
 public class UserService implements FilePaths {
 
-//    protected final BaseRepository<Users> repo = new BaseRepository<>(Users.class, userPath);
-//    protected final BaseRepository<Roadmap> RoadmapRepo = new BaseRepository<>(Roadmap.class, roadmapPath);
     UserRepo userRepo;
-
     public void register(Users u) throws Exception {
         List<Users> users =userRepo.findAll(); // findAll() is built in JPARepository
         if (!users.contains(u)) {
@@ -45,23 +38,7 @@ public class UserService implements FilePaths {
         return true;
     }
 
-//    public Users login(String email, String password) throws Exception {
-//        if (email == null || password == null) {
-//            throw new IllegalArgumentException("Neither the email nor the password are allowed to be empty.");
-//        }
-//        List<Users> users = userRepo.findAll();
-//        for (Users u : users) {
-//            if (u.getEmail().strip().equalsIgnoreCase(email.strip())) {
-//                if (u.getPlainPassword().equals(password)) {
-//                    return u;
-//                } else if(!u.getPlainPassword().equals(password)) {
-//                    throw new Exception("Provided password is incorrect.");
-//                }
-//            }
-//        }
-//        throw new Exception("Couldn't find specified user.");
-//    }
-public Users login(String email, String password) throws Exception {
+    public Users login(String email, String password) throws Exception {
     if (email == null || password == null) {
         throw new IllegalArgumentException("Neither the email nor the password are allowed to be empty.");
     }
@@ -73,7 +50,6 @@ public Users login(String email, String password) throws Exception {
     }
 }
 
-
     public Optional<Users> searchByEmail(String email) {
         return userRepo.findByEmail(email);
     }
@@ -81,9 +57,6 @@ public Users login(String email, String password) throws Exception {
     public Optional<Users> searchByID(long id) {
         return userRepo.findById(id);
     }
-//      public List<Roadmap> viewRoadmaps() {
-//        return RoadmapRepo.findAll();
-//    }
 
 }
 

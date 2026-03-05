@@ -1,9 +1,7 @@
-package com.group.InternMap.Controller;
+package com.group.InternMap.Application;
 
 import com.group.InternMap.DTO.ApplicationAndCVDTO;
 import com.group.InternMap.Job.JobPosting;
-import com.group.InternMap.Application.Application;
-import com.group.InternMap.Application.CV;
 import com.group.InternMap.User.Users;
 import com.group.InternMap.Job.JobPostingService;
 import com.group.InternMap.Recruiter.RecruiterService;
@@ -83,11 +81,11 @@ public class ApplicationController {
     }
 
     @GetMapping("/applications/new")
-    public String createNewApplication(@RequestParam("jobId") UUID jobPostingId, ApplicationAndCVDTO applicationandCVDTO, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+    public String createNewApplication(@RequestParam("jobId") long jobPostingId, ApplicationAndCVDTO applicationandCVDTO, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         if (session.getAttribute("loggedInUser") == null) {
             return "redirect:/login";
         }
-        JobPosting jobPosting=jobPostingService.findByID(jobPostingId);
+        JobPosting jobPosting=jobPostingService.findJobpostingByID(jobPostingId);
         if(jobPosting==null){
             redirectAttributes.addFlashAttribute("error","Job posting not found");
             return "redirect:/jobPosting";
@@ -100,7 +98,7 @@ public class ApplicationController {
     }
 
     @PostMapping("/application/save")
-    public String saveApplication(@RequestParam("jobId") UUID jobId,
+    public String saveApplication(@RequestParam("jobId") long jobId,
                                   @ModelAttribute ApplicationAndCVDTO applicationandCVDTO,
                                   Model model, HttpSession session,
                                   RedirectAttributes redirectAttributes)  {
@@ -120,7 +118,7 @@ public class ApplicationController {
 //        UUID jobPostingID = jobId;
 
         try {
-            JobPosting jobPosting=jobPostingService.findByID(jobId);
+            JobPosting jobPosting=jobPostingService.findJobpostingByID(jobId);
 
             System.out.println(jobPosting);
             if (jobPosting == null) {

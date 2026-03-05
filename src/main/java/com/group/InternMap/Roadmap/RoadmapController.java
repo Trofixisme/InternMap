@@ -4,7 +4,6 @@ import com.group.InternMap.DTO.RoadmapModuleSkill;
 import com.group.InternMap.Admin.Admin;
 import com.group.InternMap.Skill.Skill;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,21 +13,35 @@ import java.util.UUID;
 
 import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.*;
 
-@Controller
-@RequestMapping("/roadmaps")
+@RestController
+@RequestMapping("/api/roadmaps")
 public class RoadmapController {
 
     //RoadmapService service=new RoadmapService();
     private final RoadmapService roadmapService ;
-    public RoadmapController(RoadmapService roadmapService) {
+    private final RoadmapRepo roadmapRepo;
+
+    public RoadmapController(RoadmapService roadmapService, RoadmapRepo roadmapRepo) {
         this.roadmapService = roadmapService;
+        this.roadmapRepo = roadmapRepo;
+    }
+    @GetMapping("/")
+    public String ViewRoadmaps() throws Exception{
+        try {
+            return roadmapRepo.findAll().toString();
+        }
+        catch(Exception e){
+            return "Failed to load roadmaps: " + e.getMessage();
+        }
+
+
     }
 
     //Display a specific roadmap with modules and skills
     @GetMapping("/{id}")
     public String viewRoadmap(@PathVariable long id, Model model) {
         try {
-            Roadmap roadmap = roadmapService.findRoadmapbyId(id);
+            Roadmap roadmap = roadmapService.findRoadmapById(id);
             int totalSkills = roadmap.getAllModules().stream()
                     .mapToInt(module -> module.getAllSkills() != null ? module.getAllSkills().size() : 0)
                     .sum();
@@ -82,7 +95,7 @@ public class RoadmapController {
     @GetMapping("/{id}/edit")
     public String editRoadmap(@PathVariable long id, Model model) {
         try {
-            Roadmap roadmap = roadmapService.findRoadmapbyId(id);
+            Roadmap roadmap = roadmapService.findRoadmapById(id);
             model.addAttribute("roadmap", roadmap);
             return "roadmap/form";
         } catch (Exception e) {

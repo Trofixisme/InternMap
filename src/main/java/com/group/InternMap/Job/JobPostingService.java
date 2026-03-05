@@ -6,7 +6,7 @@ import java.util.*;
 
 @Service
 public class JobPostingService {
- JobRepo jobRepo;
+    JobRepo jobRepo;
 
     private final ArrayList<JobPosting> jobRepoo = RepositoryAccessors.allJobPostings;
 //    public List<JobPosting> searchJobPostings(String searchQuery)  {
@@ -22,7 +22,7 @@ public class JobPostingService {
     }
 
     public List<JobPosting> getAllJobPostingsName(String name) {
-        return  jobRepo.findJobPostingByName(name);
+        return  jobRepo.findJobPostingByjobName(name);
     }
 
     public JobPosting findJobpostingByID(long appId) {

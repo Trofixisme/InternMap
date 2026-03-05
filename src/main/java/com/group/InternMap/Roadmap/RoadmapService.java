@@ -1,9 +1,6 @@
 package com.group.InternMap.Roadmap;
 
-import com.group.InternMap.Deprecated.Repository.RepositoryAccessors;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 public class RoadmapService {
@@ -13,7 +10,7 @@ public class RoadmapService {
         this.roadmapRepo = roadmapRepo;// without this , the controller will have empty data
     }
 
-    Roadmap roadmap = new Roadmap();
+    Roadmap roadmap = new Roadmap(new RoadmapModule("software", " "));
     public Roadmap findRoadmapById(Long roadmapId) {
         if (roadmapId == null) {
             throw new IllegalArgumentException("Roadmap must be provided");

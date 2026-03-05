@@ -145,18 +145,18 @@ public String AddJobPostingForm(Model model, HttpSession session) {
 //        }
 //    }
 
-    @PostMapping("/JobPostings/search")
-    public String searchJobPosting(@RequestParam("searchQuery") String searchQuery, @ModelAttribute JobPosting jobposting, Model model, HttpSession session) {
-        try {
-            List<JobPosting> results = jobPostingService.searchJobPostings(searchQuery.replaceFirst(",", ""));
-            // Add search results to the model
-            model.addAttribute("jobPostings", results);
-            model.addAttribute("jobposting", jobposting);
-        } catch (Exception e) {
-            model.addAttribute("error", "Error searching job postings: " + e.getMessage());
-        }
-        return "JobPosting"; // Thymeleaf template
-    }
+//    @PostMapping("/JobPostings/search")
+//    public String searchJobPosting(@RequestParam("searchQuery") String searchQuery, @ModelAttribute JobPosting jobposting, Model model, HttpSession session) {
+//        try {
+////            List<JobPosting> results = jobPostingService.findJobpostingByID();
+//            // Add search results to the model
+//            model.addAttribute("jobPostings", results);
+//            model.addAttribute("jobposting", jobposting);
+//        } catch (Exception e) {
+//            model.addAttribute("error", "Error searching job postings: " + e.getMessage());
+//        }
+//        return "JobPosting"; // Thymeleaf template
+//    }
 
     @GetMapping("/recruiter/jobpostings")
     public String getRecruiterJobPostings(Model model, HttpSession session) throws Exception {
@@ -170,7 +170,7 @@ public String AddJobPostingForm(Model model, HttpSession session) {
     }
 
     @GetMapping("/JobPostings/{jobId}/applications")
-    public String viewApplications(@PathVariable UUID jobId,
+    public String viewApplications(@PathVariable long jobId,
                                    Model model,
                                    HttpSession session,
                                    RedirectAttributes redirectAttributes) {
@@ -180,7 +180,7 @@ public String AddJobPostingForm(Model model, HttpSession session) {
         }
 
         try {
-            JobPosting job = jobPostingService.findByID(jobId);
+            JobPosting job = jobPostingService.findJobpostingByID(jobId);
             if (job == null) {
                 System.out.println("Job is null.");
                 redirectAttributes.addFlashAttribute("error", "Job not found");

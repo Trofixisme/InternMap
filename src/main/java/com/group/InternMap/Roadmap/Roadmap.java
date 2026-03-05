@@ -12,11 +12,15 @@ public final class Roadmap implements Serializable {
     private Long id;
     private String name;
 
+    public Roadmap() {
+    }
+
     @ManyToMany
     //@JoinTable(name = "roadmaps_modules", joinColumns = @JoinColumn(name = "roadmap_id"), inverseJoinColumns = @JoinColumn(name = "roadmap_module_id"))
     private List<RoadmapModule> roadmapModules = new ArrayList<>();
 
-    public Roadmap() {}
+    public Roadmap(RoadmapModule name, Object o) {}
+
 
     public Roadmap(String name, RoadmapModule... modules) {
         this.name = name;
@@ -25,7 +29,7 @@ public final class Roadmap implements Serializable {
             addModules(modules);
     }
 
-    public Roadmap(String name) {
+    public Roadmap(RoadmapModule name) {
         this(name, null);
     }
 

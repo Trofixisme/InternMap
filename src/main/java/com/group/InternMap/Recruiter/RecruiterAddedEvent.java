@@ -2,13 +2,13 @@ package com.group.InternMap.Recruiter;
 
 public class RecruiterAddedEvent {
     private final long recruiterId;
-    private final String companyId;
+    private final long companyId;
 
-    public RecruiterAddedEvent(long recruiterId, String companyId) {
+    public RecruiterAddedEvent(long recruiterId, long companyId) {
         this.recruiterId = recruiterId;
         this.companyId = companyId;
     }
 
     public long getRecruiterId() { return recruiterId; }
-    public String getCompanyId() { return companyId; }
+    public long getCompanyId() { return companyId; }
 }

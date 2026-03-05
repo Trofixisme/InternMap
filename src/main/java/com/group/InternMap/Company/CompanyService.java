@@ -1,5 +1,4 @@
 package com.group.InternMap.Company;
-
 import com.group.InternMap.Recruiter.RecruiterAddedEvent;
 import com.group.InternMap.Recruiter.RecruiterService;
 import com.group.InternMap.User.Users;
@@ -7,8 +6,7 @@ import com.group.InternMap.Recruiter.Recruiter;
 import com.group.InternMap.Deprecated.Repository.BaseRepository;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
-
-import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allCompanies;
+import java.util.List;
 import static com.group.InternMap.FilePaths.userPath;
 
 @Service
@@ -25,21 +23,24 @@ public class CompanyService {
     @EventListener
     public void handleRecruiterAddedEvent(RecruiterAddedEvent event) {
         long recruiterId = event.getRecruiterId();
-        String companyId = event.getCompanyId();
+        long companyId = event.getCompanyId();
         Recruiter recruiter =recruiterService.findRecruiterById(recruiterId);
-        Company company = recruiterService.findCompanyById(companyId);
-//        company.addRecruiter(recruiter);
+        Company company = companyRepo.findCompanyById(companyId);
+       // company.addRecruiter(recruiter);
         System.out.println("Company updated after recruiter was added.");
     }
 
-    public Company findByName(String companyName) throws Exception {
+    public Company findByName(String companyName)  {
         if (companyName == null || companyName.isBlank()) return null;
         return companyRepo.findCompanyByName(companyName);
-
-
-//                allCompanies.stream()
-//                .filter(c -> c.getName().equalsIgnoreCase(companyName))
-//                .findFirst()
-//                .orElseThrow(() -> new Exception("Company could not be found, please check the name again or create a new company."));
     }
+    public Company findCompanyById(Long companyId) {
+        if (companyId == null ) {
+            throw new IllegalArgumentException("companyId must be provided");
+        }
+        return companyRepo.findCompanyById(companyId);
+    }
+    public List<Company> viewAllCompanies() throws Exception {
+        return companyRepo.findAll();
+     }
 }

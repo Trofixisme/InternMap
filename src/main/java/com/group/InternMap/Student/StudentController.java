@@ -1,31 +1,45 @@
-package com.group.InternMap.Application;
+package com.group.InternMap.Student;
 
+import com.group.InternMap.Application.Application;
+import com.group.InternMap.Application.CV;
 import com.group.InternMap.DTO.ApplicationAndCVDTO;
 import com.group.InternMap.Job.JobPosting;
-import com.group.InternMap.User.Users;
 import com.group.InternMap.Job.JobPostingService;
-import com.group.InternMap.Recruiter.RecruiterService;
-import com.group.InternMap.Student.Student;
+import com.group.InternMap.User.UserService;
+import com.group.InternMap.User.Users;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-import java.util.UUID;
+import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.ALL_USERS;
+import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allApplications;
 
-import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.*;
-
-@Controller
-public class ApplicationController {
-    private final RecruiterService recruiterService;
+@RestController
+public class StudentController {
     JobPostingService jobPostingService;
-    ApplicationController(JobPostingService jobPostingService, RecruiterService recruiterService){
-        this.jobPostingService = jobPostingService;
-        this.recruiterService = recruiterService;
+    UserService userService;
+    @GetMapping("/student/register")
+    public String showRegisterStudent(Model model) {
+        model.addAttribute("user", new Student());
+        return "StudentRegister";
     }
 
+    @PostMapping("/student/register")
+    public String registerStudent(@ModelAttribute("user") Student user, Model model) {
+        try {
+            var email = user.getEmail();
+            if (UserService.isEmailValid(email)) {
+                userService.register(user);
+            }
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            // Return the view name (DO NOT REDIRECT)
+            return "StudentRegister";
+        }
+        // Only redirect on SUCCESS
+        return "redirect:/login";
+    }
     @GetMapping("/cv")
     public String cv(Model model, HttpSession session) {
         // Fixed: Use correct attribute name
@@ -106,8 +120,6 @@ public class ApplicationController {
         if (session.getAttribute("loggedInUser") == null) {
             return "redirect:/login";
         }
-
-
 //        Application application = applicationandCVDTO.getApplication();
         Student user = (Student) session.getAttribute("loggedInUser");
         if(user.getCv() == null){
@@ -116,7 +128,6 @@ public class ApplicationController {
         }
 //        applicationandCVDTO.setStudent(user);
 //        UUID jobPostingID = jobId;
-
         try {
             JobPosting jobPosting=jobPostingService.findJobpostingByID(jobId);
 
@@ -142,21 +153,4 @@ public class ApplicationController {
         }
 
     }
-
-    @PostMapping("/application/search")
-    public String searchJobPosting(@RequestParam("searchQuery") String searchQuery, @ModelAttribute Application application, Model model, HttpSession session) {
-        try {
-            // Search dynamically using your service
-            List<Application> results = recruiterService.searchApplication(searchQuery.replaceFirst(",", ""));
-            // Add search results to the model
-            model.addAttribute("applications", results);
-            // Add the jobposting object to the model so form fields keep their values
-            model.addAttribute("application", application);
-            model.addAttribute("jobPosting", null);
-        } catch (Exception e) {
-            model.addAttribute("error", "Error searching application: " + e.getMessage());
-        }
-        return "ViewApplicationDetail";
-    }
-
 }

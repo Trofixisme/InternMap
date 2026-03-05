@@ -19,8 +19,8 @@ import java.util.List;
 public class InternMapApplication {
 
     public static void main(String[] args) throws IllegalClassFormatException {// REGISTER IT HERE
-//        ApplicationContext context = SpringApplication.run(InternMapApplication.class, args);
-//        Student U=new Student("sandra","remon","sandra@gmail.com","1234",2025,"carleton","software engineering","engineering");
+        ApplicationContext context = SpringApplication.run(InternMapApplication.class, args);
+//         Student U=new Student("sandra","remon","sandra@gmail.com","1234",2025,"carleton","software engineering","engineering");
 //        UserRepo user = context.getBean(UserRepo.class);
 //         user.save(U);
 //       List<String> l= List.of("python","c++","java");

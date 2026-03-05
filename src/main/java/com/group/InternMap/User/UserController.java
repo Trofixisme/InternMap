@@ -1,129 +1,89 @@
 package com.group.InternMap.User;
 
 import com.group.InternMap.Admin.Admin;
+import com.group.InternMap.Application.Application;
 import com.group.InternMap.DTO.RecruiterRegistrationDTO;
 import com.group.InternMap.Company.Company;
 import com.group.InternMap.Recruiter.Recruiter;
 import com.group.InternMap.Deprecated.Repository.RepositoryAccessors;
 import com.group.InternMap.Company.CompanyService;
 import com.group.InternMap.Recruiter.RecruiterService;
+import com.group.InternMap.Roadmap.Roadmap;
+import com.group.InternMap.Roadmap.RoadmapRepo;
 import com.group.InternMap.Student.Student;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.ALL_USERS;
 import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allCompanies;
 
-@Controller
+@RestController
+@RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
     private final RecruiterService recruiterService;
     private final CompanyService companyService;
+    private final RoadmapRepo roadmapRepo;
 
-    public UserController(UserService userService, RecruiterService recruiterService, CompanyService companyService) {
+    public UserController(RoadmapRepo roadmapRepo,UserService userService, RecruiterService recruiterService, CompanyService companyService) {
         this.userService = userService;
         this.recruiterService = recruiterService;
         this.companyService = companyService;
+        this.roadmapRepo=roadmapRepo;
     }
-
-    @GetMapping("/student/register")
-    public String showRegisterStudent(Model model) {
-        model.addAttribute("user", new Student());
-        return "StudentRegister";
-    }
-
-    @PostMapping("/student/register")
-    public String registerStudent(@ModelAttribute("user") Student user, Model model) {
+    @GetMapping("/roadmaps")
+    public String ViewRoadmaps() throws Exception{
         try {
-            var email = user.getEmail();
-            if (UserService.isEmailValid(email)) {
-                userService.register(user);
-            }
+            return roadmapRepo.findAll().toString();
+        }
+        catch(Exception e){
+            return "Failed to load roadmaps: " + e.getMessage();
+        }
+    }
+
+    //Display a specific roadmap with modules and skills
+    @GetMapping("/{id}")
+    public String viewRoadmap(@PathVariable long id, Model model) {
+        try {
+            Roadmap roadmap = roadmapService.findRoadmapById(id);
+            int totalSkills = roadmap.getAllModules().stream()
+                    .mapToInt(module -> module.getAllSkills() != null ? module.getAllSkills().size() : 0)
+                    .sum();
+            model.addAttribute("roadmap", roadmap);
+            model.addAttribute("totalSkills", totalSkills);
+            return "roadmap/view";
+        }
+        catch(Exception e){
+            model.addAttribute(e);
+            return "redirect:/roadmaps";
+        }
+    }
+
+
+
+
+
+
+    @PostMapping("/application/search")
+    public String searchJobPosting(@RequestParam("searchQuery") String searchQuery, @ModelAttribute Application application, Model model, HttpSession session) {
+        try {
+            // Search dynamically using your service
+            List<Application> results = recruiterService.searchApplication(searchQuery.replaceFirst(",", ""));
+            // Add search results to the model
+            model.addAttribute("applications", results);
+            // Add the jobposting object to the model so form fields keep their values
+            model.addAttribute("application", application);
+            model.addAttribute("jobPosting", null);
         } catch (Exception e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            // Return the view name (DO NOT REDIRECT)
-            return "StudentRegister";
+            model.addAttribute("error", "Error searching application: " + e.getMessage());
         }
-        // Only redirect on SUCCESS
-        return "redirect:/login";
+        return "ViewApplicationDetail";
     }
 
-    @GetMapping("/recruiter/register")
-    public String showRegisterRecruiter(Model model, RecruiterRegistrationDTO recruiterRegistrationDTO) {
-        model.addAttribute("form", new RecruiterRegistrationDTO());
-        System.out.println(RepositoryAccessors.ALL_USERS);
-        System.out.println(RepositoryAccessors.allCompanies);
-        return "RecruiterRegister";
-    }
-
-    @PostMapping("/recruiter/register")
-    public String registerRecruiter(@ModelAttribute("form") RecruiterRegistrationDTO recruiterRegistrationDTO, Model model) {
-
-        try {
-            Company company = recruiterRegistrationDTO.getCompany();
-            Recruiter user = recruiterRegistrationDTO.getUser();
-
-            System.out.println(company);
-            System.out.println(company);
-            if (UserService.isEmailValid(user.getEmail())) {
-                userService.register(user);
-                if (company != null) {
-                    recruiterService.addCompanyToRecruiter(user.getId(), company.getName());
-                    System.out.println(allCompanies);
-                    System.out.println(ALL_USERS);
-                }
-            }
-            // exception here
-            return "redirect:/login";
-        } catch(Exception e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            return "RecruiterRegister";
-        }
-    }
-
-    @GetMapping("/company/register")
-    public String showRegisterCompany(Model model) {
-        model.addAttribute("company", new Company());
-        return "CompanyRegister";
-    }
-
-    @PostMapping("/company/register")
-    public String RegisterCompany(@ModelAttribute("company") Company company, Model model) {
-        try {
-            allCompanies.add(company);
-            model.addAttribute("success", "Company created successfully.");
-            return"redirect:/login";
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            return "CompanyRegister";
-        }
-
-    }
-
-    @GetMapping("/admin/register")
-    public String showRegisterAdmin(Model model) {
-        model.addAttribute("user", new Admin());
-        return "adminRegister";
-    }
-
-    @PostMapping("/admin/register")
-    public String registerAdmin(@ModelAttribute("user") Admin user, Model model) {
-        try {
-            if (UserService.isEmailValid(user.getEmail())) {
-                userService.register(user);
-            }
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            // Return the view name (DO NOT REDIRECT)
-            return "adminRegister";
-        }
-        // Only redirect on SUCCESS
-        return "redirect:/login";
-    }
 
     @GetMapping("/login")
     public String showloginPage(Model model) {

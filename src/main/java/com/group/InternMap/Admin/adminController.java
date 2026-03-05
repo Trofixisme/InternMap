@@ -1,8 +1,10 @@
-package com.group.InternMap.Roadmap;
+package com.group.InternMap.Admin;
 
 import com.group.InternMap.DTO.RoadmapModuleSkill;
-import com.group.InternMap.Admin.Admin;
+import com.group.InternMap.Roadmap.Roadmap;
+import com.group.InternMap.Roadmap.RoadmapModule;
 import com.group.InternMap.Skill.Skill;
+import com.group.InternMap.User.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,51 +12,31 @@ import org.springframework.web.bind.annotation.*;
 import java.net.MalformedURLException;
 import java.util.UUID;
 
-
 import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.*;
 
-@RestController
-@RequestMapping("/api/roadmaps")
-public class RoadmapController {
-
-    //RoadmapService service=new RoadmapService();
-    private final RoadmapService roadmapService ;
-    private final RoadmapRepo roadmapRepo;
-
-    public RoadmapController(RoadmapService roadmapService, RoadmapRepo roadmapRepo) {
-        this.roadmapService = roadmapService;
-        this.roadmapRepo = roadmapRepo;
+@RestController("/api/admin")
+public class adminController {
+    UserService userService;
+    @GetMapping("/admin/register")
+    public String showRegisterAdmin(Model model) {
+        model.addAttribute("user", new Admin());
+        return "adminRegister";
     }
-    @GetMapping("/")
-    public String ViewRoadmaps() throws Exception{
+
+    @PostMapping("/admin/register")
+    public String registerAdmin(@ModelAttribute("user") Admin user, Model model) {
         try {
-            return roadmapRepo.findAll().toString();
+            if (UserService.isEmailValid(user.getEmail())) {
+                userService.register(user);
+            }
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            // Return the view name (DO NOT REDIRECT)
+            return "adminRegister";
         }
-        catch(Exception e){
-            return "Failed to load roadmaps: " + e.getMessage();
-        }
-
-
+        // Only redirect on SUCCESS
+        return "redirect:/login";
     }
-
-    //Display a specific roadmap with modules and skills
-    @GetMapping("/{id}")
-    public String viewRoadmap(@PathVariable long id, Model model) {
-        try {
-            Roadmap roadmap = roadmapService.findRoadmapById(id);
-            int totalSkills = roadmap.getAllModules().stream()
-                    .mapToInt(module -> module.getAllSkills() != null ? module.getAllSkills().size() : 0)
-                    .sum();
-            model.addAttribute("roadmap", roadmap);
-            model.addAttribute("totalSkills", totalSkills);
-            return "roadmap/view";
-        }
-        catch(Exception e){
-            model.addAttribute(e);
-            return "redirect:/roadmaps";
-        }
-    }
-
     //Display form to create a new roadmap
     @GetMapping("/new")
     public String newRoadmap(Model model, HttpSession session) {
@@ -63,13 +45,13 @@ public class RoadmapController {
         }
 
         System.out.println(admin);
-            RoadmapModuleSkill dto = new RoadmapModuleSkill();
-            RoadmapModuleSkill.ModuleData module = new RoadmapModuleSkill.ModuleData();
-            RoadmapModuleSkill.SkillData skill = new RoadmapModuleSkill.SkillData();
-            module.getSkills().add(skill);
-            dto.getModules().add(module);
-            model.addAttribute("roadmaps", dto);
-            return "roadmap/form";
+        RoadmapModuleSkill dto = new RoadmapModuleSkill();
+        RoadmapModuleSkill.ModuleData module = new RoadmapModuleSkill.ModuleData();
+        RoadmapModuleSkill.SkillData skill = new RoadmapModuleSkill.SkillData();
+        module.getSkills().add(skill);
+        dto.getModules().add(module);
+        model.addAttribute("roadmaps", dto);
+        return "roadmap/form";
     }
 
     @PostMapping("/new")
@@ -90,7 +72,6 @@ public class RoadmapController {
 
         return "redirect:/roadmaps/" + roadmap.getId();
     }
-
     //Display form to edit roadmap
     @GetMapping("/{id}/edit")
     public String editRoadmap(@PathVariable long id, Model model) {
@@ -104,7 +85,7 @@ public class RoadmapController {
         }
     }
 
-     //Update roadmap
+    //Update roadmap
     @PostMapping("/{id}")
     public String updateRoadmap(@PathVariable UUID id, @ModelAttribute Roadmap roadmap) {
         allRoadmaps.add(roadmap);

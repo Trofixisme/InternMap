@@ -11,6 +11,8 @@ public interface JobRepo extends JpaRepository<JobPosting, Long> {
     JobPosting findJobPostingById(Long id);
 
     List<JobPosting> findJobPostingByRecruiterId(Long recruiterId);
+
+
 //    @Query("SELECT j FROM JobPosting j WHERE " +
 //            "LOWER(j.jobName) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
 //            "LOWER(j.jobDescription) LIKE LOWER(CONCAT('%', :query, '%')) OR " +

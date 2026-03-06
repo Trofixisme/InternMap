@@ -1,6 +1,7 @@
 package com.group.InternMap.Recruiter;
 
 import com.group.InternMap.Company.Company;
+import com.group.InternMap.Company.CompanyRepo;
 import com.group.InternMap.DTO.RecruiterRegistrationDTO;
 import com.group.InternMap.Deprecated.Repository.RepositoryAccessors;
 import com.group.InternMap.User.UserRepo;
@@ -18,13 +19,15 @@ import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allC
 @Controller
 public class RecruiterController {
 
+    CompanyRepo companyRepo;
     UserRepo userRepo;
-    CompanyService companyService;
+    RecruiterService recruiterService;
 
     @Autowired
-    public RecruiterController(UserRepo userRepo, CompanyService companyService) {
-        this.companyService = companyService;
+    public RecruiterController(UserRepo userRepo, RecruiterService recruiterService, CompanyRepo companyRepo) {
+        this.recruiterService = recruiterService;
         this.userRepo = userRepo;
+        this.companyRepo = companyRepo;
     }
 
     @GetMapping("/company/register")
@@ -49,8 +52,6 @@ public class RecruiterController {
     @GetMapping("/recruiter/register")
     public String showRegisterRecruiter(Model model, RecruiterRegistrationDTO recruiterRegistrationDTO) {
         model.addAttribute("form", new RecruiterRegistrationDTO());
-        System.out.println(ALL_USERS);
-        System.out.println(RepositoryAccessors.allCompanies);
         return "RecruiterRegister";
     }
 
@@ -58,23 +59,20 @@ public class RecruiterController {
     public String registerRecruiter(@ModelAttribute("form") RecruiterRegistrationDTO recruiterRegistrationDTO, Model model) {
 
         try {
+            recruiterRegistrationDTO.setCompany(companyRepo.findCompanyByName(recruiterRegistrationDTO.getCompany().getName()));
             Company company = recruiterRegistrationDTO.getCompany();
             Recruiter user = recruiterRegistrationDTO.getUser();
 
-            System.out.println(company);
-            System.out.println(company);
             if (UserService.isEmailValid(user.getEmail())) {
                 userRepo.save(user);
 
                 if (company != null) {
-                    recruiterService.addCompanyToRecruiter(user.getId(), company.getName());
-                    System.out.println(allCompanies);
-                    System.out.println(ALL_USERS);
+                    recruiterService.addCompanyToRecruiter(user.getId(), company.getId());
                 }
             }
             // exception here
             return "redirect:/login";
-        } catch(Exception e) {
+        } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "RecruiterRegister";
         }

@@ -33,4 +33,12 @@ public class JobPostingService {
         return  jobRepo.findJobPostingById(appId);
     }
 
+    public JobPosting createJobPosting(JobPosting jobPosting) {
+        return jobRepo.save(jobPosting);
+    }
+
+    public void deleteJobPosting(JobPosting jobPosting){
+         jobRepo.delete(jobPosting);
+    }
+
 }

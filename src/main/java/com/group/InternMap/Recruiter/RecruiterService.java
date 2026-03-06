@@ -26,7 +26,7 @@ public class RecruiterService extends UserService {
                 return recruiterRepo.findRecruiterById(recruiterId);
     }
 
-   // public void addCompanyToRecruiter(long recruiterId, String companyId) throws Exception {
+//    public void addCompanyToRecruiter(long recruiterId, String companyId) throws Exception {
    // It was added by the event publisher and was causing issues
 
 }

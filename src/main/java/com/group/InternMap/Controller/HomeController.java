@@ -109,5 +109,4 @@ public class HomeController {
         // Redirect the user back to the login page
         return "redirect:/";
     }
-
 }

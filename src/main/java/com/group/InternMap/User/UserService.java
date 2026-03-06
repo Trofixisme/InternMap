@@ -23,8 +23,9 @@ public class UserService implements FilePaths {
     public void register(Users u) throws Exception {
         List<Users> users = userRepo.findAll(); // findAll() is built in JPARepository
         if (!users.contains(u)) {
-            if(isEmailValid(u.getEmail())){
-                userRepo.save(u);//built in JPARepository
+            if(isEmailValid(u.getEmail())) {
+                //built into JPARepository
+                userRepo.save(u);
             }
         } else {
             throw new Exception("A user with these credentials already exists.");

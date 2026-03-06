@@ -65,6 +65,7 @@ public class UserController {
         } catch (Exception e) {
             model.addAttribute("error", "Error searching application: " + e.getMessage());
         }
+
         return "ViewApplicationDetail";
     }
 

@@ -1,12 +1,20 @@
 package com.group.InternMap.Job;
+
 import com.group.InternMap.Deprecated.Repository.RepositoryAccessors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
 
 @Service
 public class JobPostingService {
+
     JobRepo jobRepo;
+
+    @Autowired
+    public JobPostingService(JobRepo jobRepo) {
+        this.jobRepo = jobRepo;
+    }
 
     public List<JobPosting> getAllJobPostings()  {
         return  RepositoryAccessors.allJobPostings;

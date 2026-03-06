@@ -1,6 +1,7 @@
 package com.group.InternMap.Application;
 import com.group.InternMap.Job.JobPosting;
 import com.group.InternMap.Job.JobRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -10,8 +11,10 @@ public class ApplicationService {
     ApplicationRepo applicationRepo;
     JobRepo jobRepo;
 
-    public ApplicationService(ApplicationRepo applicationRepo) {
+    @Autowired
+    public ApplicationService(ApplicationRepo applicationRepo, JobRepo jobRepo) {
         this.applicationRepo = applicationRepo;
+        this.jobRepo = jobRepo;
     }
 
     public List<Application> searchApplication(String studentEmail) throws Exception {
@@ -23,10 +26,9 @@ public class ApplicationService {
         if (jobPostingId == null) {
             throw new IllegalArgumentException("Job posting cannot be null");
         }
-        JobPosting joposting = jobRepo.findJobPostingById(jobPostingId);
-        List<Application> applications = joposting.getApplication();
+        JobPosting posting = jobRepo.findJobPostingById(jobPostingId);
 
-        return applications;
+        return posting.getApplication();
     }
     public List<Application> viewAllApplications() {
         return applicationRepo.findAll();

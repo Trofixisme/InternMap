@@ -3,65 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="icon" type="image/png" href="/images/Logo Glass Large.png">
-    <link rel="stylesheet" th:href="@{/CSS/InternMapSignIn.css}">
+    <link rel="icon" type="image/png" href="/images/Logo%20With%20Shadow.png">
+    <link rel="stylesheet" th:href="@{/CSS/style.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<header>
-    <div class="header-top">
-        <nav class="header-nav">
-            <a th:href="@{/signup-choice}">
-                <button class="btn-header primary">Sign Up</button>
-            </a>
-        </nav>
-    </div>
-    <div class="header-hero">
-        <img class="logo" th:src="@{/images/Logo Glass.png}" alt="InternMap Logo">
-    </div>
-</header>
-
-<body>
-<h2 class="form-title">Sign In</h2>
-<div class="form-container">
-
+<div class="horizontally-centered-container">
+    <img src="/Images/Logo With Shadow.png" alt="Logo" style="width: 100px; height: 100px; margin-bottom: 15px;">
     <form th:action="@{/login}" th:object="${user}" method="post">
+        <h1>Log in</h1>
         <div th:if="${errorMessage}"
              style="color:red;border:0 solid red;padding:2px;margin-bottom:5px; font-weight: 550;">
             <p th:text="${errorMessage}"></p></div>
-        <div class="form-row">
-        <div class="form-group">
-            <label>
-                <input type="email"
-                       class="form-input"
-                       th:field="*{email}"
-                       placeholder="Email"
-                       required />
-            </label>
+        <div class="form-container">
+            <label for="email">Email:</label>
+            <input th:field="*{email}" type="email" id="email" name="email" placeholder="example@gmail.com" required><br><br>
+            <label for="password">Password:</label>
+            <input th:field="*{plainPassword}" type="password" id="password" name="password" placeholder="Enter your password" required><br><br>
+            <input type="submit" value="Log In">
         </div>
-
-        <div class="form-group">
-            <label>
-                <input type="password"
-                       class="form-input"
-                       th:field="*{plainPassword}"
-                       placeholder="Password"
-                       required />
-            </label>
-        </div>
-        </div>
-        <button type="submit" class="form-submit">Sign In</button>
+        <br>
+        <p style="font-size: 14px; font-weight: 400;">Want to sign up first? <a style="color: rgb(49, 131, 254); font-weight: 600;" th:href="@{/signup-choice}">Sign up</a></p>
     </form>
-
-    <p class="form-link">
-        Looking for the sign up page?
-        <a th:href="@{/signup-choice}">Sign up</a>
-    </p>
+    <!-- <h6>Tip: No AI was used in the creation of this page 🫡</h6> -->
 </div>
-<div th:replace="~{fragments/footer}" style="position: absolute"></div>
-</body>
-
-</html>

@@ -1,22 +1,26 @@
 package com.group.InternMap.Roadmap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RoadmapService {
+
     RoadmapRepo roadmapRepo;
 
+    @Autowired
     public RoadmapService(RoadmapRepo roadmapRepo) {
-        this.roadmapRepo = roadmapRepo;// without this , the controller will have empty data
+        // without this, the controller will have empty data
+        this.roadmapRepo = roadmapRepo;
     }
 
-    Roadmap roadmap = new Roadmap(new RoadmapModule("software", " "));
     public Roadmap findRoadmapById(Long roadmapId) {
+        Roadmap roadmap;
         if (roadmapId == null) {
             throw new IllegalArgumentException("Roadmap must be provided");
         } else{
             roadmap = roadmapRepo.findById(roadmapId).orElseThrow(() -> new RuntimeException("Roadmap not found"));
-            //this line gets roadmap if exist , if not throw exception
+            //this line gets the roadmap if exists. If not, throws exception
         }
         return roadmap;
     }
@@ -26,7 +30,7 @@ public class RoadmapService {
         roadmapRepo.delete(roadmap);
     }
 
-    //search roadmap by name
+    //Search roadmap by name
     public Roadmap findByName(String roadmapName) {
         Roadmap roadmap;
         if (roadmapName == null) {

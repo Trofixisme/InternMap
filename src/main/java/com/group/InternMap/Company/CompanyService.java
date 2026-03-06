@@ -1,19 +1,24 @@
 package com.group.InternMap.Company;
+
 import com.group.InternMap.Recruiter.RecruiterAddedEvent;
 import com.group.InternMap.Recruiter.RecruiterService;
-import com.group.InternMap.User.Users;
 import com.group.InternMap.Recruiter.Recruiter;
-import com.group.InternMap.Deprecated.Repository.BaseRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-
 @Service
-
 public class CompanyService {
-    static CompanyRepo companyRepo; // idk why I made this static bs it is for the find myname is also static so idk ( ZIAD HELP )
-    public RecruiterService recruiterService;
+
+    CompanyRepo companyRepo;
+    RecruiterService recruiterService;
+
+    @Autowired
+    public CompanyService(CompanyRepo companyRepo, RecruiterService recruiterService) {
+        this.companyRepo = companyRepo;
+        this.recruiterService = recruiterService;
+    }
 
     @EventListener
     public void handleRecruiterAddedEvent(RecruiterAddedEvent event) {

@@ -6,6 +6,7 @@ import com.group.InternMap.Roadmap.RoadmapModule;
 import com.group.InternMap.Roadmap.RoadmapRepo;
 import com.group.InternMap.User.UserService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,10 @@ public class AdminController {
     RoadmapRepo roadmapRepo;
     UserService userService;
 
-    public AdminController(RoadmapRepo roadmapRepo) {
+    @Autowired
+    public AdminController(RoadmapRepo roadmapRepo, UserService userService) {
         this.roadmapRepo = roadmapRepo;
+        this.userService = userService;
     }
 
     @GetMapping("/admin/register")

@@ -4,6 +4,7 @@ import com.group.InternMap.Admin.Admin;
 import com.group.InternMap.Application.Application;
 import com.group.InternMap.Application.ApplicationRepo;
 import com.group.InternMap.Recruiter.Recruiter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -18,8 +19,9 @@ import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allJ
 public class JobPostingController {
 
     ApplicationRepo applicationRepo;
-    private final JobPostingService jobPostingService;
+    JobPostingService jobPostingService;
 
+    @Autowired
     public JobPostingController(JobPostingService jobPostingService, ApplicationRepo applicationRepo) {
         this.jobPostingService = jobPostingService;
         this.applicationRepo = applicationRepo;

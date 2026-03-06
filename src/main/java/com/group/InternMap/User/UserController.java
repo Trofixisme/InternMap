@@ -4,9 +4,12 @@ import com.group.InternMap.Application.Application;
 import com.group.InternMap.Roadmap.Roadmap;
 import com.group.InternMap.Roadmap.RoadmapRepo;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Controller
 public class UserController {
@@ -14,11 +17,11 @@ public class UserController {
     UserService userService;
     RoadmapRepo roadmapRepo;
 
+    @Autowired
     public UserController(RoadmapRepo roadmapRepo,UserService userService) {
         this.userService = userService;
         this.roadmapRepo = roadmapRepo;
     }
-
 
     // What was even the point of this method???
 //    @GetMapping("/roadmaps")
@@ -72,12 +75,12 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute("user") Users users, Model model, HttpSession session) {
+    public String login(@ModelAttribute("user") Users users, Map<String, Object> model, HttpSession session) {
         try {
             Users authenticatedUsers = userService.login(users.getEmail(), users.getPlainPassword());
             session.setAttribute("loggedInUser", authenticatedUsers);
         } catch (Exception e) {
-            model.addAttribute("errorMessage", e.getMessage());
+            model.put("errorMessage", e.getMessage());
             return "login";
         }
         System.out.println("User's logged in");

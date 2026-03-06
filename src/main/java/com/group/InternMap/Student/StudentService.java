@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 //crud operations
 //create,read,update,delete
 @Service
-public class StudentService extends UserService implements FilePaths {
+public class StudentService extends UserService {
 
 }

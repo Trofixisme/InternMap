@@ -8,6 +8,7 @@ import com.group.InternMap.Job.JobPostingService;
 import com.group.InternMap.User.UserService;
 import com.group.InternMap.User.Users;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,12 @@ public class StudentController {
 
     JobPostingService jobPostingService;
     UserService userService;
+
+    @Autowired
+    public StudentController(JobPostingService jobPostingService, UserService userService) {
+        this.jobPostingService = jobPostingService;
+        this.userService = userService;
+    }
 
     @GetMapping("/student/register")
     public String showRegisterStudent(Model model) {

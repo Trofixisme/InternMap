@@ -2,6 +2,7 @@ package com.group.InternMap.Student;
 
 import com.group.InternMap.Application.Application;
 import com.group.InternMap.Application.CV;
+import com.group.InternMap.Application.CVRepo;
 import com.group.InternMap.DTO.ApplicationAndCVDTO;
 import com.group.InternMap.Job.JobPosting;
 import com.group.InternMap.Job.JobPostingService;
@@ -22,11 +23,15 @@ public class StudentController {
 
     JobPostingService jobPostingService;
     UserService userService;
+    CVRepo cvRepo;
+    StudentRepo studentRepo;
 
     @Autowired
-    public StudentController(JobPostingService jobPostingService, UserService userService) {
+    public StudentController(JobPostingService jobPostingService, UserService userService, CVRepo cvRepo, StudentRepo studentRepo) {
         this.jobPostingService = jobPostingService;
         this.userService = userService;
+        this.cvRepo = cvRepo;
+        this.studentRepo = studentRepo;
     }
 
     @GetMapping("/student/register")
@@ -83,8 +88,6 @@ public class StudentController {
             return "redirect:/profile";
         }
 
-        if(ALL_USERS.contains(student)) {
-//            allUsers.remove(student);
             if (student.getCv() != null) {
                 System.out.println(student.getCv());
                 CV existingCV = student.getCv();
@@ -93,12 +96,13 @@ public class StudentController {
                 existingCV.setProjects(cv.getProjects());
                 student.setCv(existingCV);
                 System.out.println(existingCV);
-//                allUsers.add(student);
+                cvRepo.save(existingCV);
+                studentRepo.save(student);
             } else {
                 student.setCv(cv);
-//                allUsers.add(student);
+                cvRepo.save(cv);
+                studentRepo.save(student);
             }
-        }
         // Update session
         session.setAttribute("loggedInUser", student);
         return "redirect:/profile";

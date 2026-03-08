@@ -25,8 +25,7 @@ public class Recruiter extends Users implements Serializable {
     @ManyToMany
     private List<Company> companies = new ArrayList<>();
 
-    public Recruiter() {
-    }
+    public Recruiter() {}
 
     public Recruiter(String fName, String lName, String email, String plainPassword, String title, List<Company> companies, Collection<JobPosting> jobPosting) {
         super(fName, lName, email, plainPassword);

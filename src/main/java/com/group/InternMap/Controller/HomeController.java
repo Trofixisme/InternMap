@@ -70,16 +70,19 @@ public class HomeController {
                 model.addAttribute("type", "student");
                 return "profile";
             }
+
             case Recruiter _ -> {
                 model.addAttribute("recruiter", loggedUsers);
                 model.addAttribute("type", "recruiter");
                 return "profile";
             }
+
             case Admin _ -> {
                 model.addAttribute("admin", loggedUsers);
                 model.addAttribute("type", "admin");
                 return "profile";
             }
+
             default -> {
             }
         }
@@ -88,16 +91,16 @@ public class HomeController {
     }
 
     @GetMapping("/roadmaps")
-    public String ViewRoadmaps(@ModelAttribute("user") Users users, Model model){
-      try {
-//          List<Roadmap> roadmaps = userService.viewRoadmaps();
-//          model.addAttribute("roadmaps", roadmaps);
+    public String ViewRoadmaps(@ModelAttribute("user") Users users, Model model) {
+        try {
+        //          List<Roadmap> roadmaps = userService.viewRoadmaps();
+        //          model.addAttribute("roadmaps", roadmaps);
           return "index";
-      }
-      catch(Exception e){
+        }
+        catch(Exception e){
             model.addAttribute("errorMessage", e.getMessage());
             return "error";
-      }
+        }
 
     }
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -22,17 +23,6 @@ public class UserController {
         this.userService = userService;
         this.roadmapRepo = roadmapRepo;
     }
-
-    // What was even the point of this method???
-//    @GetMapping("/roadmaps")
-//    public String ViewRoadmaps() {
-//        try {
-//            return roadmapRepo.findAll().toString();
-//        }
-//        catch(Exception e){
-//            return "Failed to load roadmaps: " + e.getMessage();
-//        }
-//    }
 
     // Display a specific roadmap with modules and skills
     @GetMapping("/{id}")
@@ -56,9 +46,9 @@ public class UserController {
     public String searchJobPosting(@RequestParam("searchQuery") String searchQuery, @ModelAttribute Application application, Model model, HttpSession session) {
         try {
             // Search dynamically using your service
-            // List<Application> results = recruiterService.searchApplication(searchQuery.replaceFirst(",", ""));
+//             List<Application> results = recruiterService.searchApplication(searchQuery.replaceFirst(",", ""));
             // Add search results to the model
-            // model.addAttribute("applications", results);
+//             model.addAttribute("applications", results);
             // Add the job posting object to the model so form fields keep their values
             model.addAttribute("application", application);
             model.addAttribute("jobPosting", null);

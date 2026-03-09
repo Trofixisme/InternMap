@@ -1,5 +1,5 @@
 package com.group.InternMap.Job;
-import com.group.InternMap.Deprecated.Repository.RepositoryAccessors;
+import com.group.InternMap.Application.Application;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
@@ -7,26 +7,27 @@ import java.util.*;
 
 @Service
 public class JobPostingService {
+
     JobRepo jobRepo;
+
     @Autowired
     public JobPostingService(JobRepo jobRepo) {
         this.jobRepo = jobRepo;
     }
 
     public List<JobPosting> getAllJobPostings()  {
-        return  RepositoryAccessors.allJobPostings;
+        return  jobRepo.findAll();
     }
 
     public List<JobPosting> getJobPostingsByRecruiterId(long recruiterId)  {
-        List<JobPosting> jobPostings = jobRepo.findJobPostingByRecruiterId(recruiterId);
-        return jobPostings;
+        return jobRepo.findJobPostingByRecruiterId(recruiterId);
     }
 
     public List<JobPosting> getAllJobPostingsName(String name) {
         return jobRepo.findJobPostingByJobName(name);
     }
 
-    public JobPosting findJobpostingByID(long appId) {
+    public JobPosting findJobPostingByID(long appId) {
         return  jobRepo.findJobPostingById(appId);
     }
 
@@ -38,4 +39,7 @@ public class JobPostingService {
          jobRepo.delete(jobPosting);
     }
 
+    public List<JobPosting> findJobPostingByName(String name) {
+        return jobRepo.findJobPostingByJobName(name);
+    }
 }

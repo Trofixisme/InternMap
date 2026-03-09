@@ -23,7 +23,7 @@ public class CompanyService {
     public void handleRecruiterAddedEvent(RecruiterAddedEvent event) {
         long recruiterId = event.recruiterId();
         long companyId = event.companyId();
-        Recruiter recruiter =recruiterService.findRecruiterById(recruiterId);
+        Recruiter recruiter = recruiterService.findRecruiterById(recruiterId);
         Company company = companyRepo.findCompanyById(companyId);
        // company.addRecruiter(recruiter);
         System.out.println("Company updated after recruiter was added.");

@@ -59,12 +59,13 @@ public class Company implements Serializable {
             this.websiteURL = websiteURL;
     }
 
-//    public void addRecruiter(Recruiter recruiter) {
-//        if (recruiter == null) return;
-//        if (!recruiters.contains(recruiter)) recruiters.add(recruiter);
-//    }
-//
-//    public void removeRecruiter(Recruiter recruiter) {
-//        recruiters.remove(recruiter);
-//    }
+// public void addRecruiter(Recruiter recruiter) {
+//     if (recruiter == null) return;
+//     if (!recruiters.contains(recruiter)) recruiters.add(recruiter);
+// }
+
+// public void removeRecruiter(Recruiter recruiter) {
+//     recruiters.remove(recruiter);
+// }
+
 }

@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.ALL_USERS;
 import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allApplications;
 
 @Controller
@@ -113,8 +112,8 @@ public class StudentController {
         if (session.getAttribute("loggedInUser") == null) {
             return "redirect:/login";
         }
-        JobPosting jobPosting=jobPostingService.findJobpostingByID(jobPostingId);
-        if(jobPosting==null){
+        JobPosting jobPosting = jobPostingService.findJobPostingByID(jobPostingId);
+        if(jobPosting==null) {
             redirectAttributes.addFlashAttribute("error","Job posting not found");
             return "redirect:/jobPosting";
         }
@@ -143,7 +142,7 @@ public class StudentController {
 //        applicationandCVDTO.setStudent(user);
 //        UUID jobPostingID = jobId;
         try {
-            JobPosting jobPosting=jobPostingService.findJobpostingByID(jobId);
+            JobPosting jobPosting=jobPostingService.findJobPostingByID(jobId);
 
             System.out.println(jobPosting);
             if (jobPosting == null) {

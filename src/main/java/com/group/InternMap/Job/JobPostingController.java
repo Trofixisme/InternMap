@@ -29,7 +29,7 @@ public class JobPostingController {
 
     //JobPostings
     @GetMapping("/JobPostings")
-    public String getAllJobPostings(Model model, ArrayList<JobPosting> jobPosting, HttpSession session) {
+    public String getAllJobPostings(Model model, HttpSession session) {
         try {
             // Fetch all job postings from the service
             if (session.getAttribute("loggedInUser") instanceof Admin) {
@@ -50,13 +50,28 @@ public class JobPostingController {
                 model.addAttribute("isRecruiter", false);
             }
 
-            jobPosting = (ArrayList<JobPosting>) jobPostingService.getAllJobPostings();
+            ArrayList<JobPosting> jobPosting = (ArrayList<JobPosting>) jobPostingService.getAllJobPostings();
             model.addAttribute("jobPostings", jobPosting);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             model.addAttribute("error", "Failed to load job postings");
         }
         return "JobPosting"; // Thymeleaf template
+    }
+
+    @PostMapping("/JobPostings/search")
+    public String searchJobPosting(@RequestParam("searchQuery") String searchQuery, Model model) {
+        try {
+            // Search dynamically using your service
+             List<JobPosting> results = jobPostingService.findJobPostingByName(searchQuery);
+            // Add search results to the model
+             model.addAttribute("jobPostings", results);
+
+        } catch (Exception e) {
+            model.addAttribute("error", "Error searching application: " + e.getMessage());
+        }
+
+        return "JobPosting";
     }
 
     @GetMapping("/JobPostingForm")
@@ -110,7 +125,7 @@ public class JobPostingController {
         }
         List<JobPosting> myJobs = jobPostingService.getJobPostingsByRecruiterId(recruiter.getId());
         model.addAttribute("myJobs", myJobs);
-        return "recruiter-jobpostings";
+        return "recruiter-jobPostings";
     }
 
     @GetMapping("/JobPostings/{jobId}/applications")
@@ -121,7 +136,7 @@ public class JobPostingController {
         }
 
         try {
-            JobPosting job = jobPostingService.findJobpostingByID(jobId);
+            JobPosting job = jobPostingService.findJobPostingByID(jobId);
             if (job == null) {
                 System.out.println("Job is null.");
                 redirectAttributes.addFlashAttribute("error", "Job not found");
@@ -141,7 +156,7 @@ public class JobPostingController {
     }
 
     @GetMapping("/cv/{email}")
-    public String viewCV(@PathVariable("email") String email, Model model, HttpSession session) {
+    public String viewCV(@PathVariable("email") String email, Model model) {
         try {
 //            Student retrievedStudent = (Student) new UserService().searchByEmail(email);
 //            model.addAttribute("user", retrievedStudent);

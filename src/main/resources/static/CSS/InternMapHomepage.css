@@ -41,6 +41,7 @@ header {
             #hb1, #hb2, #hb3, #hb4, #hb5 {
                 padding: 10px 20px;
                 border-radius: 34px;
+                corner-shape: round;
                 border: none;
                 cursor: pointer;
                 text-align: center;
@@ -147,6 +148,7 @@ body {
             #bu1 {
                 background: #ffffff;
                 border-radius: 34px;
+                corner-shape: round;
                 cursor: initial;
                 color: rgba(0, 0, 0, 0.80);
             }
@@ -174,6 +176,7 @@ body {
         align-items: center;
         border: none;
         border-radius: 40px;
+        corner-shape: round;
     }
 
     .button-grid {
@@ -183,6 +186,7 @@ body {
         justify-items: center;
         align-items: center;
         border-radius: 75px;
+        corner-shape: round;
         background: rgba(237, 239, 241, 0.8);
         padding: 35px;
         margin: 10px max(10px, 5vw);
@@ -194,6 +198,7 @@ body {
         background: linear-gradient(180deg, rgb(79, 161, 255) 0%, #1883fd 100%);
         border: none;
         border-radius: 40px;
+        corner-shape: round;
         color: #FFF;
         font-size: 20px;
         font-weight: 700;

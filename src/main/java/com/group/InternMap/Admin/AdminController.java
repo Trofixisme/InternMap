@@ -70,29 +70,43 @@ public class AdminController {
         model.addAttribute("roadmaps", dto);
         return "roadmap/form";
     }
-
     @PostMapping("/new")
-    public String createRoadmap(@ModelAttribute("roadmap") RoadmapModuleSkill dto, HttpSession session) throws MalformedURLException {
-        if (session.getAttribute("loggedInUser") == null || !(session.getAttribute("loggedInUser") instanceof Admin admin)) {
-            return "redirect:/login";
+    public String createRoadmap(@ModelAttribute("roadmaps") RoadmapModuleSkill dto, HttpSession session) {
+        if (!(session.getAttribute("loggedInUser") instanceof Admin)) return "redirect:/login";
+
+        try {
+            Roadmap roadmap = dto.toRoadmap(); // Convert DTO → Entity
+            roadmapRepo.save(roadmap);         // Cascade saves modules & skills
+//            return "redirect:/roadmaps/" + roadmap.getId();
+            return "redirect:/";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/admin/roadmaps/new?error=true";
         }
-
-        Roadmap roadmap = dto.toRoadmap();
-
-        roadmap.setId(roadmapRepo.count() + 1);
-        roadmapRepo.save(roadmap);
-
-        for (RoadmapModule module : roadmap.getAllModules()) {
-            module.setId(roadmapModuleRepo.count() + 1);
-            roadmapModuleRepo.save(module);
-            for (Skill skill : module.getAllSkills()) {
-                skill.setId(skillRepo.count() + 1);
-                skillRepo.save(skill);
-            }
-        }
-
-        return "redirect:/roadmaps/" + roadmap.getId();
     }
+
+//    @PostMapping("/new")
+//    public String createRoadmap(@ModelAttribute("roadmap") RoadmapModuleSkill dto, HttpSession session) throws MalformedURLException {
+//        if (session.getAttribute("loggedInUser") == null || !(session.getAttribute("loggedInUser") instanceof Admin admin)) {
+//            return "redirect:/login";
+//        }
+//
+//        Roadmap roadmap = dto.toRoadmap();
+//
+//        roadmap.setId(roadmapRepo.count() + 1);
+//        roadmapRepo.save(roadmap);
+//
+//        for (RoadmapModule module : roadmap.getAllModules()) {
+//            module.setId(roadmapModuleRepo.count() + 1);
+//            roadmapModuleRepo.save(module);
+//            for (Skill skill : module.getAllSkills()) {
+//                skill.setId(skillRepo.count() + 1);
+//                skillRepo.save(skill);
+//            }
+//        }
+//
+//        return "redirect:/roadmaps/" + roadmap.getId();
+//    }
 
     //Display form to edit roadmap
     @GetMapping("/{id}/edit")

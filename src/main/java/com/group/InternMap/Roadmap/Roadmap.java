@@ -14,7 +14,7 @@ public final class Roadmap implements Serializable {
 
     public Roadmap() {}
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     //@JoinTable(name = "roadmaps_modules", joinColumns = @JoinColumn(name = "roadmap_id"), inverseJoinColumns = @JoinColumn(name = "roadmap_module_id"))
     private List<RoadmapModule> roadmapModules = new ArrayList<>();
 

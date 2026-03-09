@@ -12,103 +12,9 @@ html body {
     flex-direction: column;
 }
 
-header {
-
-    #h1 {
-        display: flex;
-        flex-direction: row;
-        padding: 20px;
-        justify-content: space-between;
-        align-items: center;
-
-        .box-sign-buttons {
-            margin-right: 15px;
-            margin-left: auto;
-        }
-
-        #T1 {
-            color: #000;
-            font-size: 40px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: normal;
-            letter-spacing: -0.32px;
-        }
-
-        #s1 {
-            display: flex;
-
-            #hb1, #hb2, #hb3, #hb4, #hb5 {
-                padding: 10px 20px;
-                border-radius: 34px;
-                corner-shape: round;
-                border: none;
-                cursor: pointer;
-                text-align: center;
-                font-size: max(14px, 1vw);
-                font-style: normal;
-                font-weight: 700;
-                line-height: normal;
-            }
-
-            #hb1, #hb6 {
-                background: transparent;
-                border: transparent;
-                color: #000000;
-            }
-
-            #hb3, #hb4 {
-                background: #1883fd;
-                color: #ffffff;
-            }
-
-            #person-fill {
-                filter: invert(100%);
-            }
-        }
-    }
-
-    #l1 {
-        display: flex;
-        flex-direction: column;
-        padding-top: 10px;
-
-        #logo {
-            display: flex;
-            margin: 0 auto;
-            width: 162px;
-            height: 162px;
-            aspect-ratio: 1/1;
-        }
-
-        #p1 {
-            color: #000;
-            text-align: center;
-            font-size: clamp(32px, 5vw , 64px);
-            font-style: normal;
-            font-weight: 700;
-            line-height: normal;
-            letter-spacing: -0.64px;
-        }
-
-        #p2 {
-            color: #000;
-            text-align: center;
-            font-size: clamp(12px, 5vw , 24px);
-            margin-left: 20px;
-            margin-right: 20px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: normal;
-            letter-spacing: -0.24px;
-        }
-    }
-}
-
 body {
 
     #bb1 {
-        margin-bottom: 20px;
         display: flex;
         width: auto;
         padding-top: 60px;
@@ -181,8 +87,8 @@ body {
 
     .button-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+        gap: 110px;
         justify-items: center;
         align-items: center;
         border-radius: 75px;
@@ -209,42 +115,5 @@ body {
 
     .grid-button:hover {
         background-color: #70c1ff;
-    }
-}
-
-footer {
-    width: auto;
-    height: min-content;
-    background: linear-gradient(180deg, rgba(88, 171, 255, 0.60) 0%, #3397FC 100%);
-
-    .quick-links {
-        display: grid;
-        width: auto;
-        flex-direction: column;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        justify-items: center;
-        justify-content: space-around;
-    }
-
-    #ft1 {
-        text-align: start;
-        padding-top: 30px;
-        padding-left: clamp(2px, 10vw, 80px);
-        text-shadow: 0 0 75px rgba(0, 0, 0, 0.25);
-        color: #FFFFFF;
-        font-size: 64px;
-        font-weight: 800;
-        background: #FFFFFF;
-        background-clip: text;
-    }
-
-    #ft2 {
-        color: #FFF;
-        font-style: normal;
-        font-size: 28px;
-        line-height: 60px;
-        font-weight: 700;
-        padding-top: 20px;
-        padding-bottom: 20px;
     }
 }

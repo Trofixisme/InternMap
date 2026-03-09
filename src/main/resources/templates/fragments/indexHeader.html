@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
           rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/CSS/InternMapHomepage.css}">
+    <link rel="stylesheet" th:href="@{/CSS/header.css}">
     <meta name="viewport" content="width=device-width">
 </head>
 <header>
@@ -17,6 +17,7 @@
             InternMap
         </div>
         <div id="s1" class="box-sign-buttons">
+            <!--/*@thymesVar id="isLoggedIn" type="bool"*/-->
             <button id="hb1" onclick="location.href='/login'" th:if="${isLoggedIn == false}">Sign in</button>
             <a th:href="@{/signup-choice}" style="text-decoration: none;"></a>
             <button id="hb3" onclick="location.href='/signup-choice'" th:if="${isLoggedIn == false}">Sign up</button>
@@ -27,7 +28,7 @@
         </div>
     </div>
     <div id="l1">
-        <img id="logo" src="/images/Logo Glass.png" alt="This didn't load successfuly >:(" onclick="location.href = '/';" style="cursor: pointer">
+        <img id="logo" src="/images/Logo%20With%20Shadow.png" alt="This didn't load successfully >:(" onclick="location.href = '/';" style="cursor: pointer; height: 125px; width: 125px;">
         <span id="p1">InternMap</span>
         <span id="p2">Welcome to the platform that sets your future for you</span>
     </div>

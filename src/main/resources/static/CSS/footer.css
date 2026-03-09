@@ -1,0 +1,36 @@
+footer {
+    width: auto;
+    height: min-content;
+    background: linear-gradient(180deg, rgba(88, 171, 255, 0.60) 0%, #3397FC 100%);
+
+    .quick-links {
+        display: grid;
+        width: auto;
+        flex-direction: column;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        justify-items: center;
+        justify-content: space-around;
+    }
+
+    #ft1 {
+        text-align: start;
+        padding-top: 30px;
+        padding-left: clamp(2px, 10vw, 80px);
+        text-shadow: 0 0 75px rgba(0, 0, 0, 0.25);
+        color: #FFFFFF;
+        font-size: 64px;
+        font-weight: 800;
+        background: #FFFFFF;
+        background-clip: text;
+    }
+
+    #ft2 {
+        color: #FFF;
+        font-style: normal;
+        font-size: 28px;
+        line-height: 60px;
+        font-weight: 700;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+}

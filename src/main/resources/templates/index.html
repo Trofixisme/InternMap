@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title> InternMap </title>
-    <link rel="icon" type="image/png" href="/images/Logo Glass Large.png">
+    <link rel="icon" type="image/png" href="/images/Logo%20With%20Shadow.png">
+    <link rel="stylesheet" th:href="@{/CSS/InternMapHomepage.css}">
+    <link rel="stylesheet" th:href="@{/CSS/footer.css}">
+    <link rel="stylesheet" th:href="@{/CSS/header.css}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
           rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/CSS/InternMapHomepage.css}">
     <meta name="viewport" content="width=device-width">
 </head>
 
@@ -27,28 +29,10 @@
         </div>
     </div>
 <br><br><br><br>
-<!--<nav>-->
-<!--    <ul>-->
-<!--        <li><a th:href="@{/login}">Log In</a></li>-->
-<!--        <li><a th:href="@{/admin/register}">Admin Register</a></li>-->
-<!--        <li><a th:href="@{/student/register}">Student Register</a></li>-->
-<!--        <li><a th:href="@{/recruiter/register}">Recruiter Register</a></li>-->
-<!--        <li><a th:href="@{/JobPostings}">-->
-<!--            <button id="hb5">View All Job Postings</button>-->
-<!--        </a></li>-->
-<!--        <li><a th:href="@{/profile}">Profile</a></li>-->
 
-<!--    </ul>-->
-<!--</nav>-->
-<!--<div class="button-grid">-->
-<!--    <div class="grid-button"-->
-<!--         th:each="roadmap : ${roadmaps}"-->
-<!--         th:text="${roadmap.name}">-->
-<!--    </div>-->
-<!--</div>-->
     <div class="button-grid">
         <a th:href="@{/new}"
-           class="grid-button" th:if="${isAdmin == true}"><img src="/images/plus.png" alt="Create new Roadmap" width="46" height="46" id="grid-button-plus"></a>
+           class="grid-button" th:if="${isAdmin == true}"> <img src="/images/plus.png" alt="Create new Roadmap" width="46" height="46" id="grid-button-plus"></a>
         <a th:href="@{/{id}(id=${roadmap.id})}"
            class="grid-button"
            th:each="roadmap : ${roadmaps}"

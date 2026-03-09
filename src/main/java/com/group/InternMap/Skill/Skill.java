@@ -29,6 +29,10 @@ public class Skill implements Serializable {
             this.resourceLinks.addAll(links);
         }
     }
+    public Skill(String name, String description){
+        this.name=name;
+        this.description = description;
+    }
 
     public Skill() {}
 

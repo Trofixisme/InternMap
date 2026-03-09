@@ -47,9 +47,9 @@
 <!--    </div>-->
 <!--</div>-->
     <div class="button-grid">
-        <a th:href="@{/roadmaps/new}"
+        <a th:href="@{/new}"
            class="grid-button" th:if="${isAdmin == true}"><img src="/images/plus.png" alt="Create new Roadmap" width="46" height="46" id="grid-button-plus"></a>
-        <a th:href="@{/roadmaps/{id}(id=${roadmap.roadmapID})}"
+        <a th:href="@{/roadmaps/{id}(id=${roadmap.id})}"
            class="grid-button"
            th:each="roadmap : ${roadmaps}"
            th:text="${roadmap.name}"
@@ -61,6 +61,7 @@
             No roadmaps to show.
         </a>
     </div>
+    <br><br><br><br><br>
 </body>
 
 <footer>

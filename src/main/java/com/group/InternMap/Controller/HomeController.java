@@ -2,6 +2,7 @@ package com.group.InternMap.Controller;
 
 import com.group.InternMap.Roadmap.Roadmap;
 import com.group.InternMap.Admin.Admin;
+import com.group.InternMap.Roadmap.RoadmapRepo;
 import com.group.InternMap.User.Users;
 import com.group.InternMap.Recruiter.Recruiter;
 import com.group.InternMap.Student.Student;
@@ -11,10 +12,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
-import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allRoadmaps;
-
 @Controller
 public class HomeController {
+
+    RoadmapRepo roadmapRepo;
+
+    public HomeController(RoadmapRepo roadmapRepo) {
+        this.roadmapRepo = roadmapRepo;
+    }
 
     @GetMapping("/")
     public String showHomePage(Model model, HttpSession session) {
@@ -30,7 +35,7 @@ public class HomeController {
             model.addAttribute("isAdmin", false);
         }
 
-        model.addAttribute("roadmaps", allRoadmaps);
+        model.addAttribute("roadmaps", roadmapRepo.findAll());
 
         return "index";
     }
@@ -51,7 +56,7 @@ public class HomeController {
         }
         //  Pass the user object to the Thymeleaf model for display
 //        model.addAttribute("user", user);
-        model.addAttribute("roadmaps", allRoadmaps);
+        model.addAttribute("roadmaps", roadmapRepo.findAll());
         return "index";
     }
 

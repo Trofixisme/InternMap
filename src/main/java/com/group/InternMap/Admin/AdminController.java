@@ -3,7 +3,10 @@ package com.group.InternMap.Admin;
 import com.group.InternMap.DTO.RoadmapModuleSkill;
 import com.group.InternMap.Roadmap.Roadmap;
 import com.group.InternMap.Roadmap.RoadmapModule;
+import com.group.InternMap.Roadmap.RoadmapModuleRepo;
 import com.group.InternMap.Roadmap.RoadmapRepo;
+import com.group.InternMap.Skill.Skill;
+import com.group.InternMap.Skill.SkillRepo;
 import com.group.InternMap.User.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +17,19 @@ import org.springframework.web.bind.annotation.*;
 import java.net.MalformedURLException;
 import java.util.UUID;
 
-import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.*;
-
 @Controller("/api/admin")
 public class AdminController {
 
     RoadmapRepo roadmapRepo;
+    SkillRepo skillRepo;
+    RoadmapModuleRepo roadmapModuleRepo;
     UserService userService;
 
     @Autowired
-    public AdminController(RoadmapRepo roadmapRepo, UserService userService) {
+    public AdminController(RoadmapRepo roadmapRepo, SkillRepo skillRepo, RoadmapModuleRepo roadmapModuleRepo, UserService userService) {
         this.roadmapRepo = roadmapRepo;
+        this.skillRepo = skillRepo;
+        this.roadmapModuleRepo = roadmapModuleRepo;
         this.userService = userService;
     }
 
@@ -71,13 +76,19 @@ public class AdminController {
         if (session.getAttribute("loggedInUser") == null || !(session.getAttribute("loggedInUser") instanceof Admin admin)) {
             return "redirect:/login";
         }
+
         Roadmap roadmap = dto.toRoadmap();
 
-        allRoadmaps.add(roadmap);
+        roadmap.setId(roadmapRepo.count() + 1);
+        roadmapRepo.save(roadmap);
 
         for (RoadmapModule module : roadmap.getAllModules()) {
-            allmodules.add(module);
-            allskills.addAll(module.getAllSkills());
+            module.setId(roadmapModuleRepo.count() + 1);
+            roadmapModuleRepo.save(module);
+            for (Skill skill : module.getAllSkills()) {
+                skill.setId(skillRepo.count() + 1);
+                skillRepo.save(skill);
+            }
         }
 
         return "redirect:/roadmaps/" + roadmap.getId();
@@ -99,7 +110,7 @@ public class AdminController {
     //Update roadmap
     @PostMapping("/{id}")
     public String updateRoadmap(@PathVariable UUID id, @ModelAttribute Roadmap roadmap) {
-        allRoadmaps.add(roadmap);
+        roadmapRepo.save(roadmap);
         return "redirect:/roadmaps/" + id;
     }
 

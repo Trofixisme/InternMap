@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
           rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/CSS/InternMapHomepage.css}">
     <meta name="viewport" content="width=device-width">
     <style>
@@ -168,13 +170,27 @@
             padding-top: 1.5rem;
             border-radius: 100%;
         }
+
+        #logo {
+            transition: all 0.3s ease-in-out;
+            margin-top: 20px;
+            margin-left: 20px;
+            display: flex;
+            align-self: center;
+        }
+
+        #logo:hover {
+            transform: scale(1.05);
+            rotate: 10deg;
+        }
     </style>
 </head>
 <body>
+<img src="/images/compass.png" alt="Roadmap Logo" width="140" height="140" id="logo">
 <h1>Create a new roadmap</h1>
 <div class="container">
 
-    <form th:action="@{/roadmaps/new}" method="post" th:object="${roadmaps}">
+    <form th:action="@{/new}" method="post" th:object="${roadmaps}">
 
         <div class="form-group">
             <label>

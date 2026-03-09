@@ -123,15 +123,19 @@ public class AdminController {
 
     //Update roadmap
     @PostMapping("/{id}")
-    public String updateRoadmap(@PathVariable UUID id, @ModelAttribute Roadmap roadmap) {
+    public String updateRoadmap(@PathVariable long id, @ModelAttribute Roadmap roadmap) {
         roadmapRepo.save(roadmap);
         return "redirect:/roadmaps/" + id;
     }
-
-    //Delete roadmap
-    @PostMapping("/{id}/delete")
-    public String deleteRoadmap(@PathVariable long id) {
-        roadmapRepo.deleteById(id);
-        return "redirect:/roadmaps";
+    @PostMapping("/roadmaps/{id}/delete")
+    public String deleteRoadmap(@PathVariable Long id) {
+        try {
+            roadmapRepo.deleteById(id);
+            return "redirect:/";
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
+
+
 }

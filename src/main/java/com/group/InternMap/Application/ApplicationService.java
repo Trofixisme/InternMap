@@ -17,12 +17,12 @@ public class ApplicationService {
         this.jobRepo = jobRepo;
     }
 
-    public List<Application> searchApplication(String studentEmail) throws Exception {
+    public List<Application> searchApplication(String studentEmail) {
         if (studentEmail == null || studentEmail.isBlank()) return null;
         return applicationRepo.findByEmail(studentEmail);
     }
 
-    public List<Application> getApplicationsByJobPostingId(Long jobPostingId) {
+    public List<Application> getApplicationsByJobPostingId(Long jobPostingId)throws IllegalArgumentException{
         if (jobPostingId == null) {
             throw new IllegalArgumentException("Job posting cannot be null");
         }

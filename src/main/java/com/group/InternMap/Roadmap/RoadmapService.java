@@ -14,7 +14,7 @@ public class RoadmapService {
         this.roadmapRepo = roadmapRepo;
     }
 
-    public Roadmap findRoadmapById(Long roadmapId) {
+    public Roadmap findRoadmapById(Long roadmapId) throws IllegalArgumentException {
         Roadmap roadmap;
         if (roadmapId == null) {
             throw new IllegalArgumentException("Roadmap must be provided");

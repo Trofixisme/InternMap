@@ -1,5 +1,4 @@
 package com.group.InternMap.Company;
-
 import com.group.InternMap.Recruiter.RecruiterAddedEvent;
 import com.group.InternMap.Recruiter.RecruiterService;
 import com.group.InternMap.Recruiter.Recruiter;
@@ -30,19 +29,19 @@ public class CompanyService {
         System.out.println("Company updated after recruiter was added.");
     }
 
-    public Company findByName(String companyName)  {
+    public Company findByName(String companyName){
         if (companyName == null || companyName.isBlank()) return null;
         return companyRepo.findCompanyByName(companyName);
     }
 
-    public Company findCompanyById(Long companyId) {
+    public Company findCompanyById(Long companyId) throws IllegalArgumentException {
         if (companyId == null ) {
             throw new IllegalArgumentException("companyId must be provided");
         }
         return companyRepo.findCompanyById(companyId);
     }
 
-    public List<Company> viewAllCompanies() throws Exception {
+    public List<Company> viewAllCompanies(){
         return companyRepo.findAll();
      }
 }

@@ -39,9 +39,9 @@ public class RecruiterController {
     @PostMapping("/company/register")
     public String RegisterCompany(@ModelAttribute("company") Company company, Model model) {
         try {
-            allCompanies.add(company);
+            companyRepo.save(company);
             model.addAttribute("success", "Company created successfully.");
-            return"redirect:/login";
+            return "redirect:/recruiter/register";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "CompanyRegister";

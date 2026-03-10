@@ -1,5 +1,6 @@
 package com.group.InternMap.Controller;
 
+import com.group.InternMap.Recruiter.RecruiterRepo;
 import com.group.InternMap.Roadmap.Roadmap;
 import com.group.InternMap.Admin.Admin;
 import com.group.InternMap.Roadmap.RoadmapRepo;
@@ -16,9 +17,11 @@ import java.util.ArrayList;
 public class HomeController {
 
     RoadmapRepo roadmapRepo;
+    RecruiterRepo recruiterRepo;
 
-    public HomeController(RoadmapRepo roadmapRepo) {
+    public HomeController(RoadmapRepo roadmapRepo,RecruiterRepo recruiterRepo) {
         this.roadmapRepo = roadmapRepo;
+        this.recruiterRepo = recruiterRepo;
     }
 
     @GetMapping("/")
@@ -61,7 +64,7 @@ public class HomeController {
     }
 
     @GetMapping("/profile")
-    public String showStudentProfile(Model model, HttpSession session) {
+    public String showProfile(Model model, HttpSession session) {
         Users loggedUsers = (Users) session.getAttribute("loggedInUser");
         if (loggedUsers == null) {
             return "redirect:/login";
@@ -76,9 +79,15 @@ public class HomeController {
                 return "profile";
             }
 
-            case Recruiter _ -> {
-                model.addAttribute("recruiter", loggedUsers);
+            case Recruiter recruiterUser -> {
+
+                Recruiter recruiter = recruiterRepo
+                        .findRecruiterWithCompanies(recruiterUser.getId())
+                        .orElseThrow(() -> new RuntimeException("Recruiter not found"));
+
+                model.addAttribute("recruiter", recruiter);
                 model.addAttribute("type", "recruiter");
+
                 return "profile";
             }
 

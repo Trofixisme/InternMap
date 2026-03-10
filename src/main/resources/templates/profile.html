@@ -111,27 +111,37 @@
             </div>
 
             <div class="mb-3">
+
                 <label class="form-label fw-bold">Companies</label>
-                <div th:if="${recruiter.companies.get(0) != null and !recruiter.companies.isEmpty()}">
-                    <table class="table table-sm">
-                        <thead>
+
+                <!-- If recruiter has companies -->
+                <div th:if="${!#lists.isEmpty(recruiter.companies)}">
+
+                    <table class="table table-sm table-bordered">
+                        <thead class="table-light">
                         <tr>
                             <th>Company Name</th>
                             <th>Industry</th>
                         </tr>
                         </thead>
+
                         <tbody>
-<!--                        <tr th:each="company : ${recruiter.companies}">-->
-<!--                            <td th:text="${company.name()}">Company Name</td>-->
-<!--                            <td th:text="${company.undustry()}">Industry</td>-->
+                        <tr th:each="company : ${recruiter.companies}">
+                            <td th:text="${company.name}">Company Name</td>
+                            <td th:text="${company.industry}">Industry</td>
                         </tr>
                         </tbody>
+
                     </table>
+
                 </div>
-<!--                <p th:if="${recruiter.companies.get(0) == null or recruiter.companies.isEmpty()}"-->
+
+                <!-- If recruiter has no companies -->
+                <p th:if="${#lists.isEmpty(recruiter.companies)}"
                    class="form-control-plaintext text-muted">
                     - You're not working for any company.
                 </p>
+
             </div>
 
         </div>

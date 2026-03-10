@@ -1,7 +1,6 @@
 package com.group.InternMap.Controller;
 
 import com.group.InternMap.Recruiter.RecruiterRepo;
-import com.group.InternMap.Roadmap.Roadmap;
 import com.group.InternMap.Admin.Admin;
 import com.group.InternMap.Roadmap.RoadmapRepo;
 import com.group.InternMap.User.Users;
@@ -11,7 +10,6 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
 
 @Controller
 public class HomeController {
@@ -46,21 +44,6 @@ public class HomeController {
     @GetMapping("/signup-choice")
     public String signupChoice() { // or whatever your object is
         return "InternMapSignUpChoice"; // Note: no .htm; extension
-    }
-
-    @GetMapping("/user/home")
-    public String showHomePage(Model model, ArrayList<Roadmap> roadmaps, HttpSession session) {
-        System.out.println("Home page accessed, but without an active session ");
-        // Retrieve the User object from the session
-        Users users = (Users) session.getAttribute("loggedInUser");
-        // 2. If no user is found in the session, redirect to the login page
-        if (users == null) {
-            return "redirect:/login";
-        }
-        //  Pass the user object to the Thymeleaf model for display
-//        model.addAttribute("user", user);
-        model.addAttribute("roadmaps", roadmapRepo.findAll());
-        return "index";
     }
 
     @GetMapping("/profile")

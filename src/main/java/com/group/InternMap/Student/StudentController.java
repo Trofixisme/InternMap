@@ -43,6 +43,7 @@ public class StudentController {
     public String registerStudent(@ModelAttribute("user") Student user, Model model) {
         try {
             var email = user.getEmail();
+            user.setRole(1);
             if (UserService.isEmailValid(email)) {
                 userService.register(user);
             }

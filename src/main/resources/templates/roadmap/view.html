@@ -289,7 +289,7 @@
                 <div class="stat-label">Skills</div>
             </div>
         </div>
-        <form th:action="@{'/roadmaps/' + ${roadmap.id} + '/delete'}" method="post" onsubmit="return confirm('Are you sure?');">
+        <form th:if="${user != null && user.role == 3}" th:action="@{'/roadmaps/' + ${roadmap.id} + '/delete'}" method="post" onsubmit="return confirm('Are you sure?');">
             <button type="submit" class="btn btn-danger">Delete Roadmap</button>
         </form>
     </div>

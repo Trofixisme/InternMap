@@ -2,10 +2,8 @@ package com.group.InternMap.Admin;
 
 import com.group.InternMap.DTO.RoadmapModuleSkill;
 import com.group.InternMap.Roadmap.Roadmap;
-import com.group.InternMap.Roadmap.RoadmapModule;
 import com.group.InternMap.Roadmap.RoadmapModuleRepo;
 import com.group.InternMap.Roadmap.RoadmapRepo;
-import com.group.InternMap.Skill.Skill;
 import com.group.InternMap.Skill.SkillRepo;
 import com.group.InternMap.User.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -13,9 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.MalformedURLException;
-import java.util.UUID;
 
 @Controller("/api/admin")
 public class AdminController {
@@ -43,6 +38,7 @@ public class AdminController {
     public String registerAdmin(@ModelAttribute("user") Admin user, Model model) {
         try {
             if (UserService.isEmailValid(user.getEmail())) {
+                user.setRole(3);
                 userService.register(user);
             }
         } catch (Exception e) {
@@ -50,6 +46,7 @@ public class AdminController {
             // Return the view name (DO NOT REDIRECT)
             return "adminRegister";
         }
+
         // Only redirect on SUCCESS
         return "redirect:/login";
     }
@@ -70,6 +67,7 @@ public class AdminController {
         model.addAttribute("roadmaps", dto);
         return "roadmap/form";
     }
+
     @PostMapping("/new")
     public String createRoadmap(@ModelAttribute("roadmaps") RoadmapModuleSkill dto, HttpSession session) {
         if (!(session.getAttribute("loggedInUser") instanceof Admin)) return "redirect:/login";
@@ -127,8 +125,10 @@ public class AdminController {
         roadmapRepo.save(roadmap);
         return "redirect:/roadmaps/" + id;
     }
+
     @PostMapping("/roadmaps/{id}/delete")
-    public String deleteRoadmap(@PathVariable Long id) {
+    public String deleteRoadmap(@PathVariable Long id, HttpSession session) {
+
         try {
             roadmapRepo.deleteById(id);
             return "redirect:/";
@@ -136,6 +136,4 @@ public class AdminController {
             throw new RuntimeException(e);
         }
     }
-
-
 }

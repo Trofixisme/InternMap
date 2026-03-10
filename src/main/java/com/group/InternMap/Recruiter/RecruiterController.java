@@ -62,6 +62,7 @@ public class RecruiterController {
             recruiterRegistrationDTO.setCompany(companyRepo.findCompanyByName(recruiterRegistrationDTO.getCompany().getName()));
             Company company = recruiterRegistrationDTO.getCompany();
             Recruiter user = recruiterRegistrationDTO.getUser();
+            user.setRole(2);
 
             if (UserService.isEmailValid(user.getEmail())) {
                 userRepo.save(user);

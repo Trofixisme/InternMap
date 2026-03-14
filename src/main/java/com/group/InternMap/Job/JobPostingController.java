@@ -20,11 +20,13 @@ public class JobPostingController {
 
     ApplicationRepo applicationRepo;
     JobPostingService jobPostingService;
+    JobRepo jobRepo;
 
     @Autowired
-    public JobPostingController(JobPostingService jobPostingService, ApplicationRepo applicationRepo) {
+    public JobPostingController(JobPostingService jobPostingService, ApplicationRepo applicationRepo,JobRepo jobRepo) {
         this.jobPostingService = jobPostingService;
         this.applicationRepo = applicationRepo;
+        this.jobRepo=jobRepo;
     }
 
     //JobPostings
@@ -105,7 +107,7 @@ public class JobPostingController {
         try {
 
             jobPosting.setRecruiter(recruiter);
-            allJobPostings.add(jobPosting);
+            jobRepo.save(jobPosting);
 
             model.addAttribute("success", "Job posting created successfully!");
             return "redirect:/JobPostings"; // or return to form with a success message

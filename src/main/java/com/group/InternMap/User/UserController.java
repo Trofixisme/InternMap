@@ -27,6 +27,7 @@ public class UserController {
     // Display a specific roadmap with modules and skills
     @GetMapping("/{id}")
     public String viewRoadmap(@PathVariable long id, Model model, HttpSession session) {
+
         try {
             Roadmap roadmap = roadmapRepo.findRoadmapById(id);
             int totalSkills = roadmap.getAllModules().stream()

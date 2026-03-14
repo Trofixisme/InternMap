@@ -116,6 +116,10 @@ public class JobPosting implements Serializable {
         return company;
     }
 
+    public void setCompanyName(String companyName) {
+         company.setName(companyName);
+    }
+
 
 
 }

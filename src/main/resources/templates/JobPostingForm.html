@@ -45,11 +45,11 @@
             <!-- Job Type Selection First -->
             <div class="form-group">
                 <label>
-                    <select class="form-input" id="jobTypeSelect" th:field="${jobTypeSelect}" required>
+                    <select class="form-input" id="jobTypeSelect" th:field="${jobPostingFactory.jobType}" required>
                         <option value="" disabled selected>Select Job Type</option>
-                        <option value="Internship" th:field="${jobTypeSelect}">Internship</option>
-                        <option value="FullTime" th:field="${jobTypeSelect}">Full Time</option>
-                        <option value="FreeLanceProject" th:field="${jobTypeSelect}">Freelance Project</option>
+                        <option value="Internship" th:field="${jobPostingFactory.jobType}">Internship</option>
+                        <option value="FullTime" th:field="${jobPostingFactory.jobType}">Full Time</option>
+                        <option value="FreeLanceProject" th:field="${jobPostingFactory.jobType}">Freelance Project</option>
                     </select>
                 </label>
             </div>

@@ -69,6 +69,7 @@ public class RecruiterController {
 
                 if (company != null) {
                     recruiterService.addCompanyToRecruiter(user.getId(), company.getId());
+                    userRepo.save(user);
                 }
             }
             // exception here

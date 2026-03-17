@@ -13,6 +13,7 @@ public class JobPostingFactory {
     private final Internship internship = new Internship();
     private final FreelanceProject freelanceProject = new FreelanceProject();
     private Company company ;
+    private String jobType;
 //    = new Company()
 
     public Internship toInternship() {
@@ -60,5 +61,13 @@ public class JobPostingFactory {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public String getJobType() {
+        return jobType;
+    }
+
+    public void setJobType(String jobType) {
+        this.jobType = jobType;
     }
 }

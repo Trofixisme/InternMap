@@ -108,13 +108,12 @@ public class JobPostingController {
         }
 
         String jobTypeSelect = (String) model.getAttribute("jobTypeSelect");
-        String companyName = (String) model.getAttribute("companyName");
+//        String companyName = (String) model.getAttribute("companyName");
         jobPostingFactory.setCompany(companyRepo.findCompanyByName(jobPostingFactory.getCompany().getName()));
 
-
         try {
-            jobPostingFactory.getJobPosting().setCompany(companyRepo.findCompanyByName(companyName));
-            switch (jobTypeSelect) {
+            jobPostingFactory.getJobPosting().setCompany(companyRepo.findCompanyByName(jobPostingFactory.getCompany().getName()));
+            switch (jobPostingFactory.getJobType()) {
                 case "FullTime" -> internshipRepo.save(jobPostingFactory.getInternship());
                 case "FreelanceProject" -> fullTimeRepo.save(jobPostingFactory.getFullTime());
                 case "Internship" -> freelanceProjectRepo.save(jobPostingFactory.getFreelanceProject());

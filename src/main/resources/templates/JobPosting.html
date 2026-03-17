@@ -214,10 +214,10 @@
                     <li>Posting Type: <span th:text="${job.jobPostingType}">Full Time</span></li>
                     <li>Date Posted: <span th:text="${job.datePosted}">2024-01-01</span></li>
                     <li>Requirements: <span th:text="${job.jobRequirements}">Requirements</span></li>
-                    <li>Job ID: <span th:text="${job.jobPostingUUID}">UUID</span></li>
+                    <li>Job ID: <span th:text="${job.id}">UUID</span></li>
                 </ul>
                 <div id="bottom" style="justify-items: right; display: flex; justify-content: flex-end">
-                    <a th:href="@{/applications/new(jobId=${job.jobPostingUUID})}" style="text-decoration: none" th:if="${isRecruiter == false && isAdmin == false}">
+                    <a th:href="@{/applications/new(jobId=${job.id})}" style="text-decoration: none" th:if="${isRecruiter == false && isAdmin == false}">
                         <button id="apply-button">Apply</button>
                     </a>
                 </div>

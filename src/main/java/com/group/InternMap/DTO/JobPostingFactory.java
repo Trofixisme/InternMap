@@ -1,5 +1,6 @@
 package com.group.InternMap.DTO;
 
+import com.group.InternMap.Company.Company;
 import com.group.InternMap.Job.FreelanceProject;
 import com.group.InternMap.Job.FullTime;
 import com.group.InternMap.Job.Internship;
@@ -11,6 +12,8 @@ public class JobPostingFactory {
     private final FullTime fullTime = new FullTime();
     private final Internship internship = new Internship();
     private final FreelanceProject freelanceProject = new FreelanceProject();
+    private Company company ;
+//    = new Company()
 
     public Internship toInternship() {
         internship.setRecruiter(jobPosting.getRecruiter());
@@ -50,5 +53,12 @@ public class JobPostingFactory {
 
     public FreelanceProject getFreelanceProject() {
         return freelanceProject;
+    }
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }

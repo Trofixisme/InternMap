@@ -95,7 +95,7 @@ public class JobPostingController {
         String jobType = "Internship";
 
         jobPostingFactory.getJobPosting().setRecruiter(recruiter);
-        model.addAttribute("companyName", companyName);
+//        model.addAttribute("companyName", companyName);
         model.addAttribute("jobTypeSelect", jobType);
         model.addAttribute("jobPostingFactory", jobPostingFactory);
         return "JobPostingForm";
@@ -103,12 +103,14 @@ public class JobPostingController {
 
     @PostMapping("/JobPostingForm")
     public String AddJobPosting(@ModelAttribute JobPostingFactory jobPostingFactory, HttpSession session, Model model) {
-        if (session.getAttribute("loggedInUser") == null || !(session.getAttribute("loggedInUser") instanceof Recruiter recruiter)) {
+        if (session.getAttribute("loggedInUser") == null || !(session.getAttribute("loggedInUser") instanceof Recruiter)) {
             return "redirect:/login";
         }
 
         String jobTypeSelect = (String) model.getAttribute("jobTypeSelect");
         String companyName = (String) model.getAttribute("companyName");
+        jobPostingFactory.setCompany(companyRepo.findCompanyByName(jobPostingFactory.getCompany().getName()));
+
 
         try {
             jobPostingFactory.getJobPosting().setCompany(companyRepo.findCompanyByName(companyName));

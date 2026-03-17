@@ -7,7 +7,6 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class RoadmapModuleSkill {
     private String roadmapName;
     private List<ModuleData> modules = new ArrayList<>();

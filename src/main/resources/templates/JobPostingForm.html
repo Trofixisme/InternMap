@@ -45,11 +45,11 @@
             <!-- Job Type Selection First -->
             <div class="form-group">
                 <label>
-                    <select class="form-input" id="jobTypeSelect" required>
+                    <select class="form-input" id="jobTypeSelect" th:field="${jobTypeSelect}" required>
                         <option value="" disabled selected>Select Job Type</option>
-                        <option value="Internship">Internship</option>
-                        <option value="FullTime">Full Time</option>
-                        <option value="FreeLanceProject">Freelance Project</option>
+                        <option value="Internship" th:field="${jobTypeSelect}">Internship</option>
+                        <option value="FullTime" th:field="${jobTypeSelect}">Full Time</option>
+                        <option value="FreeLanceProject" th:field="${jobTypeSelect}">Freelance Project</option>
                     </select>
                 </label>
             </div>
@@ -61,6 +61,7 @@
                            class="form-input"
                            name="jobName"
                            placeholder="Job Title"
+                           th:field="${jobPostingFactory.jobPosting.jobName}"
                            required />
                 </label>
             </div>
@@ -71,6 +72,7 @@
                            class="form-input"
                            name="companyName"
                            placeholder="Company Name"
+                           th:field="${companyName}"
                            required />
                 </label>
             </div>
@@ -81,6 +83,7 @@
                            class="form-input"
                            name="jobDescription"
                            placeholder="Job Description"
+                           th:field="${jobPostingFactory.jobPosting.jobDescription}"
                            required />
                 </label>
             </div>
@@ -91,6 +94,7 @@
                            class="form-input"
                            name="jobRequirements"
                            placeholder="Job Requirements"
+                           th:field="${jobPostingFactory.jobPosting.jobRequirements}"
                            required />
                 </label>
             </div>
@@ -103,16 +107,9 @@
                                class="form-input"
                                name="benefits"
                                placeholder="Benefits"
-                               id="fullTimeBenefits" />
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label>
-                        <input type="text"
-                               class="form-input"
-                               name="location"
-                               placeholder="Location"
-                               id="fullTimeLocation" />
+                               id="fullTimeBenefits"
+                               th:field="${jobPostingFactory.fullTime.benefits}"
+                        />
                     </label>
                 </div>
             </div>
@@ -125,7 +122,9 @@
                                class="form-input"
                                name="duration"
                                placeholder="Duration (e.g., 3 months)"
-                               id="internshipDuration" />
+                               id="internshipDuration"
+                               th:field="${jobPostingFactory.internship.duration}"
+                        />
                     </label>
                 </div>
                 <div class="form-group">
@@ -134,7 +133,9 @@
                                class="form-input"
                                name="location"
                                placeholder="Location"
-                               id="internshipLocation" />
+                               id="internshipLocation"
+                               th:field="${jobPostingFactory.internship.jobLocation}"
+                        />
                     </label>
                 </div>
             </div>
@@ -147,7 +148,9 @@
                                class="form-input"
                                name="duration"
                                placeholder="Duration"
-                               id="freelanceDuration" />
+                               id="freelanceDuration"
+                               th:field="${jobPostingFactory.freelanceProject.duration}"
+                        />
                     </label>
                 </div>
                 <div class="form-group">
@@ -156,22 +159,27 @@
                                class="form-input"
                                name="payout"
                                placeholder="Payout"
-                               id="freelancePayout" />
+                               id="freelancePayout"
+                               th:field="${jobPostingFactory.freelanceProject.payout}"
+                        />
                     </label>
                 </div>
                 <div class="form-group">
                     <label>
+<!--                        /*@thymesVar id="freelanceLocation" type="com.group.InternMap.Job.FreelanceProject"*/-->
                         <input type="text"
                                class="form-input"
                                name="jobLocation"
                                placeholder="Location"
-                               id="freelanceLocation" />
+                               id="freelanceLocation"
+                               th:field="${jobPostingFactory.freelanceProject.jobLocation}"
+                        />
                     </label>
                 </div>
             </div>
         </div>
 
-        <button type="submit" class="form-submit">Add Job Posting</button>
+        <button type="submit" class="form-submit">Create Posting</button>
     </form>
 </div>
 <div th:replace="~{fragments/footer}"></div>

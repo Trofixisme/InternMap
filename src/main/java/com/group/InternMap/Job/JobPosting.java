@@ -87,7 +87,7 @@ public class JobPosting implements Serializable {
     }
 
     public void setRecruiterEmail(String recruiterEmail) {
-        if (recruiter == null) {
+        if (recruiter != null) {
             recruiter.setEmail(recruiterEmail);
         }
     }
@@ -114,6 +114,10 @@ public class JobPosting implements Serializable {
 
     public Company getCompany() {
         return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public void setCompanyName(String companyName) {

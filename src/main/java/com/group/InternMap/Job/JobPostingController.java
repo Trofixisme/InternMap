@@ -3,6 +3,8 @@ package com.group.InternMap.Job;
 import com.group.InternMap.Admin.Admin;
 import com.group.InternMap.Application.Application;
 import com.group.InternMap.Application.ApplicationRepo;
+import com.group.InternMap.Company.CompanyRepo;
+import com.group.InternMap.DTO.JobPostingFactory;
 import com.group.InternMap.Recruiter.Recruiter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -13,20 +15,26 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allJobPostings;
-
 @Controller
 public class JobPostingController {
 
     ApplicationRepo applicationRepo;
     JobPostingService jobPostingService;
     JobRepo jobRepo;
+    CompanyRepo companyRepo;
+    InternshipRepo internshipRepo;
+    FullTimeRepo fullTimeRepo;
+    FreelanceProjectRepo freelanceProjectRepo;
 
     @Autowired
-    public JobPostingController(JobPostingService jobPostingService, ApplicationRepo applicationRepo,JobRepo jobRepo) {
+    public JobPostingController(JobPostingService jobPostingService, ApplicationRepo applicationRepo, JobRepo jobRepo, CompanyRepo companyRepo, InternshipRepo internshipRepo, FullTimeRepo fullTimeRepo, FreelanceProjectRepo freelanceProjectRepo) {
         this.jobPostingService = jobPostingService;
         this.applicationRepo = applicationRepo;
-        this.jobRepo=jobRepo;
+        this.jobRepo = jobRepo;
+        this.companyRepo = companyRepo;
+        this.internshipRepo = internshipRepo;
+        this.fullTimeRepo = fullTimeRepo;
+        this.freelanceProjectRepo = freelanceProjectRepo;
     }
 
     //JobPostings
@@ -78,43 +86,44 @@ public class JobPostingController {
 
     @GetMapping("/JobPostingForm")
     public String AddJobPostingForm(Model model, HttpSession session) {
-        if (session.getAttribute("loggedInUser") == null ||
-                !(session.getAttribute("loggedInUser") instanceof Recruiter recruiter)) {
+        if (session.getAttribute("loggedInUser") == null || !(session.getAttribute("loggedInUser") instanceof Recruiter recruiter)) {
             return "redirect:/login";
         }
 
-        JobPosting jobPosting = new JobPosting();
+        JobPostingFactory jobPostingFactory = new JobPostingFactory();
+        String companyName = "Sample";
+        String jobType = "Internship";
 
-        // IMPORTANT: Initialize all nested objects
-//    jobPosting.setFullTime(new FullTime());
-//    jobPosting.setInternship(new Internship());
-//    jobPosting.setFreeLanceProject(new FreeLanceProject());
-
-        jobPosting.setRecruiter(recruiter);
-        model.addAttribute("jobPosting", jobPosting);
+        jobPostingFactory.getJobPosting().setRecruiter(recruiter);
+        model.addAttribute("companyName", companyName);
+        model.addAttribute("jobTypeSelect", jobType);
+        model.addAttribute("jobPostingFactory", jobPostingFactory);
         return "JobPostingForm";
     }
 
     @PostMapping("/JobPostingForm")
-    public String AddJobPosting(@ModelAttribute JobPosting jobPosting,
-                                HttpSession session,
-                                Model model) {
-        if (session.getAttribute("loggedInUser") == null ||
-                !(session.getAttribute("loggedInUser") instanceof Recruiter recruiter)) {
+    public String AddJobPosting(@ModelAttribute JobPostingFactory jobPostingFactory, HttpSession session, Model model) {
+        if (session.getAttribute("loggedInUser") == null || !(session.getAttribute("loggedInUser") instanceof Recruiter recruiter)) {
             return "redirect:/login";
         }
 
-        try {
+        String jobTypeSelect = (String) model.getAttribute("jobTypeSelect");
+        String companyName = (String) model.getAttribute("companyName");
 
-            jobPosting.setRecruiter(recruiter);
-            jobRepo.save(jobPosting);
+        try {
+            jobPostingFactory.getJobPosting().setCompany(companyRepo.findCompanyByName(companyName));
+            switch (jobTypeSelect) {
+                case "FullTime" -> internshipRepo.save(jobPostingFactory.getInternship());
+                case "FreelanceProject" -> fullTimeRepo.save(jobPostingFactory.getFullTime());
+                case "Internship" -> freelanceProjectRepo.save(jobPostingFactory.getFreelanceProject());
+            }
 
             model.addAttribute("success", "Job posting created successfully!");
             return "redirect:/JobPostings"; // or return to form with a success message
 
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Error: " + e.getMessage());
-            model.addAttribute("jobPosting", jobPosting);
+            model.addAttribute("jobPostingFactory", jobPostingFactory);
             return "JobPostingForm";
         }
     }

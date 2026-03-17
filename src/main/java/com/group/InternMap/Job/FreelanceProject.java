@@ -17,4 +17,8 @@ public class FreelanceProject extends JobPosting implements Serializable {
     public int getPayout() {
         return Payout;
     }
+
+    public String getJobLocation() {
+        return jobLocation;
+    }
 }

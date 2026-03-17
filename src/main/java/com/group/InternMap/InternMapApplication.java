@@ -12,7 +12,7 @@ public class InternMapApplication {
 
     public static void main(String[] args) throws IllegalClassFormatException {
         ApplicationContext context = SpringApplication.run(InternMapApplication.class, args);
-        ShutDownSaver.registerShutdownHook();
+//        ShutDownSaver.registerShutdownHook();
 //        Skill skill1 = new Skill("Java", "A high-level programming language used for building applications.");
 //        RoadmapModule module1 = new RoadmapModule("Backend Development", skill1);
 //        Roadmap roadmap = new Roadmap("Backend Developer",module1);

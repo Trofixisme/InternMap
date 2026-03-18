@@ -14,13 +14,13 @@ public class JobPostingFactory {
     private final FreelanceProject freelanceProject = new FreelanceProject();
     private Company company ;
     private String jobType;
-//    = new Company()
 
     public Internship toInternship() {
         internship.setRecruiter(jobPosting.getRecruiter());
         internship.setJobName(jobPosting.getJobName());
         internship.setJobDescription(jobPosting.getJobDescription());
         internship.setJobRequirements(jobPosting.getJobRequirements());
+        internship.setCompany(company);
         return internship;
     }
 
@@ -29,6 +29,7 @@ public class JobPostingFactory {
         freelanceProject.setJobName(jobPosting.getJobName());
         freelanceProject.setJobDescription(jobPosting.getJobDescription());
         freelanceProject.setJobRequirements(jobPosting.getJobRequirements());
+        freelanceProject.setCompany(company);
         return freelanceProject;
     }
 
@@ -37,6 +38,7 @@ public class JobPostingFactory {
         fullTime.setJobName(jobPosting.getJobName());
         fullTime.setJobDescription(jobPosting.getJobDescription());
         fullTime.setJobRequirements(jobPosting.getJobRequirements());
+        fullTime.setCompany(company);
         return fullTime;
     }
 
@@ -55,6 +57,7 @@ public class JobPostingFactory {
     public FreelanceProject getFreelanceProject() {
         return freelanceProject;
     }
+
     public Company getCompany() {
         return company;
     }
@@ -70,4 +73,5 @@ public class JobPostingFactory {
     public void setJobType(String jobType) {
         this.jobType = jobType;
     }
+
 }

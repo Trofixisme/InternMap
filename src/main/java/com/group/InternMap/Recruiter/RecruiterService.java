@@ -27,7 +27,7 @@ public class RecruiterService extends UserService {
     }
 
     public void addCompanyToRecruiter(long recruiterId, long companyId) {
-        try{
+        try {
             Recruiter recruiter = findRecruiterById(recruiterId);
             Company company = companyRepo.findCompanyById(companyId);
             recruiter.addCompany(company);

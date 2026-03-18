@@ -44,4 +44,16 @@ public class CompanyService {
     public List<Company> viewAllCompanies(){
         return companyRepo.findAll();
      }
+
+    public void deleteCompany(Long companyId) {
+        Company company = companyRepo.findCompanyById(companyId);
+
+        if (company == null) {
+            throw new IllegalArgumentException("Company not found");
+        }
+
+        companyRepo.delete(company);
+    }
+
+
 }

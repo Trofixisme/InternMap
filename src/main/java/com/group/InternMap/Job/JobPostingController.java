@@ -103,7 +103,7 @@ public class JobPostingController {
 
     @PostMapping("/JobPostingForm")
     public String AddJobPosting(@ModelAttribute JobPostingFactory jobPostingFactory, HttpSession session, Model model) {
-        if (session.getAttribute("loggedInUser") == null || !(session.getAttribute("loggedInUser") instanceof Recruiter)) {
+        if (session.getAttribute("loggedInUser") == null || !(session.getAttribute("loggedInUser") instanceof Recruiter recruiter)) {
             return "redirect:/login";
         }
 
@@ -113,10 +113,11 @@ public class JobPostingController {
 
         try {
             jobPostingFactory.getJobPosting().setCompany(companyRepo.findCompanyByName(jobPostingFactory.getCompany().getName()));
+            jobPostingFactory.getJobPosting().setRecruiter(recruiter);
             switch (jobPostingFactory.getJobType()) {
-                case "FullTime" -> internshipRepo.save(jobPostingFactory.getInternship());
-                case "FreelanceProject" -> fullTimeRepo.save(jobPostingFactory.getFullTime());
-                case "Internship" -> freelanceProjectRepo.save(jobPostingFactory.getFreelanceProject());
+                case "FullTime" -> jobRepo.save(jobPostingFactory.toInternship());
+                case "FreelanceProject" -> jobRepo.save(jobPostingFactory.toFullTime());
+                case "Internship" -> jobRepo.save(jobPostingFactory.toFreelanceProject());
             }
 
             model.addAttribute("success", "Job posting created successfully!");

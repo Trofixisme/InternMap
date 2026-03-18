@@ -143,7 +143,7 @@ public class StudentController {
 //        applicationandCVDTO.setStudent(user);
 //        UUID jobPostingID = jobId;
         try {
-            JobPosting jobPosting=jobPostingService.findJobPostingByID(jobId);
+            JobPosting jobPosting = jobPostingService.findJobPostingByID(jobId);
 
             System.out.println(jobPosting);
             if (jobPosting == null) {

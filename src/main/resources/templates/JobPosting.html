@@ -210,9 +210,9 @@
             <div class="unordered-list" id="details-specifics">
                 <ul>
                     <li>Email: <span th:text="${job.recruiterEmail}">example@example.com</span></li>
-                    <li>Company: <span th:text="${job.companyName}">[COMPANY NAME]</span></li>
-                    <li>Posting Type: <span th:text="${job.jobPostingType}">Full Time</span></li>
-                    <li>Date Posted: <span th:text="${job.datePosted}">2024-01-01</span></li>
+                    <li>Company: <span th:text="${job.company.name}">[COMPANY NAME]</span></li>
+<!--                    <li>Posting Type: <span th:text="${job.jobPostingType}">Full Time</span></li>-->
+                    <li>Date Posted: <span th:text="${job.postingDate}">2024-01-01</span></li>
                     <li>Requirements: <span th:text="${job.jobRequirements}">Requirements</span></li>
                     <li>Job ID: <span th:text="${job.id}">UUID</span></li>
                 </ul>

@@ -66,16 +66,7 @@
                 </label>
             </div>
 
-            <div class="form-group">
-                <label>
-                    <input type="text"
-                           class="form-input"
-                           name="companyName"
-                           placeholder="Company Name"
-                           th:field="${jobPostingFactory.company.name}"
-                           required />
-                </label>
-            </div>
+
 
             <div class="form-group">
                 <label>
@@ -112,6 +103,16 @@
                         />
                     </label>
                 </div>
+                <div class="form-group">
+                    <label>
+                        <input type="text"
+                               class="form-input"
+                               name="companyName"
+                               placeholder="Company Name"
+                               th:field="${jobPostingFactory.company.name}"
+                               required />
+                    </label>
+                </div>
             </div>
 
             <!-- Internship Specific Fields -->
@@ -136,6 +137,16 @@
                                id="internshipLocation"
                                th:field="${jobPostingFactory.internship.jobLocation}"
                         />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="text"
+                               class="form-input"
+                               name="companyName"
+                               placeholder="Company Name"
+                               th:field="${jobPostingFactory.company.name}"
+                               required />
                     </label>
                 </div>
             </div>

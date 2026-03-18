@@ -265,7 +265,7 @@
     <!-- Page Header -->
     <div th:unless="${jobPosting == null}"  class="page-header">
         <h1 th:text="'Applications for: ' + ${jobPosting.jobName}">Applications List</h1>
-        <p><strong>Company:</strong> <span th:text="${jobPosting.companyName}">Company Name</span></p>
+<!--        <p><strong>Company:</strong> <span th:text="${jobPosting.companyName}">Company Name</span></p>-->
         <p><strong>Posted By:</strong> <span th:text="${jobPosting.recruiterEmail}">recruiter@example.com</span></p>
         <p><strong>Total Applications:</strong> <span th:text="${applications.size()}">0</span></p>
     </div>

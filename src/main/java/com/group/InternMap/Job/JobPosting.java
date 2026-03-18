@@ -32,8 +32,8 @@ public class JobPosting implements Serializable {
     @ManyToOne
     private Company company;
 
-    @OneToMany
-    private List<Application> applications = new ArrayList<>();
+    @OneToMany(mappedBy = "jobPosting")
+    private List<Application> applications;
 
     public void setJobDescription(String jobDescription) {
         this.jobDescription = jobDescription;
@@ -92,9 +92,7 @@ public class JobPosting implements Serializable {
         }
     }
 
-    public void addApplication(Application application) {
-        this.applications.add(application);
-    }
+
 
     public void setRecruiter(Recruiter recruiter) {
         this.recruiter = recruiter;
@@ -124,6 +122,14 @@ public class JobPosting implements Serializable {
          company.setName(companyName);
     }
 
+    public void setApplications(List<Application> applications) {
+        this.applications = applications;
+    }
+    public void addApplication(Application application) {
+        this.applications.add(application);
+    }
 
-
+    public List<Application> getApplications() {
+        return applications;
+    }
 }

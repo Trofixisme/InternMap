@@ -1,6 +1,7 @@
 package com.group.InternMap.Student;
 
 import com.group.InternMap.Application.Application;
+import com.group.InternMap.Application.ApplicationRepo;
 import com.group.InternMap.Application.CV;
 import com.group.InternMap.Application.CVRepo;
 import com.group.InternMap.DTO.ApplicationAndCVDTO;
@@ -20,17 +21,19 @@ import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allA
 @Controller
 public class StudentController {
 
+    private final ApplicationRepo applicationRepo;
     JobPostingService jobPostingService;
     UserService userService;
     CVRepo cvRepo;
     StudentRepo studentRepo;
 
     @Autowired
-    public StudentController(JobPostingService jobPostingService, UserService userService, CVRepo cvRepo, StudentRepo studentRepo) {
+    public StudentController(JobPostingService jobPostingService, UserService userService, CVRepo cvRepo, StudentRepo studentRepo, ApplicationRepo applicationRepo) {
         this.jobPostingService = jobPostingService;
         this.userService = userService;
         this.cvRepo = cvRepo;
         this.studentRepo = studentRepo;
+        this.applicationRepo = applicationRepo;
     }
 
     @GetMapping("/student/register")
@@ -136,7 +139,7 @@ public class StudentController {
         }
 //        Application application = applicationandCVDTO.getApplication();
         Student user = (Student) session.getAttribute("loggedInUser");
-        if(user.getCv() == null){
+        if (user.getCv() == null) {
             redirectAttributes.addFlashAttribute("error","CV not found");
             return "redirect:/cv";
         }
@@ -155,8 +158,9 @@ public class StudentController {
             Application application = applicationandCVDTO.getApplication();
 //            application.setCv(user.getCv());
             applicationandCVDTO.setStudent(user);
+            application.setStudent(user);
             jobPosting.addApplication(application);
-            allApplications.add(application);
+            applicationRepo.save(application);
             redirectAttributes.addFlashAttribute("message", "Application saved successfully");
             return "redirect:/JobPostings";
         }

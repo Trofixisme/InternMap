@@ -1,5 +1,6 @@
 package com.group.InternMap.Application;
 
+import com.group.InternMap.Job.JobPosting;
 import com.group.InternMap.Student.Student;
 import jakarta.persistence.*;
 
@@ -30,6 +31,9 @@ public class Application implements Serializable, Comparable<Application> {
 
     @ManyToOne //@JoinColumn(name = "student_id", referencedColumnName = "id")
     Student student;
+    @ManyToOne
+    @JoinColumn(name = "job_id")
+    private JobPosting jobPosting;
 
     public Application() {}
 
@@ -39,6 +43,14 @@ public class Application implements Serializable, Comparable<Application> {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.applicationDate = new Date();
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     public Long getApplicationID() {

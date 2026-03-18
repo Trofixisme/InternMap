@@ -10,5 +10,7 @@ public interface ApplicationRepo extends JpaRepository<Application, Long> {
     List<Application> findByEmail(String email);
 
     @Query(value = "SELECT * FROM application WHERE job_posting_id = ?1", nativeQuery = true)
-    List<Application> findByJobPosting(JobPosting jobPosting);
+    List<Application> findByJobPostingId(Long jobPostingId);
+
+
 }

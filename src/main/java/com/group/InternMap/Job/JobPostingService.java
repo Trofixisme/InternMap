@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 
 @Service
 public class JobPostingService {
@@ -42,4 +44,6 @@ public class JobPostingService {
     public List<JobPosting> findJobPostingByName(String name) {
         return jobRepo.findJobPostingByJobName(name);
     }
+//    JobPosting job =  jobRepo.getById(id);
+
 }

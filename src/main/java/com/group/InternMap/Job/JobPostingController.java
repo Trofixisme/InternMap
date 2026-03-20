@@ -33,9 +33,10 @@ public class JobPostingController {
     FullTimeRepo fullTimeRepo;
     FreelanceProjectRepo freelanceProjectRepo;
     UserService userService;
+    UserRepo userRepo;
 
     @Autowired
-    public JobPostingController(JobPostingService jobPostingService, ApplicationRepo applicationRepo, JobRepo jobRepo, CompanyRepo companyRepo, InternshipRepo internshipRepo, FullTimeRepo fullTimeRepo, FreelanceProjectRepo freelanceProjectRepo) {
+    public JobPostingController(JobPostingService jobPostingService, ApplicationRepo applicationRepo, JobRepo jobRepo, CompanyRepo companyRepo, InternshipRepo internshipRepo, FullTimeRepo fullTimeRepo, FreelanceProjectRepo freelanceProjectRepo, UserService userService, UserRepo userRepo) {
         this.jobPostingService = jobPostingService;
         this.applicationRepo = applicationRepo;
         this.jobRepo = jobRepo;
@@ -43,6 +44,9 @@ public class JobPostingController {
         this.internshipRepo = internshipRepo;
         this.fullTimeRepo = fullTimeRepo;
         this.freelanceProjectRepo = freelanceProjectRepo;
+        this.userService = userService;
+        this.userRepo = userRepo;
+
     }
 
     //JobPostings
@@ -191,10 +195,15 @@ public class JobPostingController {
     @GetMapping("/cv/{email}")
     public String viewCV(@PathVariable("email") String email, Model model) {
         try {
-            Optional<Users> retrievedStudent = userService.searchByEmail(email);
-            model.addAttribute("user", retrievedStudent);
+            Optional<Users> retrievedStudent = userRepo.findByEmail(email);
+            if (retrievedStudent == null || retrievedStudent.isEmpty()) {
+                model.addAttribute("error", "Student not found");
+                return "ViewApplicationDetail";
+            }
+            Student user = (Student) retrievedStudent.get();
+            model.addAttribute("user", user);
             model.addAttribute("type", "student");
-            return "redirect:/CV";
+            return "profile";
         } catch (Exception e) {
             model.addAttribute("error", "Error loading application");
             return "ViewApplicationDetail";

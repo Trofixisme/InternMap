@@ -54,7 +54,12 @@ public class UserService implements FilePaths {
         throw new IllegalArgumentException("Neither the email nor the password are allowed to be empty.");
     }
 
-    Users user = userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+    Optional<Users> optionalUser = userRepo.findByEmail(email);
+    if (optionalUser.isEmpty()) {
+        throw new Exception("No user found with that email.");
+    }
+
+    Users user = optionalUser.get();
     if (user.getPlainPassword().equals(password)) {
         return user;
     } else {
@@ -71,5 +76,3 @@ public class UserService implements FilePaths {
     }
 
 }
-
-

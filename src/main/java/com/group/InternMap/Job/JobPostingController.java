@@ -6,6 +6,10 @@ import com.group.InternMap.Application.ApplicationRepo;
 import com.group.InternMap.Company.CompanyRepo;
 import com.group.InternMap.DTO.JobPostingFactory;
 import com.group.InternMap.Recruiter.Recruiter;
+import com.group.InternMap.Student.Student;
+import com.group.InternMap.User.UserRepo;
+import com.group.InternMap.User.UserService;
+import com.group.InternMap.User.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import jakarta.servlet.http.HttpSession;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
@@ -27,6 +32,7 @@ public class JobPostingController {
     InternshipRepo internshipRepo;
     FullTimeRepo fullTimeRepo;
     FreelanceProjectRepo freelanceProjectRepo;
+    UserService userService;
 
     @Autowired
     public JobPostingController(JobPostingService jobPostingService, ApplicationRepo applicationRepo, JobRepo jobRepo, CompanyRepo companyRepo, InternshipRepo internshipRepo, FullTimeRepo fullTimeRepo, FreelanceProjectRepo freelanceProjectRepo) {
@@ -185,11 +191,10 @@ public class JobPostingController {
     @GetMapping("/cv/{email}")
     public String viewCV(@PathVariable("email") String email, Model model) {
         try {
-//            Student retrievedStudent = (Student) new UserService().searchByEmail(email);
-//            model.addAttribute("user", retrievedStudent);
-//            model.addAttribute("student", retrievedStudent);
+            Optional<Users> retrievedStudent = userService.searchByEmail(email);
+            model.addAttribute("user", retrievedStudent);
             model.addAttribute("type", "student");
-            return "profile";
+            return "redirect:/CV";
         } catch (Exception e) {
             model.addAttribute("error", "Error loading application");
             return "ViewApplicationDetail";

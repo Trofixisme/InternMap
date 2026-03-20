@@ -177,9 +177,11 @@
             <button id="bu1"> Positions</button>
         </div>
     </div>
-    <form th:action="@{/JobPostings/search(searchQuery=${searchQuery})}" method="post" class="search-form">
-            <input type="text" th:name="${searchQuery}" name="searchQuery" placeholder="Search by company name or job title" class="search-input"/>
-        <button type="submit" class="search-button"><img src="/images/magnifying_glass.png" alt="Magnifying glass" style="width: 22px; height: 22px"></button>
+    <form th:action="@{/JobPostings/search}" method="post" class="search-form">
+        <input type="text" name="searchQuery" placeholder="Search by company name or job title" class="search-input"/>
+        <button type="submit" class="search-button">
+            <img src="/images/magnifying_glass.png" alt="Magnifying glass" style="width: 22px; height: 22px">
+        </button>
     </form>
 
     <div th:if="${isRecruiter == true}" class="action-buttons" >

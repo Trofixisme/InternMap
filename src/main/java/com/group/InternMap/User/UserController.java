@@ -35,10 +35,9 @@ public class UserController {
                     .sum();
             model.addAttribute("roadmap", roadmap);
             model.addAttribute("totalSkills", totalSkills);
-            model.addAttribute("user", (Users) session.getAttribute("loggedInUser"));
+            model.addAttribute("user", session.getAttribute("loggedInUser"));
             return "roadmap/view";
-        }
-        catch(Exception e){
+        } catch(Exception e) {
             model.addAttribute(e);
             return "redirect:/roadmaps";
         }

@@ -2,35 +2,30 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+        <link rel="stylesheet" href="/CSS/Universal.css">
     <link rel="icon" type="image/png" href="/images/Logo Glass Large.png">
-    <link rel="stylesheet" th:href="@{/CSS/style.css}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>User Profile</title>
 </head>
 
-<body class="bg-light">
-<div class="container mt-5">
+<body class="font-inter">
 
-    <!-- Profile Card -->
-    <div class="card shadow p-4">
+<h1 class="page-header">Profile</h1>
 
-        <h2 class="mb-4 text-center">Profile</h2>
-
-        <!-- Shared User Fields -->
-        <div class="mb-3">
-            <label class="form-label fw-bold">Full Name</label>
-            <p th:text="${user.fName}" class="form-control-plaintext"></p>
+<!-- Profile Container -->
+<div class="centered-container-full-width">
+        <div>
+            <label class="label-small">Full Name</label>
+            <p th:text="${user.FName}" class="auto-capitalise"></p>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label fw-bold">Email</label>
-            <p th:text="${user.email}" class="form-control-plaintext"></p>
+        <div>
+            <label class="label-small">Email</label>
+            <p th:text="${user.email}"></p>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label fw-bold">Role</label>
-            <p th:text="${type}" class="form-control-plaintext text-capitalize"></p>
+        <div>
+            <label class="label-small">Role</label>
+            <p th:text="${type}" class="auto-capitalise"></p>
         </div>
 
         <hr>
@@ -38,51 +33,50 @@
         <!-- Student Fields -->
         <div th:if="${type == 'student'}">
 
-            <h4 class="text-primary mb-3">Student Details</h4>
+            <h4 class="label-large">Student Details</h4>
 
             <div class="mb-3">
-                <label class="form-label fw-bold">Major</label>
-                <p th:text="${student.studentMajor}" class="form-control-plaintext"></p>
+                <label class="label-small">Major</label>
+                <p th:text="${student.studentMajor}" class="auto-capitalise"></p>
             </div>
 
             <div class="mb-3">
-                <label class="form-label fw-bold">Year</label>
-                <p th:text="${student.graduatingYear}" class="form-control-plaintext"></p>
+                <label class="label-small">Year</label>
+                <p th:text="${student.graduatingYear}" class="auto-capitalise"></p>
             </div>
 
             <div class="mb-3">
-                <label class="form-label fw-bold">University</label>
-                <p th:text="${student.uniName}" class="form-control-plaintext"></p>
+                <label class="label-small">University</label>
+                <p th:text="${student.uniName}" class="auto-capitalise"></p>
             </div>
+
             <!-- CV Section -->
-            <h4 class="text-primary mb-3">Curriculum Vitae</h4>
+            <h4 class="label-large">Curriculum Vitae</h4>
 
             <div th:if="${student.cv != null}">
 
-                <div class="card bg-light p-3 mb-3">
+                <div>
 
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Professional Summary</label>
-                        <p th:text="${student.cv.description}" class="form-control-plaintext"></p>
+                    <div>
+                        <label class="label-small">Professional Summary</label>
+                        <p th:text="${student.cv.description}" class="auto-capitalise"></p>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Past Experiences</label>
+                    <div>
+                        <label class="label-small">Past Experiences</label>
                         <p th:text="${student.cv.pastExperiences}"
-                           class="form-control-plaintext"
                            style="white-space: pre-wrap;"></p>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Projects</label>
+                    <div>
+                        <label class="label-small">Projects</label>
                         <p th:text="${student.cv.projects}"
-                           class="form-control-plaintext"
                            style="white-space: pre-wrap;"></p>
                     </div>
 
                 </div>
 
-                <div class="d-flex gap-2">
+                <div>
                     <a href="/cv" class="btn btn-warning btn-sm">
                         <i class="bi bi-pencil"></i> Edit CV
                     </a>
@@ -103,32 +97,33 @@
         <!-- Recruiter Fields -->
         <div th:if="${type == 'recruiter'}">
 
-            <h4 class="text-primary mb-3">Recruiter Details</h4>
+            <h4 class="label-large">Recruiter Details</h4>
 
-            <div class="mb-3">
-                <label class="form-label fw-bold">Position</label>
-                <p th:text="${recruiter}" class="form-control-plaintext"></p>
+            <div>
+                <label class="label-small">Position</label>
+                <p th:text="${recruiter.title}" class="auto-capitalise"></p>
             </div>
 
-            <div class="mb-3">
+            <div>
 
-                <label class="form-label fw-bold">Companies</label>
+                <label class="label-small">Companies</label>
+                <br><br>
 
-                <!-- If recruiter has companies -->
+                <!-- If a recruiter has one or more companies -->
                 <div th:if="${!#lists.isEmpty(recruiter.companies)}">
 
-                    <table class="table table-sm table-bordered">
-                        <thead class="table-light">
+                    <table class="table">
+                        <thead>
                         <tr>
-                            <th>Company Name</th>
-                            <th>Industry</th>
+                            <th class="inner-table">Company Name</th>
+                            <th class="inner-table">Industry</th>
                         </tr>
                         </thead>
 
-                        <tbody>
-                        <tr th:each="company : ${recruiter.companies}">
-                            <td th:text="${company.name}">Company Name</td>
-                            <td th:text="${company.industry}">Industry</td>
+                        <tbody class="inner-table">
+                        <tr class="inner-table" th:each="company : ${recruiter.companies}">
+                            <td class="inner-table" th:text="${company.name}">Company Name</td>
+                            <td class="inner-table" th:text="${company.industry}">Industry</td>
                         </tr>
                         </tbody>
 
@@ -136,14 +131,13 @@
 
                 </div>
 
-                <!-- If recruiter has no companies -->
+                <!-- If the recruiter has no companies -->
                 <p th:if="${#lists.isEmpty(recruiter.companies)}"
-                   class="form-control-plaintext text-muted">
-                    - You're not working for any company.
+                   class="auto-capitalise">
+                    — You're not working for any company.
                 </p>
 
             </div>
-
         </div>
         <!-- Admin Fields -->
 <!--        <div th:if="${type == 'admin'}">-->
@@ -151,16 +145,14 @@
 <!--        </div>-->
 <!--        <hr>-->
 
-        <!-- Buttons -->
-        <div class="d-flex justify-content-between mt-4">
+        <br>
 
-            <a href="/" class="btn btn-secondary">Back to Dashboard</a>
+        <!-- Buttons -->
+        <div>
+        <button onclick="window.location.href = '/'" class="grid-button">Home</button>
 
 <!--            <a th:href="@{'/profile/edit'}" class="btn btn-primary">Edit Profile</a>-->
-
         </div>
-
     </div>
-</div>
 </body>
 </html>

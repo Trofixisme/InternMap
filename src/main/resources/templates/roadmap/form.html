@@ -26,7 +26,7 @@
             padding: 2rem;
         }
 
-        .container {
+        .centered-container-full-width {
             max-width: 1000px;
             margin: 0 auto;
             background: white;
@@ -188,7 +188,7 @@
 <body>
 <img src="/images/compass.png" alt="Roadmap Logo" width="140" height="140" id="logo">
 <h1>Create a new roadmap</h1>
-<div class="container">
+<div class="container-full-width">
 
     <form th:action="@{/new}" method="post" th:object="${roadmaps}">
 

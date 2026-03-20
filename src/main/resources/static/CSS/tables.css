@@ -11,7 +11,7 @@ body {
     line-height: 1.6;
 }
 
-.container {
+.centered-container-full-width {
     max-width: 1200px;
     margin: 0 auto;
     background: white;

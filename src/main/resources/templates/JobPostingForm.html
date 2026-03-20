@@ -38,7 +38,7 @@
         <p th:text="${errorMessage}" style="margin: 0;"></p>
     </div>
 
-    <form th:action="@{/JobPostingForm}" method="post">
+    <form th:action="@{/JobPostingForm}" method="post" novalidate>
         <input type="hidden" name="jobPostingType" id="jobPostingTypeHidden" value="">
 
         <div class="form-row">
@@ -88,6 +88,12 @@
                            th:field="${jobPostingFactory.jobPosting.jobRequirements}"
                            required />
                 </label>
+                <input type="text"
+                       class="form-input"
+                       name="company.name"
+                       id="CompanyName"
+                       placeholder="company name"
+                       th:field="${jobPostingFactory.company.name}" />
             </div>
 
             <!-- Full Time Specific Fields -->
@@ -103,16 +109,7 @@
                         />
                     </label>
                 </div>
-                <div class="form-group">
-                    <label>
-                        <input type="text"
-                               class="form-input"
-                               name="companyName"
-                               placeholder="Company Name"
-                               th:field="${jobPostingFactory.company.name}"
-                               required />
-                    </label>
-                </div>
+
             </div>
 
             <!-- Internship Specific Fields -->
@@ -139,16 +136,7 @@
                         />
                     </label>
                 </div>
-                <div class="form-group">
-                    <label>
-                        <input type="text"
-                               class="form-input"
-                               name="companyName"
-                               placeholder="Company Name"
-                               th:field="${jobPostingFactory.company.name}"
-                               required />
-                    </label>
-                </div>
+
             </div>
 
             <!-- Freelance Project Specific Fields -->

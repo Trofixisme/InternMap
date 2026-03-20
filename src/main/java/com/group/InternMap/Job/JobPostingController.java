@@ -91,16 +91,20 @@ public class JobPostingController {
         if (session.getAttribute("loggedInUser") == null || !(session.getAttribute("loggedInUser") instanceof Recruiter recruiter)) {
             return "redirect:/login";
         }
+        try {
+            JobPostingFactory jobPostingFactory = new JobPostingFactory();
+            String companyName = "Sample";
+            String jobType = "Internship";
 
-        JobPostingFactory jobPostingFactory = new JobPostingFactory();
-        String companyName = "Sample";
-        String jobType = "Internship";
-
-        jobPostingFactory.getJobPosting().setRecruiter(recruiter);
+            jobPostingFactory.getJobPosting().setRecruiter(recruiter);
 //        model.addAttribute("companyName", companyName);
-        model.addAttribute("jobTypeSelect", jobType);
-        model.addAttribute("jobPostingFactory", jobPostingFactory);
-        return "JobPostingForm";
+            model.addAttribute("jobTypeSelect", jobType);
+            model.addAttribute("jobPostingFactory", jobPostingFactory);
+            return "JobPostingForm";
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @PostMapping("/JobPostingForm")

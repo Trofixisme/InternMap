@@ -294,7 +294,7 @@
         <!-- Application Cards -->
         <div class="application-card" th:each="app : ${applications}"
              th:if="${applications != null and !applications.isEmpty()}">
-            <div class="applicant-title" th:text="${app.fname + ' ' + app.lname}">Applicant's Name</div>
+            <div class="applicant-title" th:text="${app.fName + ' ' + app.lName}">Applicant's Name</div>
 
             <div class="application-info">
                 <ul>
@@ -318,7 +318,7 @@
             </div>
 
             <div class="action-link">
-                <a th:unless="${app.cv != null}" class="review-btn-unprovided">Not provided</a>
+                <a th:unless="${app.student.cv != null}" class="review-btn-unprovided">Not provided</a>
                 <a th:href="@{/cv/{email}(email=${app.email})}" class="review-btn">
                     View CV
                 </a>

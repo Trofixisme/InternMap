@@ -21,9 +21,6 @@ public interface JobRepo extends JpaRepository<JobPosting, Long> {
 
 
 
-    JobPosting getById(SingularAttribute<AbstractPersistable, Serializable> id);
-
-
 //    @Query("SELECT j FROM JobPosting j WHERE " +
 //            "LOWER(j.jobName) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
 //            "LOWER(j.jobDescription) LIKE LOWER(CONCAT('%', :query, '%')) OR " +

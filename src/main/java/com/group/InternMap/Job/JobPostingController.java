@@ -162,8 +162,15 @@ public class JobPostingController {
                 return "redirect:/JobPostings";
             }
 
-            List<Application> apps = job.getApplications();
-//            List<Application> apps =jobRepo.findByJobPosting(job);
+            List<Application> apps = applicationRepo.findByJobPosting(job);
+
+            System.out.println("Fetched applications count: " + (apps == null ? 0 : apps.size()));
+            if (apps != null) {
+                for (Application a : apps) {
+                    System.out.println("App id=" + a.getApplicationID() + ", app.jobPostingId=" + (a.getJobPosting() == null ? "null" : a.getJobPosting().getId()));
+                }
+            }
+
             model.addAttribute("jobPosting", job);
             model.addAttribute("applications", apps);
             return "ViewApplicationDetail"; //I still don't have it, but need to do it for clicking the view button

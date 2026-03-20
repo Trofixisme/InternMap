@@ -97,6 +97,14 @@ public class Application implements Serializable, Comparable<Application> {
         this.email = email;
     }
 
+    public JobPosting getJobPosting() {
+        return jobPosting;
+    }
+
+    public void setJobPosting(JobPosting jobPosting) {
+        this.jobPosting = jobPosting;
+    }
+
     @Override
     public int compareTo(Application application) {
         if(this.getApplicationDate().before(application.getApplicationDate())){

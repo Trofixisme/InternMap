@@ -33,7 +33,7 @@ public class JobPosting implements Serializable {
     private Company company;
 
     @OneToMany(mappedBy = "jobPosting")
-    private List<Application> applications;
+    private List<Application> applications = new ArrayList<>();
 
     public void setJobDescription(String jobDescription) {
         this.jobDescription = jobDescription;
@@ -126,6 +126,8 @@ public class JobPosting implements Serializable {
         this.applications = applications;
     }
     public void addApplication(Application application) {
+        // set the owning side so the application will have the jobPosting foreign key
+        application.setJobPosting(this);
         this.applications.add(application);
     }
 

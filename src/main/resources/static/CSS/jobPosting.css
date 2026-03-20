@@ -63,8 +63,8 @@ header {
         #logo {
             display: flex;
             margin: 0 auto;
-            width: 162px;
-            height: 162px;
+            width: 125px;
+            height: 125px;
             aspect-ratio: 1/1;
         }
 

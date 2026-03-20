@@ -83,14 +83,12 @@ public class JobPostingController {
     public String searchJobPosting(@RequestParam("searchQuery") String searchQuery, Model model) {
         try {
             // Search dynamically using your service
-             List<JobPosting> results = jobPostingService.findJobPostingByName(searchQuery);
+             List<JobPosting> results = jobRepo.searchJobs(searchQuery);
             // Add search results to the model
              model.addAttribute("jobPostings", results);
-
         } catch (Exception e) {
             model.addAttribute("error", "Error searching application: " + e.getMessage());
         }
-
         return "JobPosting";
     }
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="icon" type="image/png" href="/images/Logo%20With%20Shadow.png">
+    <link rel="icon" type="image/png" href="/images/Navi/Navi%20Unique.png">
     <link rel="stylesheet" th:href="@{/CSS/form.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +12,7 @@
 </head>
 
 <div class="horizontally-centered-container">
-    <img src="/Images/Logo With Shadow.png" alt="Logo" style="width: 100px; height: 100px; margin-bottom: 15px;">
+    <img src="/images/Navi/Navi%20Unique.png" alt="Logo" style="width: 100px; height: 100px; margin-bottom: 15px;">
     <form th:action="@{/login}" th:object="${user}" method="post">
         <h1>Log in</h1>
         <div th:if="${errorMessage}"

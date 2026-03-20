@@ -53,6 +53,9 @@ public class HomeController {
             return "redirect:/login";
         }
 
+        //Stupid way to resolve the "Edit CV" button not showing up whenever it should show
+        //or showing up when it shouldn't.
+        model.addAttribute("loggedInUser", loggedUsers);
         model.addAttribute("user", loggedUsers);
 
         switch (loggedUsers) {
@@ -80,8 +83,7 @@ public class HomeController {
                 return "profile";
             }
 
-            default -> {
-            }
+            default -> {}
         }
 
         return "index";

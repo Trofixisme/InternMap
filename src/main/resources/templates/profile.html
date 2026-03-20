@@ -35,7 +35,7 @@
 
             <h4 class="label-large">Student Details</h4>
 
-            <div class="mb-3">
+            <div>
                 <label class="label-small">Major</label>
                 <p th:text="${student.studentMajor}" class="auto-capitalise"></p>
             </div>
@@ -77,7 +77,7 @@
                 </div>
 
                 <div>
-                    <a href="/cv" class="btn btn-warning btn-sm">
+                    <a th:if="${loggedInUser != null && loggedInUser.id == user.id }" href="/cv" class="btn btn-warning btn-sm">
                         <i class="bi bi-pencil"></i> Edit CV
                     </a>
                 </div>

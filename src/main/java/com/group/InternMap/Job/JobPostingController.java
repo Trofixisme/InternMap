@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
 @Controller
 public class JobPostingController {
 
@@ -103,7 +101,6 @@ public class JobPostingController {
         }
         try {
             JobPostingFactory jobPostingFactory = new JobPostingFactory();
-            String companyName = "Sample";
             String jobType = "Internship";
 
             jobPostingFactory.getJobPosting().setRecruiter(recruiter);
@@ -123,7 +120,6 @@ public class JobPostingController {
             return "redirect:/login";
         }
 
-        String jobTypeSelect = (String) model.getAttribute("jobTypeSelect");
 //        String companyName = (String) model.getAttribute("companyName");
         jobPostingFactory.setCompany(companyRepo.findCompanyByName(jobPostingFactory.getCompany().getName()));
 
@@ -193,16 +189,17 @@ public class JobPostingController {
     }
 
     @GetMapping("/cv/{email}")
-    public String viewCV(@PathVariable("email") String email, Model model) {
+    public String viewCV(@PathVariable String email, Model model) {
         try {
             Optional<Users> retrievedStudent = userRepo.findByEmail(email);
-            if (retrievedStudent == null || retrievedStudent.isEmpty()) {
-                model.addAttribute("error", "Student not found");
+            if (retrievedStudent.isEmpty()) {
+                model.addAttribute("error", "Student could not be found");
                 return "ViewApplicationDetail";
             }
             Student user = (Student) retrievedStudent.get();
             model.addAttribute("user", user);
             model.addAttribute("type", "student");
+            model.addAttribute("student", user);
             return "profile";
         } catch (Exception e) {
             model.addAttribute("error", "Error loading application");

@@ -65,17 +65,4 @@ public class UserController {
         model.addAttribute("user", new Users());
         return "login";
     }
-
-//    @PostMapping("/login")
-//    public String login(@ModelAttribute("user") Users users, Map<String, Object> model, HttpSession session) {
-//        try {
-//            Users authenticatedUsers = userService.login(users.getEmail(), users.getPassword());
-//            session.setAttribute("loggedInUser", authenticatedUsers);
-//        } catch (Exception e) {
-//            model.put("errorMessage", e.getMessage());
-//            return "login";
-//        }
-//        System.out.println("User's logged in");
-//        return "redirect:/";
-//    }
 }

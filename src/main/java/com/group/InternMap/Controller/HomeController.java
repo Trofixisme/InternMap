@@ -24,54 +24,22 @@ public class HomeController {
         this.recruiterRepo = recruiterRepo;
     }
 
-//    @GetMapping("/")
-//    public String showHomePage(Model model, HttpSession session) {
-//
-//        if (session.getAttribute("loggedInUser") instanceof Admin) {
-//            model.addAttribute("isLoggedIn", true);
-//            model.addAttribute("isAdmin", true);
-//        } else if (session.getAttribute("loggedInUser") == null) {
-//            model.addAttribute("isLoggedIn", false);
-//            model.addAttribute("isAdmin", false);
-//        } else {
-//            model.addAttribute("isLoggedIn", true);
-//            model.addAttribute("isAdmin", false);
-//        }
-//
-//        model.addAttribute("roadmaps", roadmapRepo.findAll());
-//
-//        return "index";
-//    }
-//@GetMapping("/")
-//public String showHomePage(Model model, Principal principal) {
-//
-//    if (principal != null) {
-//        model.addAttribute("isLoggedIn", true);
-//        model.addAttribute("email", principal.getName());
-//    } else {
-//        model.addAttribute("isLoggedIn", false);
-//    }
-//
-//    model.addAttribute("roadmaps", roadmapRepo.findAll());
-//
-//    return "index";
-//}
-@GetMapping("/")
-public String home(Model model, Principal principal) {
+    @GetMapping("/")
+    public String home(Model model, Principal principal) {
 
-    System.out.println("Principal: " + principal);
+        System.out.println("Principal: " + principal);
 
-    if (principal != null) {
-        System.out.println("User email: " + principal.getName());
-        model.addAttribute("email", principal.getName());
-        model.addAttribute("isLoggedIn", true);
-    } else {
-        System.out.println("User is NOT logged in");
-        model.addAttribute("isLoggedIn", false);
+        if (principal != null) {
+            System.out.println("User email: " + principal.getName());
+            model.addAttribute("email", principal.getName());
+            model.addAttribute("isLoggedIn", true);
+        } else {
+            System.out.println("User is NOT logged in");
+            model.addAttribute("isLoggedIn", false);
+        }
+
+        return "index";
     }
-
-    return "index";
-}
 
     @GetMapping("/signup-choice")
     public String signupChoice() { // or whatever your object is

@@ -69,7 +69,7 @@ public class UserController {
     @PostMapping("/login")
     public String login(@ModelAttribute("user") Users users, Map<String, Object> model, HttpSession session) {
         try {
-            Users authenticatedUsers = userService.login(users.getEmail(), users.getPlainPassword());
+            Users authenticatedUsers = userService.login(users.getEmail(), users.getPassword());
             session.setAttribute("loggedInUser", authenticatedUsers);
         } catch (Exception e) {
             model.put("errorMessage", e.getMessage());

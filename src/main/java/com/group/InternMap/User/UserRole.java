@@ -1,20 +1,24 @@
 package com.group.InternMap.User;
 
-import java.io.Serializable;
+public enum UserRole {
 
-public enum UserRole implements Serializable {
+    STUDENT("ROLE_STUDENT", 1),
+    RECRUITER("ROLE_RECRUITER", 2),
+    ADMIN("ROLE_ADMIN", 3);
 
-    STUDENT(1),
-    RECRUITER(2),
-    ADMIN(3);
+    private final String roleName;
+    private final int id;
 
-    private final int ID;
-
-    UserRole(int ID) {
-        this.ID = ID;
+    UserRole(String roleName, int id) {
+        this.roleName = roleName;
+        this.id = id;
     }
 
-    public int getID() {
-        return ID;
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public UserRole getID() {
+        return id;
     }
 }

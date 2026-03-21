@@ -60,7 +60,7 @@ public class UserService implements FilePaths {
     }
 
     Users user = optionalUser.get();
-    if (user.getPlainPassword().equals(password)) {
+    if (user.getPassword().equals(password)) {
         return user;
     } else {
         throw new Exception("Provided password is incorrect.");

@@ -7,10 +7,10 @@ import java.io.Serializable;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Users implements Serializable {
 
-    private int role;
+
 
     @Column(nullable = false)
-    private String plainPassword;
+    private String password;
 
     @Column(nullable = false)
     private String fName;
@@ -24,30 +24,32 @@ public class Users implements Serializable {
     @Id @GeneratedValue
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+
     public Users() {}
 
     public Users(String fName, String lName, String email, String plainPassword) {
         this.fName = fName;
         this.lName = lName;
         this.email = email;
-        this.plainPassword = plainPassword;
+        this.password = plainPassword;
     }
 
-    public int getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public Users setRole(Short role) {
+    public void setRole(UserRole role) {
         this.role = role;
-        return this;
     }
 
-    public String getPlainPassword() {
-        return plainPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPlainPassword(String plainPassword) {
-      this.plainPassword = plainPassword;
+    public void setPassword(String plainPassword) {
+      this.password = plainPassword;
     }
 
     public String getFName() {
@@ -88,7 +90,5 @@ public class Users implements Serializable {
 
     }
 
-    public void setRole(int role) {
-        this.role = role;
-    }
+
 }

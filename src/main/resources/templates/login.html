@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head data-th-src="~{fragments/head}">
     <title>Login</title>
-    <link rel="stylesheet" th:href="@{/CSS/form.css}">
+    <link rel="stylesheet" th:href="@{/css/form.css}">
+
 </head>
 
 <div class="horizontally-centered-container">
@@ -16,7 +17,7 @@
             <label for="email">Email:</label>
             <input th:field="*{email}" type="email" id="email" name="email" placeholder="example@gmail.com" required><br><br>
             <label for="password">Password:</label>
-            <input th:field="*{plainPassword}" type="password" id="password" name="password" placeholder="Enter your password" required><br><br>
+            <input th:field="*{password}" type="password" id="password" name="password" placeholder="Enter your password" required><br><br>
             <input type="submit" value="Log In">
         </div>
         <br>

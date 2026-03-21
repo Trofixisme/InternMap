@@ -16,25 +16,27 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-           .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/login", "/register", "/css/**").permitAll()
-                    .requestMatchers("/student/**").hasRole("STUDENT")
-                    .requestMatchers("/recruiter/**").hasRole("RECRUITER")
-                    .requestMatchers("/recruiter/**").hasRole("ADMIN")
-                    .anyRequest().authenticated()
-           )
-           .formLogin(form -> form
-                    .loginPage("/login")              // custom login page
-                    .defaultSuccessUrl("/home", true)
-                    .permitAll()
-           )
-           .logout(logout -> logout
-                    .logoutSuccessUrl("/login?logout")
-           );
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/login", "/register", "/css/**" ,
+                                "/register",
+                                "/js/**",
+                                "/images/**","/").permitAll()
+                        .requestMatchers("/student/**").hasRole("STUDENT")
+                        .requestMatchers("/recruiter/**").hasRole("RECRUITER")
+                        .requestMatchers("/recruiter/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                        .loginPage("/login")              // custom login page
+                        .defaultSuccessUrl("/home", true)
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/login?logout")
+                );
 
         return http.build();
     }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

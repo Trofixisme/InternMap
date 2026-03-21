@@ -11,20 +11,16 @@ import java.util.Optional;
 //Create, Read, Update, Delete
 @Service
 public class UserService implements FilePaths {
-    @Autowired
+
     private PasswordEncoder passwordEncoder;
+    private UserRepo userRepo;
 
-    UserRepo userRepo;
-    public UserService(){
-
-    }
-    public UserService(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
+    public UserService() {}
 
     @Autowired
-    public UserService(UserRepo userRepo) {
+    public UserService(UserRepo userRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void register(Users u) throws Exception {

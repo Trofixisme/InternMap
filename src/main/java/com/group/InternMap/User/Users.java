@@ -27,11 +27,11 @@ public class Users implements Serializable {
 
     public Users() {}
 
-    public Users(String fName, String lName, String email, String plainPassword) {
+    public Users(String fName, String lName, String email, String password) {
         this.fName = fName;
         this.lName = lName;
         this.email = email;
-        this.password = plainPassword;
+        this.password = password;
     }
 
     public UserRole getRole() {
@@ -85,8 +85,6 @@ public class Users implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-
     }
-
 
 }

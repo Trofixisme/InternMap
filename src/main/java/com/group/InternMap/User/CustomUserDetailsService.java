@@ -21,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         // 1. Fetch user from DB
         Users user = userRepo.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User doesn't exist"));
+                    .orElseThrow(() -> new UsernameNotFoundException("User doesn't exist"));
 
         // 2. Convert to Spring Security format
         return org.springframework.security.core.userdetails.User

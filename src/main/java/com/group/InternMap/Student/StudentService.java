@@ -7,6 +7,4 @@ import org.springframework.stereotype.Service;
 //create,read,update,delete
 @Service
 public class StudentService extends UserService {
-
-
 }

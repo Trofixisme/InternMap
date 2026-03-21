@@ -20,7 +20,7 @@ public class Admin extends Users implements Serializable {
         super();
     }
 
-    public Admin(int Role,String fName, String lName, String email, String plainPassword) {
+    public Admin(int Role, String fName, String lName, String email, String plainPassword) {
         super(fName, lName, email, plainPassword);
         setRole(UserRole.ADMIN.getID());
     }

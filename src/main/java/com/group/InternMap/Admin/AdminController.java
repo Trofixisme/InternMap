@@ -127,7 +127,7 @@ public class AdminController {
     }
 
     @PostMapping("/roadmaps/{id}/delete")
-    public String deleteRoadmap(@PathVariable Long id, HttpSession session) {
+    public String deleteRoadmap(@PathVariable Long id) {
 
         try {
             roadmapRepo.deleteById(id);

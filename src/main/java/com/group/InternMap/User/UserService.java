@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-//crud operations
-//create,read,update,delete
+//CRUD operations
+//Create, Read, Update, Delete
 @Service
 public class UserService implements FilePaths {
     @Autowired

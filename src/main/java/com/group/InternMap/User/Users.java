@@ -7,8 +7,6 @@ import java.io.Serializable;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Users implements Serializable {
 
-
-
     @Column(nullable = false)
     private String password;
 

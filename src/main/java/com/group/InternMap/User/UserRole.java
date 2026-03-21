@@ -18,7 +18,7 @@ public enum UserRole {
         return roleName;
     }
 
-    public UserRole getID() {
+    public int getID() {
         return id;
     }
 }

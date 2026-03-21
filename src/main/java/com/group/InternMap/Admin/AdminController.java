@@ -5,6 +5,7 @@ import com.group.InternMap.Roadmap.Roadmap;
 import com.group.InternMap.Roadmap.RoadmapModuleRepo;
 import com.group.InternMap.Roadmap.RoadmapRepo;
 import com.group.InternMap.Skill.SkillRepo;
+import com.group.InternMap.User.UserRole;
 import com.group.InternMap.User.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class AdminController {
     public String registerAdmin(@ModelAttribute("user") Admin user, Model model) {
         try {
             if (UserService.isEmailValid(user.getEmail())) {
-                user.setRole(3);
+                user.setRole(UserRole.ADMIN);
                 userService.register(user);
             }
         } catch (Exception e) {

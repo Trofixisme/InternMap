@@ -22,7 +22,7 @@ public class Student extends Users implements Serializable {
 
     public Student(String fName, String lName, String email, String plainPassword,int graduatingYear, String uniName, String studentMajor, String faculty) {
         super(fName, lName, email, plainPassword);
-        this.setRole(UserRole.STUDENT.getID());
+        this.setRole(UserRole.STUDENT);
         this.graduatingYear = graduatingYear;
         this.uniName = uniName;
         this.studentMajor = studentMajor;

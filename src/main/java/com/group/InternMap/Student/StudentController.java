@@ -7,6 +7,7 @@ import com.group.InternMap.Application.CVRepo;
 import com.group.InternMap.DTO.ApplicationAndCVDTO;
 import com.group.InternMap.Job.JobPosting;
 import com.group.InternMap.Job.JobPostingService;
+import com.group.InternMap.User.UserRole;
 import com.group.InternMap.User.UserService;
 import com.group.InternMap.User.Users;
 import jakarta.servlet.http.HttpSession;
@@ -46,7 +47,7 @@ public class StudentController {
     public String registerStudent(@ModelAttribute("user") Student user, Model model) {
         try {
             var email = user.getEmail();
-            user.setRole(1);
+            user.setRole(UserRole.STUDENT);
             if (UserService.isEmailValid(email)) {
                 userService.register(user);
             }

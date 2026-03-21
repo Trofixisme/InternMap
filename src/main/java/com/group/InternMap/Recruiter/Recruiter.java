@@ -29,7 +29,7 @@ public class Recruiter extends Users implements Serializable {
 
     public Recruiter(String fName, String lName, String email, String plainPassword, String title, List<Company> companies, Collection<JobPosting> jobPosting) {
         super(fName, lName, email, plainPassword);
-        setRole(UserRole.RECRUITER.getID());
+        setRole(UserRole.RECRUITER);
         this.title = title;
         this.companies = companies;
         this.jobPosting = jobPosting;

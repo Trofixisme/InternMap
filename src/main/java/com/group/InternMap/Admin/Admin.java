@@ -9,6 +9,8 @@ import jakarta.persistence.Enumerated;
 
 import java.io.Serializable;
 
+import static com.group.InternMap.User.UserRole.ADMIN;
+
 @Entity
 public class Admin extends Users implements Serializable {
 
@@ -22,6 +24,6 @@ public class Admin extends Users implements Serializable {
 
     public Admin(int Role, String fName, String lName, String email, String plainPassword) {
         super(fName, lName, email, plainPassword);
-        setRole(UserRole.ADMIN.getID());
+        setRole(ADMIN);
     }
 }

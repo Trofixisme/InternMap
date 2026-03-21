@@ -5,6 +5,7 @@ import com.group.InternMap.Company.CompanyRepo;
 import com.group.InternMap.DTO.RecruiterRegistrationDTO;
 import com.group.InternMap.Deprecated.Repository.RepositoryAccessors;
 import com.group.InternMap.User.UserRepo;
+import com.group.InternMap.User.UserRole;
 import com.group.InternMap.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -62,7 +63,7 @@ public class RecruiterController {
             recruiterRegistrationDTO.setCompany(companyRepo.findCompanyByName(recruiterRegistrationDTO.getCompany().getName()));
             Company company = recruiterRegistrationDTO.getCompany();
             Recruiter user = recruiterRegistrationDTO.getUser();
-            user.setRole(2);
+            user.setRole(UserRole.RECRUITER);
 
             if (UserService.isEmailValid(user.getEmail())) {
                 userRepo.save(user);

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head data-th-src="~{fragments/head}">
     <title>Home</title>
-    <link rel="stylesheet" th:href="@{/CSS/InternMapHomepage.css}">
+    <link rel="stylesheet" th:href="@{/css/InternMapHomepage.css}">
 </head>
 
 <header th:replace="~{fragments/indexHeader}"></header>
@@ -37,23 +37,10 @@
     <br><br><br><br><br>
 </body>
 
-<footer>
-    <div>
+
+
         <!--    <img id="footer-image" src="/images/Footer image.png">-->
-        <div id="footer">
-            <div id="ft1" class="can-we-stop-with-the-boxes-please">
-                InternMap
-            </div>
-            <div id="ft2">
-                <ul class="quick-links">
-                    <li>
-                        <a onclick="location.href = '/'" style="cursor: pointer">Home </a>
-                    </li>
-                    <li><a onclick="location.href = '/'" style="cursor: pointer">RoadMaps</a></li>
-                    <li><a onclick="location.href = '/JobPostings'" style="cursor: pointer" >JobPostings</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</footer>
+
+            <footer th:replace="~{fragments/indexFooter}"></footer>
+
 </html>

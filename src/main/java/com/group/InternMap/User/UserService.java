@@ -2,6 +2,7 @@ package com.group.InternMap.User;
 
 import com.group.InternMap.FilePaths;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -10,10 +11,16 @@ import java.util.Optional;
 //create,read,update,delete
 @Service
 public class UserService implements FilePaths {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     UserRepo userRepo;
+    public UserService(){
 
-    public UserService() {}
+    }
+    public UserService(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Autowired
     public UserService(UserRepo userRepo) {
@@ -24,7 +31,7 @@ public class UserService implements FilePaths {
         List<Users> users = userRepo.findAll(); // findAll() is built in JPARepository
         if (!users.contains(u)) {
             if(isEmailValid(u.getEmail())) {
-                //built into JPARepository
+                u.setPassword(passwordEncoder.encode(u.getPassword()));
                 userRepo.save(u);
             }
         } else {

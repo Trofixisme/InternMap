@@ -17,7 +17,7 @@ public class SecurityConfig {
 
         http
            .authorizeHttpRequests(auth -> auth
-                      .requestMatchers("/login", "/register", "/css/**" , "/register", "/js/**", "/images/**","/").permitAll()
+                      .requestMatchers("/login", "/register", "/css/**" , "/signup-choice","/recruiter/register","/student/register", "/js/**", "/images/**","/").permitAll()
                       .requestMatchers("/student/**").hasRole("STUDENT")
                       .requestMatchers("/recruiter/**").hasRole("RECRUITER")
                       .requestMatchers("/recruiter/**").hasRole("ADMIN")

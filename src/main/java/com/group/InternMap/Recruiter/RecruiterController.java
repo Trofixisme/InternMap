@@ -18,6 +18,7 @@ import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.ALL_
 import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allCompanies;
 
 @Controller
+
 public class RecruiterController {
 
     CompanyRepo companyRepo;

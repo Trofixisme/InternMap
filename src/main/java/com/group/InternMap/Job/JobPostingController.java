@@ -177,7 +177,7 @@ public class JobPostingController {
 
             model.addAttribute("jobPosting", job);
             model.addAttribute("applications", apps);
-            return "ViewApplicationDetail"; //I still don't have it, but need to do it for clicking the view button
+            return "ViewApplicationDetail";
 
         } catch (Exception e) {
             System.out.println("Error");

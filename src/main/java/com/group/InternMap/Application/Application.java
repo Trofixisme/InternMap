@@ -31,6 +31,7 @@ public class Application implements Serializable, Comparable<Application> {
 
     @ManyToOne //@JoinColumn(name = "student_id", referencedColumnName = "id")
     Student student;
+
     @ManyToOne
     @JoinColumn(name = "job_id")
     private JobPosting jobPosting;

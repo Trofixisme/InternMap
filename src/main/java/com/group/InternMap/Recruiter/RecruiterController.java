@@ -24,10 +24,12 @@ public class RecruiterController {
     CompanyRepo companyRepo;
     UserRepo userRepo;
     RecruiterService recruiterService;
+    UserService userService;
 
     @Autowired
-    public RecruiterController(UserRepo userRepo, RecruiterService recruiterService, CompanyRepo companyRepo) {
+    public RecruiterController(UserRepo userRepo, RecruiterService recruiterService, CompanyRepo companyRepo, UserService userService) {
         this.recruiterService = recruiterService;
+        this.userService = userService;
         this.userRepo = userRepo;
         this.companyRepo = companyRepo;
     }
@@ -66,15 +68,12 @@ public class RecruiterController {
             Recruiter user = recruiterRegistrationDTO.getUser();
             user.setRole(UserRole.RECRUITER);
 
-            if (UserService.isEmailValid(user.getEmail())) {
-                userRepo.save(user);
-
+            userService.register(user);
                 if (company != null) {
                     recruiterService.addCompanyToRecruiter(user.getId(), company.getId());
                     userRepo.save(user);
                 }
-            }
-            // exception here
+
             return "redirect:/login";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());

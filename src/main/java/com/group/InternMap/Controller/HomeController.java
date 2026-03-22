@@ -26,11 +26,8 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model, Principal principal) {
-
-        System.out.println("Principal: " + principal);
-
         if (principal != null) {
-            System.out.println("User email: " + principal.getName());
+
             model.addAttribute("email", principal.getName());
             model.addAttribute("isLoggedIn", true);
         } else {

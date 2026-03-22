@@ -19,6 +19,7 @@
         </div>
 
         <div id="s1" class="box-sign-buttons">
+            <!--/*@thymesVar id="isLoggedIn" type="Boolean"*/-->
             <div th:if="${isLoggedIn == false}">
                 <button id="hb1" onclick="location.href='/login'">Sign in</button>
                 <a th:href="@{/signup-choice}" style="text-decoration: none;"></a>
@@ -26,7 +27,9 @@
             </div>
 
             <div th:if="${isLoggedIn == true}">
-                <form id="hb4" onclick="location.href='/logout';">Log out</form>
+                <form method="POST" th:action="@{/logout}">
+                    <input id="hb4" type="submit" value="Log out">
+                </form>
                 <button id="hb6" onclick="location.href='/profile'">
                     <img id="person-fill" src="/images/person_fill.png" alt="Profile" style="width: 25px; height: 26px; margin-left: 10px;">
                 </button>

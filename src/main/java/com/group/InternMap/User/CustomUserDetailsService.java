@@ -1,5 +1,7 @@
 package com.group.InternMap.User;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepo userRepo;
+    Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
 
     @Autowired
     public CustomUserDetailsService(UserRepo userRepo) {
@@ -19,9 +22,17 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
+        logger.info("Attempting to find user with the email: {}", email);
+
         // 1. Fetch user from DB
-        Users user = userRepo.findByEmail(email)
+        Users user;
+        try {
+            user = userRepo.findByEmail(email)
                     .orElseThrow(() -> new UsernameNotFoundException("User doesn't exist"));
+        } catch (UsernameNotFoundException e) {
+            logger.warn("Failed to find user with the email {}. Email doesn't exist in the database", email);
+            throw e;
+        }
 
         // 2. Convert to Spring Security format
         return org.springframework.security.core.userdetails.User

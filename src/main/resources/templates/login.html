@@ -3,16 +3,16 @@
 <head data-th-src="~{fragments/head}">
     <title>Login</title>
     <link rel="stylesheet" th:href="@{/css/form.css}">
-
 </head>
 
 <div class="horizontally-centered-container">
     <img src="/images/Navi/Navi%20Unique.png" alt="Logo" style="width: 100px; height: 100px; margin-bottom: 15px;">
     <form th:action="@{/login}" method="post">
         <h1>Log in</h1>
-        <div th:if="${errorMessage}"
-             style="color:red;border:0 solid red;padding:2px;margin-bottom:5px; font-weight: 550;">
-            <p th:text="${errorMessage}"></p></div>
+        <div th:if="${errorMessage}" style="color:red;border:0 solid red;padding:2px;margin-bottom:5px; font-weight: 550;">
+            <p th:text="${errorMessage}"></p>
+        </div>
+
         <div class="form-container">
             <label for="email">Email:</label>
             <input type="email" id="email" name="username" placeholder="example@gmail.com" required><br><br>
@@ -21,6 +21,6 @@
             <input type="submit" value="Log In">
         </div>
         <br>
-        <p style="font-size: 14px; font-weight: 400;">Want to sign up first? <a style="color: rgb(49, 131, 254); font-weight: 600;" th:href="@{/signup-choice}">Sign up</a></p>
+        <p style="font-size: 14px; font-weight: 400;">Need to sign up first? <a style="color: rgb(49, 131, 254); font-weight: 600;" th:href="@{/signup-choice}">Sign up</a></p>
     </form>
 </div>

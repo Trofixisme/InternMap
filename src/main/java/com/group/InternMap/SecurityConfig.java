@@ -17,19 +17,21 @@ public class SecurityConfig {
 
         http
            .authorizeHttpRequests(auth -> auth
-                      .requestMatchers("/login", "/register", "/css/**" , "/signup-choice","/recruiter/register","/student/register", "/js/**", "/images/**","/").permitAll()
-                      .requestMatchers("/student/**").hasRole("STUDENT")
-                      .requestMatchers("/recruiter/**").hasRole("RECRUITER")
-                      .requestMatchers("/recruiter/**").hasRole("ADMIN")
-                      .anyRequest().authenticated()
+                   .requestMatchers("/login", "/register", "/css/**" , "/signup-choice","/recruiter/register","/student/register", "/js/**", "/images/**","/").permitAll()
+                   .requestMatchers("/student/**").hasRole("STUDENT")
+                   .requestMatchers("/recruiter/**").hasRole("RECRUITER")
+                   .requestMatchers("/recruiter/**").hasRole("ADMIN")
+                   .anyRequest().authenticated()
            )
            .formLogin(form -> form
-                      .loginPage("/login")              // custom login page
-                      .defaultSuccessUrl("/", true)
-                      .permitAll()
+                   .loginPage("/login")              // custom login page
+                   .defaultSuccessUrl("/", true)
+                   .permitAll()
            )
            .logout(logout -> logout
-                      .logoutSuccessUrl("/login?logout")
+                   .logoutUrl("/logout")
+                   .logoutSuccessUrl("/")
+                   .permitAll()
            );
 
         return http.build();

@@ -8,6 +8,7 @@ import com.group.InternMap.Recruiter.Recruiter;
 import com.group.InternMap.Student.Student;
 import jakarta.servlet.http.HttpSession;
 import org.jboss.logging.Logger;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String home(Model model, Principal principal) {
+    public String home(Model model, Principal principal, Authentication authentication) {
         if (principal != null) {
             logger.info("Accessed '/' with credientials: " + principal.getName());
             model.addAttribute("email", principal.getName());
@@ -36,6 +37,12 @@ public class HomeController {
             logger.info("Accessed '/' without credientials");
             model.addAttribute("isLoggedIn", false);
         }
+
+        if (authentication != null && authentication.getAuthorities().toString().equals("[ROLE_ADMIN]")) {
+            model.addAttribute("role", "admin");
+        }
+
+        model.addAttribute("roadmaps", roadmapRepo.findAll());
 
         return "index";
     }

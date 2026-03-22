@@ -1,6 +1,11 @@
 package com.group.InternMap.User;
 
+import com.group.InternMap.Admin.Admin;
 import com.group.InternMap.Application.Application;
+import com.group.InternMap.Job.JobPosting;
+import com.group.InternMap.Job.JobPostingService;
+import com.group.InternMap.Job.JobRepo;
+import com.group.InternMap.Recruiter.Recruiter;
 import com.group.InternMap.Roadmap.Roadmap;
 import com.group.InternMap.Roadmap.RoadmapRepo;
 import jakarta.servlet.http.HttpSession;
@@ -8,20 +13,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class UserController {
 
     UserService userService;
     RoadmapRepo roadmapRepo;
+    JobPostingService jobPostingService;
+    JobRepo jobRepo;
 
     @Autowired
-    public UserController(RoadmapRepo roadmapRepo,UserService userService) {
+    public UserController(RoadmapRepo roadmapRepo, UserService userService, JobPostingService jobPostingService, JobRepo jobRepo) {
         this.userService = userService;
         this.roadmapRepo = roadmapRepo;
+        this.jobPostingService = jobPostingService;
+        this.jobRepo = jobRepo;
     }
 
     // Display a specific roadmap with modules and skills
@@ -44,7 +52,7 @@ public class UserController {
     }
 
     @PostMapping("/application/search")
-    public String searchJobPosting(@RequestParam("searchQuery") String searchQuery, @ModelAttribute Application application, Model model, HttpSession session) {
+    public String searchJobPosting(@RequestParam("searchQuery") String searchQuery, @ModelAttribute Application application, Model model) {
         try {
             // Search dynamically using your service
 //             List<Application> results = recruiterService.searchApplication(searchQuery.replaceFirst(",", ""));
@@ -65,4 +73,49 @@ public class UserController {
         model.addAttribute("user", new Users());
         return "login";
     }
+    //JobPostings
+    @GetMapping("/JobPostings")
+    public String getAllJobPostings(Model model, HttpSession session) {
+        try {
+            // Fetch all job postings from the service
+            if (session.getAttribute("loggedInUser") instanceof Admin) {
+                model.addAttribute("isLoggedIn", true);
+                model.addAttribute("isAdmin", true);
+                model.addAttribute("isRecruiter", false);
+            } else if (session.getAttribute("loggedInUser") == null) {
+                model.addAttribute("isLoggedIn", false);
+                model.addAttribute("isAdmin", false);
+                model.addAttribute("isRecruiter", false);
+            } else if (session.getAttribute("loggedInUser") instanceof Recruiter) {
+                model.addAttribute("isLoggedIn", true);
+                model.addAttribute("isAdmin", false);
+                model.addAttribute("isRecruiter", true);
+            } else {
+                model.addAttribute("isLoggedIn", true);
+                model.addAttribute("isAdmin", false);
+                model.addAttribute("isRecruiter", false);
+            }
+
+            ArrayList<JobPosting> jobPosting = (ArrayList<JobPosting>) jobPostingService.getAllJobPostings();
+            model.addAttribute("jobPostings", jobPosting);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            model.addAttribute("error", "Failed to load job postings");
+        }
+        return "JobPosting"; // Thymeleaf template
+    }
+
+    @PostMapping("/JobPostings/search")
+    public String searchJobPosting(@RequestParam("searchQuery") String searchQuery, Model model) {
+        try {
+            // Search dynamically using your service
+            List<JobPosting> results = jobRepo.searchJobs(searchQuery);
+            // Add search results to the model
+            model.addAttribute("jobPostings", results);
+        } catch (Exception e) {
+            model.addAttribute("error", "Error searching application: " + e.getMessage());
+        }
+        return "JobPosting";
+    }
+
 }

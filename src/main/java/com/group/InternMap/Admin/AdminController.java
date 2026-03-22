@@ -44,10 +44,10 @@ public class AdminController {
     @PostMapping("/admin/register")
     public String registerAdmin(@ModelAttribute("user") Admin user, Model model) {
         try {
-            if (UserService.isEmailValid(user.getEmail())) {
+
                 user.setRole(UserRole.ADMIN);
                 userService.register(user);
-            }
+
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             // Return the view name (DO NOT REDIRECT)

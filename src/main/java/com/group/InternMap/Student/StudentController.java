@@ -46,17 +46,12 @@ public class StudentController {
     @PostMapping("/student/register")
     public String registerStudent(@ModelAttribute("user") Student user, Model model) {
         try {
-            var email = user.getEmail();
-            user.setRole(UserRole.STUDENT);
-            if (UserService.isEmailValid(email)) {
+                user.setRole(UserRole.STUDENT);
                 userService.register(user);
-            }
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            // Return the view name (DO NOT REDIRECT)
             return "StudentRegister";
         }
-        // Only redirect on SUCCESS
         return "redirect:/login";
     }
 

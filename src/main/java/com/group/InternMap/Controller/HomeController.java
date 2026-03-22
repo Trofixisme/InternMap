@@ -48,9 +48,6 @@ public class HomeController {
     @GetMapping("/profile")
     public String showProfile(Model model, HttpSession session) {
         Users loggedUsers = (Users) session.getAttribute("loggedInUser");
-        if (loggedUsers == null) {
-            return "redirect:/login";
-        }
 
         //Stupid way to resolve the "Edit CV" button not showing up whenever it should show
         //or showing up when it shouldn't.

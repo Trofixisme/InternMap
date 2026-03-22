@@ -7,6 +7,7 @@ import com.group.InternMap.User.Users;
 import com.group.InternMap.Recruiter.Recruiter;
 import com.group.InternMap.Student.Student;
 import jakarta.servlet.http.HttpSession;
+import org.jboss.logging.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ public class HomeController {
 
     RoadmapRepo roadmapRepo;
     RecruiterRepo recruiterRepo;
+    Logger logger = Logger.getLogger(HomeController.class.getName());
 
     public HomeController(RoadmapRepo roadmapRepo,RecruiterRepo recruiterRepo) {
         this.roadmapRepo = roadmapRepo;
@@ -27,11 +29,11 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model, Principal principal) {
         if (principal != null) {
-
+            logger.info("Accessed '/' with credientials: " + principal.getName());
             model.addAttribute("email", principal.getName());
             model.addAttribute("isLoggedIn", true);
         } else {
-            System.out.println("User is NOT logged in");
+            logger.info("Accessed '/' without credientials");
             model.addAttribute("isLoggedIn", false);
         }
 

@@ -1,15 +1,13 @@
 package com.group.InternMap.User;
 
-import com.group.InternMap.Admin.Admin;
 import com.group.InternMap.Application.Application;
 import com.group.InternMap.Job.JobPosting;
 import com.group.InternMap.Job.JobPostingService;
 import com.group.InternMap.Job.JobRepo;
-import com.group.InternMap.Recruiter.Recruiter;
 import com.group.InternMap.Roadmap.Roadmap;
 import com.group.InternMap.Roadmap.RoadmapRepo;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +32,7 @@ public class UserController {
 
     // Display a specific roadmap with modules and skills
     @GetMapping("/{id}")
-    public String viewRoadmap(@PathVariable long id, Model model, HttpSession session) {
+    public String viewRoadmap(@PathVariable long id, Model model, Authentication authentication) {
 
         try {
             Roadmap roadmap = roadmapRepo.findRoadmapById(id);
@@ -43,7 +41,7 @@ public class UserController {
                     .sum();
             model.addAttribute("roadmap", roadmap);
             model.addAttribute("totalSkills", totalSkills);
-            model.addAttribute("user", session.getAttribute("loggedInUser"));
+            model.addAttribute("userRole", authentication != null ? authentication.getAuthorities().toString() : "");
             return "roadmap/view";
         } catch(Exception e) {
             model.addAttribute(e);
@@ -73,27 +71,18 @@ public class UserController {
         model.addAttribute("user", new Users());
         return "login";
     }
-    //JobPostings
+
+    //MARK: JobPostings
     @GetMapping("/JobPostings")
-    public String getAllJobPostings(Model model, HttpSession session) {
+    public String getAllJobPostings(Model model, Authentication authentication) {
         try {
-            // Fetch all job postings from the service
-            if (session.getAttribute("loggedInUser") instanceof Admin) {
-                model.addAttribute("isLoggedIn", true);
-                model.addAttribute("isAdmin", true);
-                model.addAttribute("isRecruiter", false);
-            } else if (session.getAttribute("loggedInUser") == null) {
-                model.addAttribute("isLoggedIn", false);
-                model.addAttribute("isAdmin", false);
-                model.addAttribute("isRecruiter", false);
-            } else if (session.getAttribute("loggedInUser") instanceof Recruiter) {
-                model.addAttribute("isLoggedIn", true);
-                model.addAttribute("isAdmin", false);
-                model.addAttribute("isRecruiter", true);
-            } else {
-                model.addAttribute("isLoggedIn", true);
-                model.addAttribute("isAdmin", false);
-                model.addAttribute("isRecruiter", false);
+            model.addAttribute("isLoggedIn", authentication == null);
+
+            if (authentication != null) {
+                switch (authentication.getAuthorities().toString()) {
+                    case "[ROLE_ADMIN]" -> model.addAttribute("isAdmin", true);
+                    case "[ROLE_RECRUITER]" -> model.addAttribute("isRecruiter", true);
+                }
             }
 
             ArrayList<JobPosting> jobPosting = (ArrayList<JobPosting>) jobPostingService.getAllJobPostings();

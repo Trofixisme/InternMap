@@ -36,7 +36,6 @@ public class HomeController {
             logger.info("Accessed '/' without credientials");
             model.addAttribute("isLoggedIn", false);
         }
-
         return "index";
     }
 

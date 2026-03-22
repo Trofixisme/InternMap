@@ -33,13 +33,13 @@ public class RecruiterController {
         this.companyRepo = companyRepo;
     }
 
-    @GetMapping("/company/register")
+    @GetMapping("/recruiter/company/register")
     public String showRegisterCompany(Model model) {
         model.addAttribute("company", new Company());
         return "CompanyRegister";
     }
 
-    @PostMapping("/company/register")
+    @PostMapping("/recruiter/company/register")
     public String RegisterCompany(@ModelAttribute("company") Company company, Model model) {
         try {
             companyRepo.save(company);
@@ -53,7 +53,7 @@ public class RecruiterController {
     }
 
     @GetMapping("/recruiter/register")
-    public String showRegisterRecruiter(Model model, RecruiterRegistrationDTO recruiterRegistrationDTO) {
+    public String showRegisterRecruiter(Model model) {
         model.addAttribute("form", new RecruiterRegistrationDTO());
         return "RecruiterRegister";
     }
@@ -66,7 +66,6 @@ public class RecruiterController {
             Company company = recruiterRegistrationDTO.getCompany();
             Recruiter user = recruiterRegistrationDTO.getUser();
             user.setRole(UserRole.RECRUITER);
-
             userService.register(user);
                 if (company != null) {
                     recruiterService.addCompanyToRecruiter(user.getId(), company.getId());
@@ -79,4 +78,5 @@ public class RecruiterController {
             return "RecruiterRegister";
         }
     }
+
 }

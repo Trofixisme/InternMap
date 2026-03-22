@@ -7,19 +7,25 @@ import com.group.InternMap.Roadmap.RoadmapRepo;
 import com.group.InternMap.Skill.SkillRepo;
 import com.group.InternMap.User.UserRole;
 import com.group.InternMap.User.UserService;
-import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller("/api/admin")
+@Controller("/admin")
+@EnableMethodSecurity
 public class AdminController {
 
     RoadmapRepo roadmapRepo;
     SkillRepo skillRepo;
     RoadmapModuleRepo roadmapModuleRepo;
     UserService userService;
+
+    Logger logger = LoggerFactory.getLogger(AdminController.class);
 
     @Autowired
     public AdminController(RoadmapRepo roadmapRepo, SkillRepo skillRepo, RoadmapModuleRepo roadmapModuleRepo, UserService userService) {
@@ -53,25 +59,23 @@ public class AdminController {
     }
 
     //Display form to create a new roadmap
-    @GetMapping("/new")
-    public String newRoadmap(Model model, HttpSession session) {
-        if (session.getAttribute("loggedInUser") == null || !(session.getAttribute("loggedInUser") instanceof Admin admin)) {
-            return "redirect:/login";
-        }
+    @GetMapping("/new/roadmap")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String newRoadmap(Model model) {
 
-        System.out.println(admin);
         RoadmapModuleSkill dto = new RoadmapModuleSkill();
         RoadmapModuleSkill.ModuleData module = new RoadmapModuleSkill.ModuleData();
         RoadmapModuleSkill.SkillData skill = new RoadmapModuleSkill.SkillData();
         module.getSkills().add(skill);
         dto.getModules().add(module);
         model.addAttribute("roadmaps", dto);
+
         return "roadmap/form";
     }
 
-    @PostMapping("/new")
-    public String createRoadmap(@ModelAttribute("roadmaps") RoadmapModuleSkill dto, HttpSession session) {
-        if (!(session.getAttribute("loggedInUser") instanceof Admin)) return "redirect:/login";
+    @PostMapping("/new/roadmap")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String createRoadmap(@ModelAttribute("roadmaps") RoadmapModuleSkill dto) {
 
         try {
             Roadmap roadmap = dto.toRoadmap(); // Convert DTO → Entity
@@ -79,40 +83,19 @@ public class AdminController {
 //            return "redirect:/roadmaps/" + roadmap.getId();
             return "redirect:/";
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return "redirect:/admin/roadmaps/new?error=true";
         }
     }
 
-//    @PostMapping("/new")
-//    public String createRoadmap(@ModelAttribute("roadmap") RoadmapModuleSkill dto, HttpSession session) throws MalformedURLException {
-//        if (session.getAttribute("loggedInUser") == null || !(session.getAttribute("loggedInUser") instanceof Admin admin)) {
-//            return "redirect:/login";
-//        }
-//
-//        Roadmap roadmap = dto.toRoadmap();
-//
-//        roadmap.setId(roadmapRepo.count() + 1);
-//        roadmapRepo.save(roadmap);
-//
-//        for (RoadmapModule module : roadmap.getAllModules()) {
-//            module.setId(roadmapModuleRepo.count() + 1);
-//            roadmapModuleRepo.save(module);
-//            for (Skill skill : module.getAllSkills()) {
-//                skill.setId(skillRepo.count() + 1);
-//                skillRepo.save(skill);
-//            }
-//        }
-//
-//        return "redirect:/roadmaps/" + roadmap.getId();
-//    }
-
     //Display form to edit roadmap
     @GetMapping("/{id}/edit")
+    @PreAuthorize("hasRole('ADMIN')")
     public String editRoadmap(@PathVariable long id, Model model) {
         try {
             Roadmap roadmap = roadmapRepo.findRoadmapById(id);
             model.addAttribute("roadmap", roadmap);
+            model.addAttribute("modules", roadmap.getAllModules());
             return "roadmap/form";
         } catch (Exception e) {
             model.addAttribute(e);
@@ -122,12 +105,14 @@ public class AdminController {
 
     //Update roadmap
     @PostMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String updateRoadmap(@PathVariable long id, @ModelAttribute Roadmap roadmap) {
         roadmapRepo.save(roadmap);
         return "redirect:/roadmaps/" + id;
     }
 
     @PostMapping("/roadmaps/{id}/delete")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteRoadmap(@PathVariable Long id) {
 
         try {

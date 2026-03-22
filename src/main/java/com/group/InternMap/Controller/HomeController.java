@@ -3,6 +3,7 @@ package com.group.InternMap.Controller;
 import com.group.InternMap.Recruiter.RecruiterRepo;
 import com.group.InternMap.Admin.Admin;
 import com.group.InternMap.Roadmap.RoadmapRepo;
+import com.group.InternMap.User.UserRepo;
 import com.group.InternMap.User.Users;
 import com.group.InternMap.Recruiter.Recruiter;
 import com.group.InternMap.Student.Student;
@@ -18,13 +19,15 @@ import java.security.Principal;
 @Controller
 public class HomeController {
 
+    private final UserRepo userRepo;
     RoadmapRepo roadmapRepo;
     RecruiterRepo recruiterRepo;
     Logger logger = Logger.getLogger(HomeController.class.getName());
 
-    public HomeController(RoadmapRepo roadmapRepo,RecruiterRepo recruiterRepo) {
+    public HomeController(RoadmapRepo roadmapRepo, RecruiterRepo recruiterRepo, UserRepo userRepo) {
         this.roadmapRepo = roadmapRepo;
         this.recruiterRepo = recruiterRepo;
+        this.userRepo = userRepo;
     }
 
     @GetMapping("/")
@@ -53,17 +56,22 @@ public class HomeController {
     }
 
     @GetMapping("/profile")
-    public String showProfile(Model model, HttpSession session) {
-        Users loggedUsers = (Users) session.getAttribute("loggedInUser");
-
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    public String showProfile(Model model, Principal principal) {
+        Users user;
+        if (principal != null) {
+            user = userRepo.findByEmail(principal.getName()).get();
+        } else {
+            return "redirect:/";
+        }
         //Stupid way to resolve the "Edit CV" button not showing up whenever it should show
         //or showing up when it shouldn't.
-        model.addAttribute("loggedInUser", loggedUsers);
-        model.addAttribute("user", loggedUsers);
+        model.addAttribute("loggedInUser", user);
+        model.addAttribute("user", user);
 
-        switch (loggedUsers) {
+        switch (user) {
             case Student _ -> {
-                model.addAttribute("student", loggedUsers);
+                model.addAttribute("student", user);
                 model.addAttribute("type", "student");
                 return "profile";
             }
@@ -81,7 +89,7 @@ public class HomeController {
             }
 
             case Admin _ -> {
-                model.addAttribute("admin", loggedUsers);
+                model.addAttribute("admin", user);
                 model.addAttribute("type", "admin");
                 return "profile";
             }
@@ -99,7 +107,7 @@ public class HomeController {
         //          model.addAttribute("roadmaps", roadmaps);
           return "index";
         }
-        catch(Exception e){
+        catch(Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "error";
         }

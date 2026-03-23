@@ -9,7 +9,6 @@ import com.group.InternMap.Job.JobPosting;
 import com.group.InternMap.Job.JobPostingService;
 import com.group.InternMap.User.UserRole;
 import com.group.InternMap.User.UserService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -94,12 +93,13 @@ public class StudentController {
     }
 
     @GetMapping("/applications/new")
-    public String createNewApplication(@RequestParam("jobId") long jobPostingId, ApplicationAndCVDTO applicationandCVDTO, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-        if (session.getAttribute("loggedInUser") == null) {
+    public String createNewApplication(@RequestParam("jobId") long jobPostingId, Model model, Principal principal, RedirectAttributes redirectAttributes) {
+        if (principal == null) {
             return "redirect:/login";
         }
+
         JobPosting jobPosting = jobPostingService.findJobPostingByID(jobPostingId);
-        if(jobPosting==null) {
+        if (jobPosting == null) {
             redirectAttributes.addFlashAttribute("error","Job posting not found");
             return "redirect:/jobPosting";
         }
@@ -111,13 +111,13 @@ public class StudentController {
     }
 
     @PostMapping("/application/save")
-    public String saveApplication(@RequestParam("jobId") long jobId, @ModelAttribute ApplicationAndCVDTO applicationandCVDTO, Model model, HttpSession session, RedirectAttributes redirectAttributes)  {
+    public String saveApplication(@RequestParam("jobId") long jobId, @ModelAttribute ApplicationAndCVDTO applicationandCVDTO, Model model, Principal principal, RedirectAttributes redirectAttributes)  {
 
-        if (session.getAttribute("loggedInUser") == null) {
+        if (principal == null) {
             return "redirect:/login";
         }
 //        Application application = applicationandCVDTO.getApplication();
-        Student user = (Student) session.getAttribute("loggedInUser");
+        Student user = studentRepo.findByEmail(principal.getName());
         if (user.getCv() == null) {
             redirectAttributes.addFlashAttribute("error","CV not found");
             return "redirect:/cv";
@@ -131,7 +131,6 @@ public class StudentController {
             if (jobPosting == null) {
                 redirectAttributes.addFlashAttribute("error","Job posting not found");
                 return "redirect:/JobPostings";
-
             }
 
             Application application = applicationandCVDTO.getApplication();
@@ -141,9 +140,10 @@ public class StudentController {
             jobPosting.addApplication(application);
             applicationRepo.save(application);
             redirectAttributes.addFlashAttribute("message", "Application saved successfully");
+
             return "redirect:/JobPostings";
-        }
-        catch (Exception e) {
+
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             model.addAttribute("error", "Error saving application: " + e.getMessage());
             return "redirect:/applications/new?jobId=" + jobId;

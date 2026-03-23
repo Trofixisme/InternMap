@@ -14,13 +14,14 @@ import com.group.InternMap.User.UserRepo;
 import com.group.InternMap.User.UserRole;
 import com.group.InternMap.User.UserService;
 import com.group.InternMap.User.Users;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -94,18 +95,17 @@ public class RecruiterController {
 
     @PreAuthorize("hasRole('RECRUITER')")
     @GetMapping("/JobPostingForm")
-    public String AddJobPostingForm(Model model, HttpSession session) {
-        if (session.getAttribute("loggedInUser") == null || !(session.getAttribute("loggedInUser") instanceof Recruiter recruiter)) {
-            return "redirect:/login";
-        }
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    public String AddJobPostingForm(Model model, Principal principal) {
         try {
             JobPostingFactory jobPostingFactory = new JobPostingFactory();
             String jobType = "Internship";
 
-            jobPostingFactory.getJobPosting().setRecruiter(recruiter);
+            jobPostingFactory.getJobPosting().setRecruiter((Recruiter) userRepo.findByEmail(principal.getName()).get());
 //        model.addAttribute("companyName", companyName);
             model.addAttribute("jobTypeSelect", jobType);
             model.addAttribute("jobPostingFactory", jobPostingFactory);
+
             return "JobPostingForm";
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -114,17 +114,15 @@ public class RecruiterController {
     }
 
     @PostMapping("/JobPostingForm")
-    public String AddJobPosting(@ModelAttribute JobPostingFactory jobPostingFactory, HttpSession session, Model model) {
-        if (session.getAttribute("loggedInUser") == null || !(session.getAttribute("loggedInUser") instanceof Recruiter recruiter)) {
-            return "redirect:/login";
-        }
-
+    @PreAuthorize("hasRole('RECRUITER')")
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    public String AddJobPosting(@ModelAttribute JobPostingFactory jobPostingFactory, Principal principal, Model model) {
 //        String companyName = (String) model.getAttribute("companyName");
         jobPostingFactory.setCompany(companyRepo.findCompanyByName(jobPostingFactory.getCompany().getName()));
 
         try {
             jobPostingFactory.getJobPosting().setCompany(companyRepo.findCompanyByName(jobPostingFactory.getCompany().getName()));
-            jobPostingFactory.getJobPosting().setRecruiter(recruiter);
+            jobPostingFactory.getJobPosting().setRecruiter((Recruiter) userRepo.findByEmail(principal.getName()).get());
             switch (jobPostingFactory.getJobType()) {
                 case "FullTime" -> jobRepo.save(jobPostingFactory.toInternship());
                 case "FreelanceProject" -> jobRepo.save(jobPostingFactory.toFullTime());
@@ -140,24 +138,20 @@ public class RecruiterController {
             return "JobPostingForm";
         }
     }
+
     @PreAuthorize("hasRole('RECRUITER')")
     @GetMapping("/recruiter/jobpostings")
-    public String getRecruiterJobPostings(Model model, HttpSession session) {
-        Recruiter recruiter = (Recruiter) session.getAttribute("loggedInUser");
-        if (recruiter == null) {
-            return "redirect:/login";
-        }
-        List<JobPosting> myJobs = jobPostingService.getJobPostingsByRecruiterId(recruiter.getId());
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    public String getRecruiterJobPostings(Model model, Principal principal) {
+
+        List<JobPosting> myJobs = jobPostingService.getJobPostingsByRecruiterId((userRepo.findByEmail(principal.getName()).get()).getId());
         model.addAttribute("myJobs", myJobs);
         return "recruiter-jobPostings";
     }
+
     @PreAuthorize("hasRole('RECRUITER')")
     @GetMapping("/JobPostings/{jobId}/applications")
-    public String viewApplications(@PathVariable long jobId, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-        Recruiter recruiter = (Recruiter) session.getAttribute("loggedInUser");
-        if (recruiter == null) {
-            return "redirect:/login";
-        }
+    public String viewApplications(@PathVariable long jobId, Model model, RedirectAttributes redirectAttributes) {
 
         try {
             JobPosting job = jobPostingService.findJobPostingByID(jobId);

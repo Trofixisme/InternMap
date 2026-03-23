@@ -3,6 +3,7 @@ package com.group.InternMap.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         logger.info("Attempting to find user with the email: {}", email);
 
-        // 1. Fetch user from DB
+        // Fetch user from DB
         Users user;
         try {
             user = userRepo.findByEmail(email)
@@ -34,8 +35,8 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw e;
         }
 
-        // 2. Convert to Spring Security format
-        return org.springframework.security.core.userdetails.User
+        // Converting result to Spring Security format
+        return User
                 .withUsername(user.getEmail())
                 .password(user.getPassword()) // MUST be encoded
                 .roles(user.getRole().name()) // STUDENT / RECRUITER

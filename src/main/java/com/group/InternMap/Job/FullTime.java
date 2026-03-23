@@ -1,6 +1,5 @@
 package com.group.InternMap.Job;
 
-import com.group.InternMap.Company.Company;
 import jakarta.persistence.*;
 
 import java.io.Serializable;

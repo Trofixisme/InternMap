@@ -22,7 +22,7 @@ public class SecurityConfig {
 
         http
            .authorizeHttpRequests(auth -> auth
-                   .requestMatchers("/student/**").hasRole("STUDENT")
+//                   .requestMatchers("/student/**").hasRole("STUDENT")
                    .requestMatchers("/recruiter/**").hasRole("RECRUITER")
                    .requestMatchers("/recruiter/**").hasRole("ADMIN")
                    .anyRequest().permitAll()
@@ -30,6 +30,8 @@ public class SecurityConfig {
            .formLogin(form -> form
                    .loginPage("/login")              // custom login page
                    .defaultSuccessUrl("/", true)
+                   .passwordParameter("password")
+                   .usernameParameter("email")
                    .permitAll()
            )
            .logout(logout -> logout

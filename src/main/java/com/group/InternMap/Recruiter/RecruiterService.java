@@ -1,11 +1,11 @@
 package com.group.InternMap.Recruiter;
+
 import com.group.InternMap.Company.Company;
 import com.group.InternMap.Company.CompanyRepo;
 import com.group.InternMap.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class RecruiterService extends UserService {

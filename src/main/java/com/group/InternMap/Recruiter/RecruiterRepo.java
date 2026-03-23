@@ -1,4 +1,5 @@
 package com.group.InternMap.Recruiter;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -12,13 +13,7 @@ public interface RecruiterRepo extends JpaRepository<Recruiter, Long> {
        List<Recruiter> findRecruiterByfName(String fName);
 
        List<Recruiter> findRecruiterBylName(String lName);
-//       @Query("SELECT r FROM Recruiter r LEFT JOIN FETCH r.companies WHERE r.id = :id")
-//       Recruiter findRecruiterWithCompanies(@Param("id") Long id);
-@Query("SELECT r FROM Recruiter r LEFT JOIN FETCH r.companies WHERE r.id = :id")
-Optional<Recruiter> findRecruiterWithCompanies(@Param("id") Long id);
 
-
-
-
-
+       @Query("SELECT r FROM Recruiter r LEFT JOIN FETCH r.companies WHERE r.id = :id")
+       Optional<Recruiter> findRecruiterWithCompanies(@Param("id") Long id);
 }

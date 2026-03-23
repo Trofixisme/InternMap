@@ -1,5 +1,3 @@
-//Created by Ziad on 30/10/2025
-
 package com.group.InternMap.Roadmap;
 
 import com.group.InternMap.Skill.Skill;

@@ -1,4 +1,5 @@
 package com.group.InternMap.Application;
+
 import com.group.InternMap.Job.JobPosting;
 import com.group.InternMap.Job.JobRepo;
 import org.springframework.beans.factory.annotation.Autowired;

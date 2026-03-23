@@ -9,15 +9,15 @@ import com.group.InternMap.Job.JobPosting;
 import com.group.InternMap.Job.JobPostingService;
 import com.group.InternMap.User.UserRole;
 import com.group.InternMap.User.UserService;
-import com.group.InternMap.User.Users;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import static com.group.InternMap.Deprecated.Repository.RepositoryAccessors.allApplications;
+import java.security.Principal;
 
 @Controller
 public class StudentController {
@@ -56,15 +56,9 @@ public class StudentController {
     }
 
     @GetMapping("/cv")
-    public String cv(Model model, HttpSession session) {
-        // Fixed: Use correct attribute name
-        Users users = (Users) session.getAttribute("loggedInUser");
-        if (users == null) {
-            return "redirect:/login";
-        }
-        if (!(users instanceof Student student)) {
-            return "redirect:/profile";
-        }
+    @PreAuthorize("hasRole('STUDENT')")
+    public String cv(Model model, Principal principal) {
+        Student student = studentRepo.findByEmail(principal.getName());
 
         if (student.getCv() != null) {
             model.addAttribute("cv", student.getCv());
@@ -76,16 +70,9 @@ public class StudentController {
     }
 
     @PostMapping("/cv/save")
-    public String saveCV(@ModelAttribute("cv") CV cv, HttpSession session) {
-        Users loggedUsers = (Users) session.getAttribute("loggedInUser");
-
-        if (loggedUsers == null) {
-            return "redirect:/login";
-        }
-
-        if (!(loggedUsers instanceof Student student)) {
-            return "redirect:/profile";
-        }
+    @PreAuthorize("hasRole('STUDENT')")
+    public String saveCV(@ModelAttribute("cv") CV cv, Principal principal) {
+        Student student = studentRepo.findByEmail(principal.getName());
 
             if (student.getCv() != null) {
                 System.out.println(student.getCv());
@@ -102,8 +89,7 @@ public class StudentController {
                 cvRepo.save(cv);
                 studentRepo.save(student);
             }
-        // Update session
-        session.setAttribute("loggedInUser", student);
+
         return "redirect:/profile";
     }
 
@@ -125,10 +111,7 @@ public class StudentController {
     }
 
     @PostMapping("/application/save")
-    public String saveApplication(@RequestParam("jobId") long jobId,
-                                  @ModelAttribute ApplicationAndCVDTO applicationandCVDTO,
-                                  Model model, HttpSession session,
-                                  RedirectAttributes redirectAttributes)  {
+    public String saveApplication(@RequestParam("jobId") long jobId, @ModelAttribute ApplicationAndCVDTO applicationandCVDTO, Model model, HttpSession session, RedirectAttributes redirectAttributes)  {
 
         if (session.getAttribute("loggedInUser") == null) {
             return "redirect:/login";

@@ -19,7 +19,7 @@ public class Users implements Serializable {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)

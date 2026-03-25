@@ -8,7 +8,7 @@ import java.util.*;
 @Entity
 public final class Roadmap implements Serializable {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
@@ -16,7 +16,7 @@ public final class Roadmap implements Serializable {
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     //@JoinTable(name = "roadmaps_modules", joinColumns = @JoinColumn(name = "roadmap_id"), inverseJoinColumns = @JoinColumn(name = "roadmap_module_id"))
-    private List<RoadmapModule> roadmapModules = new ArrayList<>();
+    private final List<RoadmapModule> roadmapModules = new ArrayList<>();
 
     public Roadmap(RoadmapModule name, Object o) {}
 

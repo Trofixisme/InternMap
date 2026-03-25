@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 public class Company implements Serializable {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String industry;

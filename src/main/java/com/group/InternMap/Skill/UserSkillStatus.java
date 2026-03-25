@@ -11,7 +11,7 @@ import java.util.Date;
 @Entity
 public class UserSkillStatus implements Serializable {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne //@JoinColumn(name = "skill_id")

@@ -11,7 +11,7 @@ import java.util.Date;
 @Entity
 public class Application implements Serializable, Comparable<Application> {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)

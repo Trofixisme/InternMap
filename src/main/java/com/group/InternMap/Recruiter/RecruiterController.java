@@ -73,7 +73,6 @@ public class RecruiterController {
 
     @PostMapping("/recruiter/register")
     public String registerRecruiter(@ModelAttribute("form") RecruiterRegistrationDTO recruiterRegistrationDTO, Model model) {
-
         try {
             recruiterRegistrationDTO.setCompany(companyRepo.findCompanyByName(recruiterRegistrationDTO.getCompany().getName()));
             Company company = recruiterRegistrationDTO.getCompany();

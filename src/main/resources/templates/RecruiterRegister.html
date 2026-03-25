@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="">
 <head data-th-src="~{fragments/head}">
     <title>Login</title>
     <link rel="stylesheet" th:href="@{/CSS/InternMapSignIn.css}">
@@ -17,32 +17,40 @@
       method="post">
     <div class="form-row">
         <div class="form-group">
-            <input type="text"
-                   class="form-input"
-                   th:field="*{user.fName}"
-                   placeholder="First name"
-                   required />
+            <label>
+                <input type="text"
+                       class="form-input"
+                       th:field="*{user.FName}"
+                       placeholder="First name"
+                       required />
+            </label>
         </div>
         <div class="form-group">
-            <input type="text"
-                   class="form-input"
-                   th:field="*{user.lName}"
-                   placeholder="Last name"
-                   required />
+            <label>
+                <input type="text"
+                       class="form-input"
+                       th:field="*{user.LName}"
+                       placeholder="Last name"
+                       required />
+            </label>
         </div>
         <div class="form-group">
-            <input type="email"
-                   class="form-input"
-                   th:field="*{user.email}"
-                   placeholder="Email"
-                   required />
+            <label>
+                <input type="email"
+                       class="form-input"
+                       th:field="*{user.email}"
+                       placeholder="Email"
+                       required />
+            </label>
         </div>
         <div class="form-group">
-            <input type="password"
-                   class="form-input"
-                   th:field="*{user.password}"
-                   placeholder="Password"
-                   required />
+            <label>
+                <input type="password"
+                       class="form-input"
+                       th:field="*{user.password}"
+                       placeholder="Password"
+                       required />
+            </label>
         </div>
 
         <div class="form-group">

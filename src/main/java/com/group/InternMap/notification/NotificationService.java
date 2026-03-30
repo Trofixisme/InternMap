@@ -23,11 +23,11 @@ public class NotificationService {
 
     // for spring web sockets it requiers the string username but i noticed in the spring security tje email is identified as the username
     // in customerUserDetails line 34
-    public void sendToPrivate(String userEmail , String message) {
+    public void sendToUser(String userEmail , String message) {
         //saving it to database
         Notification notification = new Notification(userEmail, message);
         notificationRepo.save(notification);
         //sending to user
-        simpMessagingTemplate.convertAndSendToUser(userEmail, "/private/user", message);
+        simpMessagingTemplate.convertAndSendToUser(userEmail, "/queue/notifications", message);
     }
 }

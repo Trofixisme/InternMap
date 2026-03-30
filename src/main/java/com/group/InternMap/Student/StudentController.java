@@ -9,6 +9,8 @@ import com.group.InternMap.Job.JobPosting;
 import com.group.InternMap.Job.JobPostingService;
 import com.group.InternMap.User.UserRole;
 import com.group.InternMap.User.UserService;
+import com.group.InternMap.notification.NotificationRepo;
+import com.group.InternMap.notification.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -26,14 +28,17 @@ public class StudentController {
     UserService userService;
     CVRepo cvRepo;
     StudentRepo studentRepo;
+    NotificationService notificationService;
 
     @Autowired
-    public StudentController(JobPostingService jobPostingService, UserService userService, CVRepo cvRepo, StudentRepo studentRepo, ApplicationRepo applicationRepo) {
+    public StudentController(JobPostingService jobPostingService, UserService userService, CVRepo cvRepo, StudentRepo studentRepo, ApplicationRepo applicationRepo, NotificationService notificationService) {
         this.jobPostingService = jobPostingService;
         this.userService = userService;
         this.cvRepo = cvRepo;
         this.studentRepo = studentRepo;
         this.applicationRepo = applicationRepo;
+        this.notificationService = notificationService;
+
     }
 
     @GetMapping("/student/register")
@@ -112,37 +117,31 @@ public class StudentController {
 
     @PostMapping("/application/save")
     public String saveApplication(@RequestParam("jobId") long jobId, @ModelAttribute ApplicationAndCVDTO applicationandCVDTO, Model model, Principal principal, RedirectAttributes redirectAttributes)  {
-
         if (principal == null) {
             return "redirect:/login";
         }
-//        Application application = applicationandCVDTO.getApplication();
         Student user = studentRepo.findByEmail(principal.getName());
         if (user.getCv() == null) {
             redirectAttributes.addFlashAttribute("error","CV not found");
             return "redirect:/cv";
         }
-//        applicationandCVDTO.setStudent(user);
-//        UUID jobPostingID = jobId;
         try {
             JobPosting jobPosting = jobPostingService.findJobPostingByID(jobId);
-
             System.out.println(jobPosting);
             if (jobPosting == null) {
                 redirectAttributes.addFlashAttribute("error","Job posting not found");
                 return "redirect:/JobPostings";
             }
-
             Application application = applicationandCVDTO.getApplication();
-//            application.setCv(user.getCv());
             applicationandCVDTO.setStudent(user);
             application.setStudent(user);
             jobPosting.addApplication(application);
             applicationRepo.save(application);
             redirectAttributes.addFlashAttribute("message", "Application saved successfully");
-
+            String recruiterEmail = jobPosting.getRecruiterEmail();
+            notificationService.sendToUser(recruiterEmail, "An application is submitted");
+            System.out.println("Notification triggered!");
             return "redirect:/JobPostings";
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
             model.addAttribute("error", "Error saving application: " + e.getMessage());

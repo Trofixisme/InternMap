@@ -22,8 +22,11 @@ public class WebSocketBrokerConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws-notifications");// this stomp  endpoint will have the websocket communication
-        registry.addEndpoint("/ws-notifications").withSockJS(); // this is in case the web doesnt support web sockets
-        //it will fall back to sockJS
+        registry.addEndpoint("/ws")
+                .withSockJS();
+
+//        registry.addEndpoint("/ws-notifications");// this stomp  endpoint will have the websocket communication
+//        registry.addEndpoint("/ws-notifications").withSockJS(); // this is in case the web doesnt support web sockets
+//        //it will fall back to sockJS
     }
 }

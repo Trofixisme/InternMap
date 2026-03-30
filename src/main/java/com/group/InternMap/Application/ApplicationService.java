@@ -18,9 +18,8 @@ public class ApplicationService {
         this.jobRepo = jobRepo;
     }
 
-    public List<Application> searchApplication(String studentEmail) {
-        if (studentEmail == null || studentEmail.isBlank()) return null;
-        return applicationRepo.findByEmail(studentEmail);
+    public List<Application> searchApplication(String searchQuery) {
+        return applicationRepo.searchApplications(searchQuery);
     }
 
     public List<Application> getApplicationsByJobPostingId(Long jobPostingId)throws IllegalArgumentException{

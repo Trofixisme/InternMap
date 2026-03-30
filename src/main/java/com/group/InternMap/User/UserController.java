@@ -1,6 +1,7 @@
 package com.group.InternMap.User;
 
 import com.group.InternMap.Application.Application;
+import com.group.InternMap.Application.ApplicationService;
 import com.group.InternMap.Job.JobPosting;
 import com.group.InternMap.Job.JobPostingService;
 import com.group.InternMap.Roadmap.Roadmap;
@@ -19,16 +20,18 @@ public class UserController {
     UserService userService;
     RoadmapService roadmapService;
     JobPostingService jobPostingService;
+    ApplicationService applicationService;
 
     @Autowired
-    public UserController(RoadmapService roadmapService, UserService userService, JobPostingService jobPostingService) {
+    public UserController(RoadmapService roadmapService, UserService userService, JobPostingService jobPostingService, ApplicationService applicationService) {
         this.userService = userService;
         this.roadmapService = roadmapService;
         this.jobPostingService = jobPostingService;
+        this.applicationService=applicationService;
     }
 
     // Display a specific roadmap with modules and skills
-    @GetMapping("/{id}")
+    @GetMapping("/{id:[0-9]+}")
     public String viewRoadmap(@PathVariable long id, Model model, Authentication authentication) {
 
         Roadmap roadmap = roadmapService.findRoadmapById(id);
@@ -37,24 +40,6 @@ public class UserController {
         model.addAttribute("userRole", authentication != null ? authentication.getAuthorities().toString() : "");
 
         return "roadmap/view";
-    }
-
-    //TODO: FIX
-    @PostMapping("/application/search")
-    public String searchJobPosting(@RequestParam("searchQuery") String searchQuery, @ModelAttribute Application application, Model model) {
-        try {
-            // Search dynamically using your service
-//             List<Application> results = recruiterService.searchApplication(searchQuery.replaceFirst(",", ""));
-            // Add search results to the model
-//             model.addAttribute("applications", results);
-            // Add the job posting object to the model so form fields keep their values
-            model.addAttribute("application", application);
-            model.addAttribute("jobPosting", null);
-        } catch (Exception e) {
-            model.addAttribute("error", "Error searching application: " + e.getMessage());
-        }
-
-        return "ViewApplicationDetail";
     }
 
     @GetMapping("/login")
@@ -88,5 +73,15 @@ public class UserController {
 
         model.addAttribute("jobPostings", results);
         return "JobPosting";
+    }
+
+    @PostMapping("/JobPostings/{jobId}/applications/search")
+    public String searchApplication(@PathVariable Long jobId, @RequestParam("searchQuery") String searchQuery, Model model) {
+            List<Application> results = applicationService.searchApplication(searchQuery);
+        JobPosting job = jobPostingService.findJobPostingByID(jobId);
+        model.addAttribute("applications", results);
+        model.addAttribute("jobPosting", job);
+        model.addAttribute("query", searchQuery);
+        return "ViewApplicationDetail";
     }
 }

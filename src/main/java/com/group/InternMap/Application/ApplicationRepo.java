@@ -2,16 +2,19 @@ package com.group.InternMap.Application;
 
 import com.group.InternMap.Job.JobPosting;
 import org.springframework.data.jpa.repository.JpaRepository;
-
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import java.util.List;
 
+
 public interface ApplicationRepo extends JpaRepository<Application, Long> {
-    List<Application> findByEmail(String email);
-
-    // Correct Spring Data JPA derived query for the JobPosting relationship's id
-    List<Application> findByJobPosting_Id(Long jobPostingId);
-
     // Alternative: query by JobPosting entity reference
     List<Application> findByJobPosting(JobPosting jobPosting);
+
+    @Query("SELECT a FROM Application a JOIN a.jobPosting j WHERE " +
+            "LOWER(a.email) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+            "LOWER(a.fName) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+            "LOWER(a.lName) LIKE LOWER(CONCAT('%', :query, '%'))")
+    List<Application> searchApplications(@Param("query") String query);
 
 }

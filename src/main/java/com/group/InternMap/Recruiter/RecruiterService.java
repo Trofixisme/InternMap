@@ -23,6 +23,7 @@ public class RecruiterService extends UserService {
         this.recruiterRepo = recruiterRepo;
         this.eventPublisher = eventPublisher;
         this.companyRepo = companyRepo;
+        this.userService = userService;
     }
 
     public void registerRecruiter(RecruiterRegistrationDTO recruiterRegistrationDTO) throws Exception {

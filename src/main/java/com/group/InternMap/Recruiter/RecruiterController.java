@@ -66,7 +66,6 @@ public class RecruiterController {
 
     @PostMapping("/recruiter/register")
     public String registerRecruiter(@ModelAttribute("form") RecruiterRegistrationDTO recruiterRegistrationDTO, Model model) {
-
         try {
             recruiterService.registerRecruiter(recruiterRegistrationDTO);
 

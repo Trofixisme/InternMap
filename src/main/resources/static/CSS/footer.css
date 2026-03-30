@@ -1,7 +1,7 @@
 footer {
-    width: auto;
+    width: 100%;
     height: min-content;
-    background: linear-gradient(180deg, rgba(88, 171, 255, 0.60) 0%, #3397FC 100%);
+        background: rgba(187, 190, 193, 0.15);
 
     .quick-links {
         display: grid;
@@ -27,10 +27,10 @@ footer {
     #ft2 {
         color: #FFF;
         font-style: normal;
-        font-size: 28px;
-        line-height: 60px;
+        font-size: 14px;
+        line-height: 26px;
         font-weight: 700;
         padding-top: 20px;
-        padding-bottom: 20px;
+        padding-bottom: 10px;
     }
 }

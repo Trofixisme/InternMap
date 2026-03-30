@@ -1,9 +1,10 @@
 package com.group.InternMap.Controller;
 
-import com.group.InternMap.Recruiter.RecruiterRepo;
 import com.group.InternMap.Admin.Admin;
+import com.group.InternMap.Recruiter.RecruiterService;
 import com.group.InternMap.Roadmap.RoadmapRepo;
-import com.group.InternMap.User.UserRepo;
+import com.group.InternMap.Roadmap.RoadmapService;
+import com.group.InternMap.User.UserService;
 import com.group.InternMap.User.Users;
 import com.group.InternMap.Recruiter.Recruiter;
 import com.group.InternMap.Student.Student;
@@ -19,15 +20,16 @@ import java.security.Principal;
 @Controller
 public class HomeController {
 
-    private final UserRepo userRepo;
-    RoadmapRepo roadmapRepo;
-    RecruiterRepo recruiterRepo;
+    private final UserService userService;
+    RoadmapService roadmapService;
+    RecruiterService recruiterService;
+
     Logger logger = Logger.getLogger(HomeController.class.getName());
 
-    public HomeController(RoadmapRepo roadmapRepo, RecruiterRepo recruiterRepo, UserRepo userRepo) {
-        this.roadmapRepo = roadmapRepo;
-        this.recruiterRepo = recruiterRepo;
-        this.userRepo = userRepo;
+    public HomeController(RoadmapService roadmapService, RecruiterService recruiterService, UserService userService) {
+        this.roadmapService = roadmapService;
+        this.recruiterService = recruiterService;
+        this.userService = userService;
     }
 
     @GetMapping("/")
@@ -45,14 +47,15 @@ public class HomeController {
             model.addAttribute("role", "admin");
         }
 
-        model.addAttribute("roadmaps", roadmapRepo.findAll());
+        model.addAttribute("roadmaps", roadmapService.findAll());
 
         return "index";
     }
 
     @GetMapping("/signup-choice")
-    public String signupChoice() { // or whatever your object is
-        return "InternMapSignUpChoice"; // Note: no .htm; extension
+    public String signupChoice() {
+        // Note: no .htm; extension
+        return "InternMapSignUpChoice";
     }
 
     @GetMapping("/profile")
@@ -60,10 +63,11 @@ public class HomeController {
     public String showProfile(Model model, Principal principal) {
         Users user;
         if (principal != null) {
-            user = userRepo.findByEmail(principal.getName()).get();
+            user = userService.searchByEmail(principal.getName()).get();
         } else {
             return "redirect:/";
         }
+
         //Stupid way to resolve the "Edit CV" button not showing up whenever it should show
         //or showing up when it shouldn't.
         model.addAttribute("loggedInUser", user);
@@ -76,11 +80,10 @@ public class HomeController {
                 return "profile";
             }
 
-            case Recruiter recruiterUser -> {
+            case Recruiter _ -> {
 
-                Recruiter recruiter = recruiterRepo
-                        .findRecruiterWithCompanies(recruiterUser.getId())
-                        .orElseThrow(() -> new RuntimeException("Recruiter not found"));
+                Recruiter recruiter = recruiterService
+                        .findRecruiterById(user.getId());
 
                 model.addAttribute("recruiter", recruiter);
                 model.addAttribute("type", "recruiter");
@@ -94,24 +97,10 @@ public class HomeController {
                 return "profile";
             }
 
-            default -> {}
+            default -> {
+                return "index";
+            }
         }
-
-        return "index";
-    }
-
-    @GetMapping("/roadmaps")
-    public String ViewRoadmaps(@ModelAttribute("user") Users users, Model model) {
-        try {
-        //          List<Roadmap> roadmaps = userService.viewRoadmaps();
-        //          model.addAttribute("roadmaps", roadmaps);
-          return "index";
-        }
-        catch(Exception e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            return "error";
-        }
-
     }
 
     @GetMapping("/logout")

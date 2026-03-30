@@ -12,15 +12,22 @@
 </head>
 
 <footer th:fragment="indexFooter">
-    <div>
-        <div id="footer">
-            <div id="ft1" class="can-we-stop-with-the-boxes-please">InternMap</div>
-            <div id="ft2">
-                <ul class="quick-links">
-                    <li><a onclick="location.href='/'" style="cursor:pointer">Home</a></li>
-                    <li><a onclick="location.href='/'" style="cursor:pointer">RoadMaps</a></li>
-                    <li><a onclick="location.href='/JobPostings'" style="cursor:pointer">JobPostings</a></li>
-                </ul>
+    <div style="align-items: center; justify-content: center; ">
+<!--        <div id="footer">-->
+<!--            <div id="ft1" class="can-we-stop-with-the-boxes-please">InternMap</div>-->
+<!--            <div id="ft2" style="display: flex; justify-self: center; gap: 20px; font-weight: 700;">-->
+<!--                <a onclick="location.href='/'" style="cursor:pointer; color: #000000">Home</a>-->
+<!--                <a onclick="location.href='/'" style="cursor:pointer; color: #000000">RoadMaps</a>-->
+<!--                <a onclick="location.href='/JobPostings'" style="cursor:pointer; color: #000000">JobPostings</a>-->
+<!--            </div>-->
+<!--        </div>-->
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px; padding: 5px 20px; /* border-top: 2px solid rgba(78,78,78,0.2); */ margin-left: 5%; margin-right: 5%; border-shape: circle()">
+            <div style="display: flex; align-items: center">
+            <img src="/images/Navi/Navi%20Straight.png" alt="Logo" style="height: 35px; width: 35px; margin-right: 10px; ">
+            <h3 style="text-align: center; color: #000000">InternMap</h3>
+            </div>
+            <div style="display: flex; align-items: center; gap: 20px; font-weight: 700;">
+                <a onclick="location.href='/'" style="cursor:pointer; color: #000000">Home</a>
             </div>
         </div>
     </div>

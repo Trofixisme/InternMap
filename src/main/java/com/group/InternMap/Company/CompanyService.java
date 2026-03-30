@@ -1,9 +1,7 @@
 package com.group.InternMap.Company;
-import com.group.InternMap.Recruiter.RecruiterAddedEvent;
+
 import com.group.InternMap.Recruiter.RecruiterService;
-import com.group.InternMap.Recruiter.Recruiter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -17,16 +15,6 @@ public class CompanyService {
     public CompanyService(CompanyRepo companyRepo, RecruiterService recruiterService) {
         this.companyRepo = companyRepo;
         this.recruiterService = recruiterService;
-    }
-
-    @EventListener
-    public void handleRecruiterAddedEvent(RecruiterAddedEvent event) {
-        long recruiterId = event.recruiterId();
-        long companyId = event.companyId();
-        Recruiter recruiter = recruiterService.findRecruiterById(recruiterId);
-        Company company = companyRepo.findCompanyById(companyId);
-       // company.addRecruiter(recruiter);
-        System.out.println("Company updated after recruiter was added.");
     }
 
     public Company findByName(String companyName){
@@ -55,5 +43,7 @@ public class CompanyService {
         companyRepo.delete(company);
     }
 
-
+    public void save(Company company) {
+        companyRepo.save(company);
+    }
 }

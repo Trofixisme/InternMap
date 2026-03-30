@@ -3,6 +3,8 @@ package com.group.InternMap.Roadmap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RoadmapService {
 
@@ -12,6 +14,12 @@ public class RoadmapService {
     public RoadmapService(RoadmapRepo roadmapRepo) {
         // without this, the controller will have empty data
         this.roadmapRepo = roadmapRepo;
+    }
+
+    public int countTotalModules(Roadmap roadmap) {
+        return roadmap.getAllModules().stream()
+                .mapToInt(module -> module.getAllSkills() != null ? module.getAllSkills().size() : 0)
+                .sum();
     }
 
     public Roadmap findRoadmapById(Long roadmapId) throws IllegalArgumentException {
@@ -41,4 +49,7 @@ public class RoadmapService {
         return roadmap;
     }
 
+    public List<Roadmap> findAll(){
+        return roadmapRepo.findAll();
+    }
 }

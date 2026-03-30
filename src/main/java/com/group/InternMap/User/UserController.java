@@ -3,9 +3,8 @@ package com.group.InternMap.User;
 import com.group.InternMap.Application.Application;
 import com.group.InternMap.Job.JobPosting;
 import com.group.InternMap.Job.JobPostingService;
-import com.group.InternMap.Job.JobRepo;
 import com.group.InternMap.Roadmap.Roadmap;
-import com.group.InternMap.Roadmap.RoadmapRepo;
+import com.group.InternMap.Roadmap.RoadmapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -18,37 +17,29 @@ import java.util.List;
 public class UserController {
 
     UserService userService;
-    RoadmapRepo roadmapRepo;
+    RoadmapService roadmapService;
     JobPostingService jobPostingService;
-    JobRepo jobRepo;
 
     @Autowired
-    public UserController(RoadmapRepo roadmapRepo, UserService userService, JobPostingService jobPostingService, JobRepo jobRepo) {
+    public UserController(RoadmapService roadmapService, UserService userService, JobPostingService jobPostingService) {
         this.userService = userService;
-        this.roadmapRepo = roadmapRepo;
+        this.roadmapService = roadmapService;
         this.jobPostingService = jobPostingService;
-        this.jobRepo = jobRepo;
     }
 
     // Display a specific roadmap with modules and skills
     @GetMapping("/{id}")
     public String viewRoadmap(@PathVariable long id, Model model, Authentication authentication) {
 
-        try {
-            Roadmap roadmap = roadmapRepo.findRoadmapById(id);
-            int totalSkills = roadmap.getAllModules().stream()
-                    .mapToInt(module -> module.getAllSkills() != null ? module.getAllSkills().size() : 0)
-                    .sum();
-            model.addAttribute("roadmap", roadmap);
-            model.addAttribute("totalSkills", totalSkills);
-            model.addAttribute("userRole", authentication != null ? authentication.getAuthorities().toString() : "");
-            return "roadmap/view";
-        } catch(Exception e) {
-            model.addAttribute(e);
-            return "redirect:/roadmaps";
-        }
+        Roadmap roadmap = roadmapService.findRoadmapById(id);
+        model.addAttribute("roadmap", roadmap);
+        model.addAttribute("totalSkills", roadmapService.countTotalModules(roadmap));
+        model.addAttribute("userRole", authentication != null ? authentication.getAuthorities().toString() : "");
+
+        return "roadmap/view";
     }
 
+    //TODO: FIX
     @PostMapping("/application/search")
     public String searchJobPosting(@RequestParam("searchQuery") String searchQuery, @ModelAttribute Application application, Model model) {
         try {
@@ -75,36 +66,27 @@ public class UserController {
     //MARK: JobPostings
     @GetMapping("/JobPostings")
     public String getAllJobPostings(Model model, Authentication authentication) {
-        try {
-            model.addAttribute("isLoggedIn", authentication == null);
 
-            if (authentication != null) {
-                switch (authentication.getAuthorities().toString()) {
-                    case "[ROLE_ADMIN]" -> model.addAttribute("isAdmin", true);
-                    case "[ROLE_RECRUITER]" -> model.addAttribute("isRecruiter", true);
-                }
+        model.addAttribute("isLoggedIn", authentication == null);
+
+        if (authentication != null) {
+            switch (authentication.getAuthorities().toString()) {
+                case "[ROLE_ADMIN]" -> model.addAttribute("isAdmin", true);
+                case "[ROLE_RECRUITER]" -> model.addAttribute("isRecruiter", true);
             }
-
-            ArrayList<JobPosting> jobPosting = (ArrayList<JobPosting>) jobPostingService.getAllJobPostings();
-            model.addAttribute("jobPostings", jobPosting);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            model.addAttribute("error", "Failed to load job postings");
         }
+
+        ArrayList<JobPosting> jobPosting = (ArrayList<JobPosting>) jobPostingService.getAllJobPostings();
+        model.addAttribute("jobPostings", jobPosting);
+
         return "JobPosting"; // Thymeleaf template
     }
 
     @PostMapping("/JobPostings/search")
     public String searchJobPosting(@RequestParam("searchQuery") String searchQuery, Model model) {
-        try {
-            // Search dynamically using your service
-            List<JobPosting> results = jobRepo.searchJobs(searchQuery);
-            // Add search results to the model
-            model.addAttribute("jobPostings", results);
-        } catch (Exception e) {
-            model.addAttribute("error", "Error searching application: " + e.getMessage());
-        }
+        List<JobPosting> results = jobPostingService.searchJobs(searchQuery);
+
+        model.addAttribute("jobPostings", results);
         return "JobPosting";
     }
-
 }

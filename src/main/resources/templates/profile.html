@@ -7,10 +7,12 @@
 
 <body>
 
-<h1 class="page-header">Profile</h1>
+<div class="centered">
 
 <!-- Profile Container -->
-<div class="centered-container-full-width">
+<div class="container-full-width">
+    <h1 class="container-header">Profile</h1>
+
         <div>
             <label class="label-small">Full Name</label>
             <p th:text="${user.FName}" class="auto-capitalise"></p>
@@ -148,9 +150,10 @@
         <!-- Buttons -->
         <div>
         <button onclick="window.location.href = '/'" class="grid-button">Home</button>
-
+        <br><br>
 <!--            <a th:href="@{'/profile/edit'}" class="btn btn-primary">Edit Profile</a>-->
         </div>
     </div>
+</div>
 </body>
 </html>

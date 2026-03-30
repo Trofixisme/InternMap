@@ -27,7 +27,7 @@ public class JobPostingService {
     }
 
     public JobPosting findJobPostingByID(long appId) {
-        return  jobRepo.findJobPostingById(appId);
+        return jobRepo.findJobPostingById(appId);
     }
 
     public JobPosting createJobPosting(JobPosting jobPosting) {
@@ -43,4 +43,11 @@ public class JobPostingService {
     }
 //    JobPosting job =  jobRepo.getById(id);
 
+    public List<JobPosting> searchJobs(String searchQuery) {
+        return jobRepo.searchJobs(searchQuery);
+    }
+
+    public void save(JobPosting jobPosting) {
+        jobRepo.save(jobPosting);
+    }
 }

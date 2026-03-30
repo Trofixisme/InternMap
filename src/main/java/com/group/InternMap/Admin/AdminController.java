@@ -44,9 +44,8 @@ public class AdminController {
     @PostMapping("/admin/register")
     public String registerAdmin(@ModelAttribute("user") Admin user, Model model) {
         try {
-
-                user.setRole(UserRole.ADMIN);
-                userService.register(user);
+            user.setRole(UserRole.ADMIN);
+            userService.register(user);
 
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class StudentController {
@@ -126,7 +127,6 @@ public class StudentController {
         }
         try {
             JobPosting jobPosting = jobPostingService.findJobPostingByID(jobId);
-            System.out.println(jobPosting);
             if (jobPosting == null) {
                 redirectAttributes.addFlashAttribute("error","Job posting not found");
                 return "redirect:/JobPostings";
@@ -148,4 +148,14 @@ public class StudentController {
         }
 
     }
+
+    @PreAuthorize("hasRole('STUDENT')")
+    @GetMapping("/student/applications")
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    public String getStudentApplications(Model model, Principal principal) {
+        List<Application> myApplications = applicationRepo.findByStudentEmail((userService.searchByEmail(principal.getName()).get()).getEmail());
+        model.addAttribute("myApplications", myApplications);
+        return "Student-Applications";
+    }
+
 }

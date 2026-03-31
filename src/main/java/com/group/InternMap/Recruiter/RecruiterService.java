@@ -5,6 +5,7 @@ import com.group.InternMap.Company.CompanyRepo;
 import com.group.InternMap.DTO.RecruiterRegistrationDTO;
 import com.group.InternMap.User.UserRole;
 import com.group.InternMap.User.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -26,12 +27,12 @@ public class RecruiterService extends UserService {
         this.userService = userService;
     }
 
-    public void registerRecruiter(RecruiterRegistrationDTO recruiterRegistrationDTO) throws Exception {
+    public void registerRecruiter(RecruiterRegistrationDTO recruiterRegistrationDTO, HttpServletRequest servletRequest) throws Exception {
         recruiterRegistrationDTO.setCompany(companyRepo.findCompanyByName(recruiterRegistrationDTO.getCompany().getName()));
         Company company = recruiterRegistrationDTO.getCompany();
         Recruiter user = recruiterRegistrationDTO.getUser();
         user.setRole(UserRole.RECRUITER);
-        userService.register(user);
+        userService.register(user, servletRequest);
         if (company != null) {
             addCompanyToRecruiter(user.getId(), company.getId());
             recruiterRepo.save(user);

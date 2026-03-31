@@ -7,6 +7,7 @@ import com.group.InternMap.Roadmap.RoadmapRepo;
 import com.group.InternMap.Skill.SkillRepo;
 import com.group.InternMap.User.UserRole;
 import com.group.InternMap.User.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +37,10 @@ public class AdminController {
     }
 
     @PostMapping("/admin/register")
-    public String registerAdmin(@ModelAttribute("user") Admin user, Model model) {
+    public String registerAdmin(HttpServletRequest request, @ModelAttribute("user") Admin user, Model model) {
         try {
             user.setRole(UserRole.ADMIN);
-            userService.register(user);
+            userService.register(user, request);
 
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
@@ -48,7 +49,7 @@ public class AdminController {
         }
 
         // Only redirect on SUCCESS
-        return "redirect:/login";
+        return "redirect:/";
     }
 
     //Display form to create a new roadmap

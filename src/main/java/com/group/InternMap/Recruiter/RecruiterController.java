@@ -11,6 +11,7 @@ import com.group.InternMap.Job.JobPostingService;
 import com.group.InternMap.Student.Student;
 import com.group.InternMap.User.UserService;
 import com.group.InternMap.User.Users;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,15 +61,16 @@ public class RecruiterController {
     }
 
     @PostMapping("/recruiter/register")
-    public String registerRecruiter(@ModelAttribute("form") RecruiterRegistrationDTO recruiterRegistrationDTO, Model model) {
+    public String registerRecruiter(HttpServletRequest request, @ModelAttribute("form") RecruiterRegistrationDTO recruiterRegistrationDTO, Model model) {
         try {
-            recruiterService.registerRecruiter(recruiterRegistrationDTO);
+            recruiterService.registerRecruiter(recruiterRegistrationDTO, request);
 
-            return "redirect:/login";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "register";
         }
+
+        return "redirect:/";
     }
 
     @PreAuthorize("hasRole('RECRUITER')")

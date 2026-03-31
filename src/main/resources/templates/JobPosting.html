@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head data-th-src="~{fragments/head}">
     <title> InternMap </title>
-    <link rel="stylesheet" href="/CSS/jobPosting.css">
-    <link rel="stylesheet" href="/CSS/InternMapHomepage.css">
+    <link rel="stylesheet" th:href="@{/css/jobPosting.css}">
+    <link rel="stylesheet" th:href="@{/css/InternMapHomepage.css}">
     <style>
         /* Search and Action Buttons Styling */
         .search-action-container {
@@ -83,12 +83,12 @@
             transform: translateY(-2px);
         }
 
-        .action-btn.secondary {
+        .action-btn.button-secondary {
             background: transparent;
             color: #2391FF;
         }
 
-        .action-btn.secondary:hover {
+        .action-btn.button-secondary:hover {
             background: rgba(35, 145, 255, 0.1);
         }
 
@@ -118,49 +118,9 @@
     </style>
 </head>
 
-<!--<header>-->
-<!--    <div id="h1">-->
-<!--        <div id="T1" class="box-title">-->
-<!--            InternMap-->
-<!--        </div>-->
-<!--        <div id="s1" class="box-sign-buttons">-->
-<!--            <button id="hb1"> Sign in</button>-->
-<!--            <button id="hb2"> Sign up</button>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div id="l1">-->
-<!--            <img id="logo" th:src="@{/images/Logo Glass.png}" alt="Logo">-->
-<!--        <span id="p1">InternMap</span>-->
-<!--        <span id="p2">Welcome to the platform that sets your future for you</span>-->
-<!--    </div>-->
-<!--</header>-->
-
-<header>
-    <div id="h1">
-        <div id="T1" class="box-title" onclick="location.href = '/'" style="cursor: pointer">
-            InternMap
-        </div>
-        <div id="s1" class="box-sign-buttons">
-            <button id="hb1" onclick="location.href='/login'" th:if="${isLoggedIn == false}">Sign in</button>
-            <a th:href="@{/signup-choice}" style="text-decoration: none;"></a>
-            <button id="hb3" onclick="location.href='/signup-choice'" th:if="${isLoggedIn == false}">Sign up</button>
-            <form id="hb4" onclick="location.href='/logout';" th:if="${isLoggedIn == true}">Log out</form>
-            <button id="hb6" onclick="location.href='/profile'" th:if="${isLoggedIn == true}">
-                <img id="person-fill" src="/images/person_fill.png" alt="Profile" style="width: 25px; height: 26px; margin-left: 10px;">
-            </button>
-
-        </div>
-    </div>
-
-    <div id="l1">
-        <img id="logo" src="/images/Navi/Navi%20Unique.png" alt="Logo" onclick="location.href = '/';" style="cursor: pointer">
-        <span id="p1">InternMap</span>
-        <span id="p2">Welcome to the platform that sets your future for you</span>
-    </div>
-</header>
+<header th:replace="~{fragments/indexHeader.html}"></header>
 
 <body>
-
 <div class="search-action-container">
     <div id="bb1" class="no-longer-a-box">
         <div id="bh">
@@ -223,24 +183,5 @@
 </div>
 </body>
 
-<br><br><br><br><br><br><br>
-<footer>
-    <div>
-        <!--    <img id="footer-image" src="/images/Footer image.png">-->
-        <div id="footer">
-            <div id="ft1" class="can-we-stop-with-the-boxes-please">
-                InternMap
-            </div>
-            <div id="ft2">
-                <ul class="quick-links">
-                    <li>
-                        <a onclick="location.href = '/'" style="cursor: pointer">Home </a>
-                    </li>
-                    <li><a onclick="location.href = '/'" style="cursor: pointer">RoadMaps</a></li>
-                    <li><a onclick="location.href = '/JobPostings'" style="cursor: pointer" >JobPostings</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</footer>
+<footer th:replace="~{fragments/indexFooter}"></footer>
 </html>

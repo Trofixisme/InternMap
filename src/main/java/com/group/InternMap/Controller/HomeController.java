@@ -1,6 +1,7 @@
 package com.group.InternMap.Controller;
 
 import com.group.InternMap.Admin.Admin;
+import com.group.InternMap.DTO.RecruiterRegistrationDTO;
 import com.group.InternMap.Recruiter.RecruiterService;
 import com.group.InternMap.Roadmap.RoadmapRepo;
 import com.group.InternMap.Roadmap.RoadmapService;
@@ -52,10 +53,13 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/signup-choice")
-    public String signupChoice() {
+    @GetMapping("/signup")
+    public String signupChoice(Model model) {
         // Note: no .htm; extension
-        return "InternMapSignUpChoice";
+        model.addAttribute("user", new Student());
+        model.addAttribute("recruiterRegistrationDTO", new RecruiterRegistrationDTO());
+        model.addAttribute("admin", new Admin());
+        return "register";
     }
 
     @GetMapping("/profile")

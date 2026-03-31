@@ -1,16 +1,18 @@
 <!Doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
 <head data-th-src="~{fragments/head}">
     <title>Home</title>
     <link rel="stylesheet" th:href="@{/css/InternMapHomepage.css}">
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
 </head>
 
-<header th:replace="~{fragments/indexHeader}"></header>
+<header th:replace="~{fragments/indexHeader.html}"></header>
+
+<div class="wrapper">
+<div id="notificationBox" style="position: fixed; top: 20px; right: 20px; background: #333; color: white; padding: 10px 20px; border-radius: 10px; display: none; z-index: 1000;"></div>
 
 <body style="margin: 0; background: white">
-
     <div id="bb1" class="box">
         <div id="bh">
             Explore Roadmaps
@@ -20,7 +22,6 @@
             <button id="bu2" onclick="location.href = '/JobPostings'">Positions</button>
         </div>
     </div>
-    <br><br><br><br>
 
     <div class="button-grid">
         <a th:href="@{/new/roadmap}"
@@ -32,49 +33,38 @@
             No roadmaps to show.
         </a>
     </div>
-    <div id="notificationBox" style="
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: #333;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 10px;
-    display: none;
-    z-index: 1000;
-">
-    </div>
-    <script>
-        let stompClient = null;
-
-        function connect() {
-            let socket = new SockJS('/ws'); // must match your config
-            stompClient = Stomp.over(socket);
-
-            stompClient.connect({}, function (frame) {
-                console.log('Connected: ' + frame);
-
-                // VERY IMPORTANT
-                stompClient.subscribe('/user/queue/notifications', function (notification) {
-                    showNotification(notification.body);
-                });
-            });
-        }
-
-        function showNotification(message) {
-            let box = document.getElementById("notificationBox");
-            box.innerText = message;
-            box.style.display = "block";
-
-            setTimeout(() => {
-                box.style.display = "none";
-            }, 4000);
-        }
-
-        connect();
-    </script>
-    <br><br><br><br><br>
 </body>
 
 <div th:replace="~{fragments/indexFooter}"></div>
+</div>
+
+<script>
+    let stompClient = null;
+
+    function connect() {
+        let socket = new SockJS('/ws'); // must match your config
+        stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
+
+            // VERY IMPORTANT
+            stompClient.subscribe('/user/queue/notifications', function (notification) {
+                showNotification(notification.body);
+            });
+        });
+    }
+
+    function showNotification(message) {
+        let box = document.getElementById("notificationBox");
+        box.innerText = message;
+        box.style.display = "block";
+
+        setTimeout(() => {
+            box.style.display = "none";
+        }, 4000);
+    }
+
+    connect();
+</script>
 </html>

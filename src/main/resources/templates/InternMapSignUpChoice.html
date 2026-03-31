@@ -3,49 +3,28 @@
 
 <head data-th-src="~{fragments/head}">
     <title>Sign Up</title>
-
-    <style>
-        .flex-button-container {
-            display: flex;
-            flex-wrap: wrap;
-            flex-direction: row;
-            gap: 20px;
-            padding-bottom: 20px;
-            justify-content: center;
-        }
-
-        .flex-button {
-            width: 280px;
-            height: 280px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            border: black solid 2px;
-            border-radius: 50px;
-            color: black;
-            background-color: rgb(247, 247, 247);
-            font-family: Inter;
-            font-size: 30px;
-            font-weight: 600;
-        }
-
-        .flex-button:hover {
-            cursor: pointer;
-            border-width: 5px;
-        }
-    </style>
-
+    <link rel="stylesheet" th:href="@{/css/InternMapSignUpChoice.css}">
+<!--    <link rel="stylesheet" th:href="@{/css/InternMapSignUp.css}">-->
+    <link rel="stylesheet" th:href="@{/css/Universal.css}">
 </head>
 
-
 <body>
-<header th:replace="~{fragments/indexHeader}"></header>
-<div id="p1">Sign Up as...</div>
+    <div class="centered">
+    <div id="segmented-control" style="display: flex; flex-direction: row; gap: 10px;">
+        <input type="radio" id="admin" name="role" value="admin-view" style="">
+        <label for="admin">Admin</label>
+        <br>
+        <input type="radio" id="student" name="role" value="student-view" style="" checked>
+        <label for="student">Student</label>
+        <br>
+        <input type="radio" id="recruiter" name="role" value="recruiter-view" style="">
+        <label for="recruiter">Recruiter</label>
+        <br>
+    </div>
+    <div style="display: flex; flex-direction: row; gap: 30px;">
 
-<div class="flex-button-container">
 
-    <div class="flex-button-container">
+        <div class="signup-view" id="admin-view" style="display: none;">
         <a th:href="@{/admin/register}" style="text-decoration: none; color: black;">
             <div class="flex-button">
                 <div class="vertical-container">
@@ -54,8 +33,10 @@
                 </div>
             </div>
         </a>
+        </div>
 
-        <a th:href="@{/student/register}" style="text-decoration: none; color: black; z-index: 10">
+        <div class="signup-view" id="student-view">
+        <a th:href="@{/student/register}" style="text-decoration: none; color: black;">
             <div class="flex-button">
                 <div class="vertical-container">
                     <img src="/images/Graduation_cap.png" height="81" width="76.87" alt="Graduation Cap"/>
@@ -63,7 +44,9 @@
                 </div>
             </div>
         </a>
+        </div>
 
+        <div class="signup-view" id="recruiter-view" style="display: none;">
         <a th:href="@{/recruiter/register}" style="text-decoration: none; color: black;">
             <div class="flex-button">
                 <div class="vertical-container">
@@ -72,11 +55,39 @@
                 </div>
             </div>
         </a>
+        </div>
     </div>
-    <br>
-</div>
-<div th:replace="~{fragments/indexFooter}"></div>
+    </div>
 </body>
 
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const controlsContainer = document.getElementById('segmented-control');
+
+        controlsContainer.addEventListener('change', (e) => {
+            if (e.target && e.target.matches('input[type="radio"]')) {
+                const selectedValue = e.target.value;
+                switchView(selectedValue);
+            }
+        });
+
+        function switchView(viewId) {
+            // Hide all content views
+            document.querySelectorAll('.signup-view').forEach(view => {
+                view.style.display = 'none';
+            });
+            // Show the selected view
+            const selectedView = document.getElementById(viewId);
+            if (selectedView) {
+                selectedView.style.display = 'block';
+            }
+        }
+
+        // Initialize on page load (optional, based on 'checked' attribute)
+        // switchView(document.querySelector('input[name="view-group"]:checked').value);
+    });
+</script>
+
+<!--<div th:replace="~{fragments/footer}"></div>-->
 </html>
 

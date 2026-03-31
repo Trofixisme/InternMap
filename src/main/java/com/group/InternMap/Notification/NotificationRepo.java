@@ -1,4 +1,4 @@
-package com.group.InternMap.notification;
+package com.group.InternMap.Notification;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

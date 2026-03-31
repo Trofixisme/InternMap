@@ -1,18 +1,17 @@
-package com.group.InternMap.notification;
+package com.group.InternMap.Notification;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "notifications")
 public class Notification {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String userEmail;
     private String message;
 
-    public Notification() {
-    }
+    public Notification() {}
 
     public Notification(String userEmail, String message) {
         this.userEmail = userEmail;

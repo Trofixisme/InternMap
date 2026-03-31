@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Applications</title>
+    <link rel="stylesheet" th:href="@{/CSS/tables.css}">
+</head>
+
+<body>
+<div class="centered-container-full-width" style="border-radius: 48px;">
+    <div class="table-header" style="background: transparent">
+        <h2 style="font-weight: bold; font-size: 28px; color: black; border: none">My Applications</h2>
+    </div>
+
+    <div class="table-wrapper" style="border: none">
+        <table class="table" style="border-radius: 48px; border: none">
+            <thead style="background: white">
+            <tr>
+                <th>Job Title</th>
+                <th>Applications</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+
+            <tbody th:if="${myApplications != null and !myApplications.isEmpty()}">
+            <tr th:each="app : ${myApplications}">
+                <td th:text="${app.jobPosting.jobName}" data-label="Job Title"></td>
+                <td data-label="Applications">
+                    <a th:href="@{/JobPostings/{id}/applications(id=${app.jobPosting.id})}"
+                       class="btn btn-primary" style="border-radius: 24px;">
+                        View Application Details
+                    </a>
+                </td>
+<!--                <td th:text="${app.status}" data-label="Status"></td> -->
+            </tr>
+            </tbody>
+
+            <tbody th:if="${myApplications == null or myApplications.isEmpty()}">
+            <tr>
+                <td colspan="3" style="border: none; padding: 0;">
+                    <div class="empty-state">
+                        <h3>You haven't applied to any job postings yet.</h3>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

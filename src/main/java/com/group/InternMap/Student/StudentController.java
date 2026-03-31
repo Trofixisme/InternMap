@@ -41,12 +41,6 @@ public class StudentController {
 
     }
 
-    @GetMapping("/student/register")
-    public String showRegisterStudent(Model model) {
-        model.addAttribute("user", new Student());
-        return "StudentRegister";
-    }
-
     @PostMapping("/student/register")
     public String registerStudent(@ModelAttribute("user") Student user, Model model) {
         try {
@@ -54,7 +48,7 @@ public class StudentController {
                 userService.register(user);
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "StudentRegister";
+            return "register";
         }
         return "redirect:/login";
     }

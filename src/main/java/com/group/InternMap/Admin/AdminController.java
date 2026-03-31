@@ -35,12 +35,6 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @GetMapping("/admin/register")
-    public String showRegisterAdmin(Model model) {
-        model.addAttribute("user", new Admin());
-        return "adminRegister";
-    }
-
     @PostMapping("/admin/register")
     public String registerAdmin(@ModelAttribute("user") Admin user, Model model) {
         try {
@@ -50,7 +44,7 @@ public class AdminController {
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             // Return the view name (DO NOT REDIRECT)
-            return "adminRegister";
+            return "register";
         }
 
         // Only redirect on SUCCESS

@@ -6,6 +6,40 @@
   <link rel="stylesheet" th:href="@{/css/Universal.css}">
 </head>
 
+<style>
+  div.segmented-control {
+    background: var(--secondary-background-color);
+
+    display: flex;
+    flex-direction: row;
+    padding: 5px 0;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    border-radius: 25px;
+    font-weight: 500;
+
+    section.segment {
+      border-radius: 25px;
+      padding: 10px 10.45%;
+    }
+
+    #student-segment {
+      background: var(--background-color);
+    }
+
+    label {
+      margin-bottom: -8px;
+      text-size-adjust: 90%;
+    }
+
+    input[type="radio"] {
+      align-self: center;
+      display: none;
+    }
+  }
+</style>
+
 <body>
 <div class="centered">
   <br><br><br>
@@ -15,15 +49,23 @@
   <h1>Sign Up</h1>
 
   <!-- SEGMENTED CONTROL -->
-  <div class="center" id="segmented-control" style="display: flex; flex-direction: row; gap: 10px;">
+  <div class="segmented-control full-width" id="segmented-control">
+    <section class="segment" id="admin-segment">
     <input type="radio" id="admin" name="role" value="admin-view" style="">
     <label for="admin">Admin</label>
+    </section>
     <br>
+
+    <section class="segment" id="student-segment">
     <input type="radio" id="student" name="role" value="student-view" style="" checked>
     <label for="student">Student</label>
+    </section>
     <br>
+
+    <section class="segment" id="recruiter-segment">
     <input type="radio" id="recruiter" name="role" value="recruiter-view" style="">
     <label for="recruiter">Recruiter</label>
+    </section>
     <br>
   </div>
   <br>
@@ -73,7 +115,7 @@
     </form>
 
     <br>
-    <p style="justify-self: center; font-size: 14px; font-weight: 400;">Already have an account? <a style="color: rgb(49, 131, 254); font-weight: 600; border-radius: 200px; text-decoration: none;" th:href="@{/login}">Sign in</a></p>
+    <p style="justify-self: center; align-self: center; font-size: 14px; font-weight: 400;">Already have an account? <a style="color: rgb(49, 131, 254); font-weight: 600; border-radius: 200px; text-decoration: none;" th:href="@{/login}">Sign in</a></p>
     <br>
   </div>
 
@@ -109,8 +151,8 @@
     </form>
 
     <br>
-    <p style="justify-self: center; font-size: 14px; font-weight: 400;">Don't have a company yet? <a style="color: rgb(49, 131, 254); font-weight: 600; border-radius: 200px; text-decoration: none;" th:href="@{/recruiter/company/register}">Create a company</a></p>
-    <p style="justify-self: center; font-size: 14px; font-weight: 400;">Already have an account? <a style="color: rgb(49, 131, 254); font-weight: 600; border-radius: 200px; text-decoration: none;" th:href="@{/login}">Sign in</a></p>
+    <p style="justify-self: center; align-self: center;  font-size: 14px; font-weight: 400;">Don't have a company yet? <a style="color: rgb(49, 131, 254); font-weight: 600; border-radius: 200px; text-decoration: none;" th:href="@{/recruiter/company/register}">Create a company</a></p>
+    <p style="justify-self: center; align-self: center;  font-size: 14px; font-weight: 400;">Already have an account? <a style="color: rgb(49, 131, 254); font-weight: 600; border-radius: 200px; text-decoration: none;" th:href="@{/login}">Sign in</a></p>
     <br>
 
   </div>
@@ -118,27 +160,27 @@
   <!-- ADMIN Sign in VIEW -->
   <div class="signup-view full-width" id="admin-view" style="display: none;">
     <form class="full-width" th:action="@{/admin/register}" th:object="${user}" method="post">
-      <label>First Name:</label>
-        <input type="text" class="form-input" th:field="*{FName}" placeholder="First name" required autocomplete="given-name"/>
+      <label for="admin-first-name">First Name:</label>
+        <input type="text" id="admin-first-name" class="form-input" th:field="*{FName}" placeholder="First name" required autocomplete="given-name"/>
       <br><br>
 
-      <label>Last Name:</label>
-        <input type="text" class="form-input" th:field="*{LName}" placeholder="Last name" required autocomplete="family-name"/>
+      <label for="admin-last-name">Last Name:</label>
+        <input type="text" id="admin-last-name" class="form-input" th:field="*{LName}" placeholder="Last name" required autocomplete="family-name"/>
       <br><br>
 
-      <label>Email:</label>
-        <input type="email" class="form-input" th:field="*{email}" placeholder="Email" required autocomplete="email"/>
+      <label for="admin-email">Email:</label>
+        <input type="email" id="admin-email" class="form-input" th:field="*{email}" placeholder="Email" required autocomplete="email"/>
       <br><br>
 
-      <label>Password:</label>
-        <input type="password" class="form-input" th:field="*{password}" placeholder="Password" required autocomplete="new-password"/>
+      <label for="admin-password">Password:</label>
+        <input type="password" id="admin-password" class="form-input" th:field="*{password}" placeholder="Password" required autocomplete="new-password"/>
       <br><br>
 
   <input type="submit" class="form-submit" value="Create Account">
       </form>
 
     <br>
-    <p style="justify-self: center; font-size: 14px; font-weight: 400;">Already have an account? <a style="color: rgb(49, 131, 254); font-weight: 600; border-radius: 200px; text-decoration: none;" th:href="@{/login}">Sign in</a></p>
+    <p style="justify-self: center; align-self: center;  font-size: 14px; font-weight: 400;">Already have an account? <a style="color: rgb(49, 131, 254); font-weight: 600; border-radius: 200px; text-decoration: none;" th:href="@{/login}">Sign in</a></p>
     <br>
     </div>
 </div>
@@ -147,6 +189,8 @@
 </body>
 
 <script>
+  const rootStyles = window.getComputedStyle(document.documentElement);
+
   document.addEventListener('DOMContentLoaded', () => {
     const controlsContainer = document.getElementById('segmented-control');
 
@@ -162,6 +206,22 @@
       document.querySelectorAll('.signup-view').forEach(view => {
         view.style.display = 'none';
       });
+
+      document.querySelectorAll('.segment').forEach(segment => {
+        segment.style.background = 'none';
+      })
+
+      switch (viewId) {
+        case 'student-view':
+          document.getElementById('student-segment').style.background = rootStyles.getPropertyValue('--background-color').trim();
+          break;
+        case 'recruiter-view':
+          document.getElementById('recruiter-segment').style.background = rootStyles.getPropertyValue('--background-color').trim();
+          break;
+        case 'admin-view':
+          document.getElementById('admin-segment').style.background = rootStyles.getPropertyValue('--background-color').trim();
+      }
+
       // Show the selected view
       const selectedView = document.getElementById(viewId);
       if (selectedView) {

@@ -58,11 +58,6 @@ public class RecruiterController {
         return "redirect:/recruiter/register";
 
     }
-    @GetMapping("/recruiter/register")
-    public String showRegisterRecruiter(Model model) {
-        model.addAttribute("form", new RecruiterRegistrationDTO());
-        return "RecruiterRegister";
-    }
 
     @PostMapping("/recruiter/register")
     public String registerRecruiter(@ModelAttribute("form") RecruiterRegistrationDTO recruiterRegistrationDTO, Model model) {
@@ -72,7 +67,7 @@ public class RecruiterController {
             return "redirect:/login";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "RecruiterRegister";
+            return "register";
         }
     }
 

@@ -77,7 +77,7 @@
                 </div>
 
                 <div>
-                    <a th:if="${loggedInUser != null && loggedInUser.id == user.id }" href="/cv" class="btn btn-warning btn-sm">
+                    <a th:if="${user != null && user.role.name() == 'STUDENT'}" href="/cv" class="btn btn-warning btn-sm">
                         <i class="bi bi-pencil"></i> Edit CV
                     </a>
                 </div>

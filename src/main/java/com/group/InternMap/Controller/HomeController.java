@@ -74,7 +74,7 @@ public class HomeController {
 
         //Stupid way to resolve the "Edit CV" button not showing up whenever it should show
         //or showing up when it shouldn't.
-        model.addAttribute("loggedInUser", user);
+//        model.addAttribute("loggedInUser", user); // fixed that thinge ( hopefully nothing breaks )
         model.addAttribute("user", user);
 
         switch (user) {

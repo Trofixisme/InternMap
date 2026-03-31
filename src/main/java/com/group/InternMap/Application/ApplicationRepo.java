@@ -10,6 +10,7 @@ import java.util.List;
 public interface ApplicationRepo extends JpaRepository<Application, Long> {
     // Alternative: query by JobPosting entity reference
     List<Application> findByJobPosting(JobPosting jobPosting);
+    List<Application> findByStudentEmail(String studentEmail);
 
     @Query("SELECT a FROM Application a JOIN a.jobPosting j WHERE " +
             "LOWER(a.email) LIKE LOWER(CONCAT('%', :query, '%')) OR " +

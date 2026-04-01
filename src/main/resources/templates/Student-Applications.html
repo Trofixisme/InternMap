@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/head}">
 <head>
     <title>My Applications</title>
     <link rel="stylesheet" th:href="@{/CSS/tables.css}">
 </head>
 
 <body>
+<div th:replace="~{fragments/Notification}"></div>
 <div class="centered-container-full-width" style="border-radius: 48px;">
     <div class="table-header" style="background: transparent">
         <h2 style="font-weight: bold; font-size: 28px; color: black; border: none">My Applications</h2>

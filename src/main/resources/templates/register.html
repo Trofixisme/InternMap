@@ -1,46 +1,47 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/head}">
 <head data-th-src="~{fragments/head}">
   <title>Sign up</title>
   <link rel="icon" type="image/png" href="/images/Navi/Navi%20Unique%20(Shadow-less).png">
   <link rel="stylesheet" th:href="@{/css/Universal.css}">
+  <style>
+    div.segmented-control {
+      background: var(--secondary-background-color);
+
+      display: flex;
+      flex-direction: row;
+      padding: 5px 0;
+      justify-content: center;
+      align-items: center;
+      justify-items: center;
+      border-radius: 25px;
+      font-weight: 500;
+
+      section.segment {
+        border-radius: 25px;
+        padding: 10px 10.45%;
+      }
+
+      #student-segment {
+        background: var(--background-color);
+      }
+
+      label {
+        margin-bottom: -8px;
+        text-size-adjust: 90%;
+      }
+
+      input[type="radio"] {
+        align-self: center;
+        display: none;
+      }
+    }
+  </style>
 </head>
 
-<style>
-  div.segmented-control {
-    background: var(--secondary-background-color);
-
-    display: flex;
-    flex-direction: row;
-    padding: 5px 0;
-    justify-content: center;
-    align-items: center;
-    justify-items: center;
-    border-radius: 25px;
-    font-weight: 500;
-
-    section.segment {
-      border-radius: 25px;
-      padding: 10px 10.45%;
-    }
-
-    #student-segment {
-      background: var(--background-color);
-    }
-
-    label {
-      margin-bottom: -8px;
-      text-size-adjust: 90%;
-    }
-
-    input[type="radio"] {
-      align-self: center;
-      display: none;
-    }
-  }
-</style>
 
 <body>
+<div th:replace="~{fragments/Notification}"></div>
 <div class="centered">
   <br><br><br>
   <a th:href="@{/}" style="border-radius: 200px;" inert><img src="/images/Navi/Navi%20Unique.png" alt="Logo" style="width: 100px; height: 100px;"></a>
@@ -186,7 +187,6 @@
 </div>
 </div>
 <br>
-</body>
 
 <script>
   const rootStyles = window.getComputedStyle(document.documentElement);
@@ -233,5 +233,7 @@
     // switchView(document.querySelector('input[name="view-group"]:checked').value);
   });
 </script>
+
+</body>
 
 </html>

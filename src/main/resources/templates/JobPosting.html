@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head data-th-src="~{fragments/head}">
-    <title> InternMap </title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/head}">
+<head>
+    <title>JobPosting</title>
     <link rel="stylesheet" th:href="@{/css/jobPosting.css}">
     <link rel="stylesheet" th:href="@{/css/InternMapHomepage.css}">
     <style>
@@ -118,9 +118,9 @@
     </style>
 </head>
 
-<header th:replace="~{fragments/indexHeader.html}"></header>
-
 <body>
+<div th:replace="~{fragments/Notification}"></div>
+<header th:replace="~{fragments/indexHeader.html}"></header>
 <div class="search-action-container">
     <div id="bb1" class="no-longer-a-box">
         <div id="bh">
@@ -181,7 +181,6 @@
         </div>
     </div>
 </div>
-</body>
-
 <footer th:replace="~{fragments/indexFooter}"></footer>
+</body>
 </html>

@@ -10,8 +10,10 @@ import com.group.InternMap.Job.JobPostingService;
 import com.group.InternMap.User.UserRole;
 import com.group.InternMap.User.UserService;
 import com.group.InternMap.Notification.NotificationService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,8 @@ import java.util.List;
 @Controller
 public class StudentController {
 
+    AuthenticationManager authenticationManager;
+
     private final ApplicationRepo applicationRepo;
     JobPostingService jobPostingService;
     UserService userService;
@@ -31,32 +35,29 @@ public class StudentController {
     NotificationService notificationService;
 
     @Autowired
-    public StudentController(JobPostingService jobPostingService, UserService userService, CVRepo cvRepo, StudentRepo studentRepo, ApplicationRepo applicationRepo, NotificationService notificationService) {
+    public StudentController(JobPostingService jobPostingService, UserService userService, CVRepo cvRepo, StudentRepo studentRepo, ApplicationRepo applicationRepo, NotificationService notificationService, AuthenticationManager authenticationManager) {
         this.jobPostingService = jobPostingService;
         this.userService = userService;
         this.cvRepo = cvRepo;
         this.studentRepo = studentRepo;
         this.applicationRepo = applicationRepo;
         this.notificationService = notificationService;
+        this.authenticationManager = authenticationManager;
 
-    }
-
-    @GetMapping("/student/register")
-    public String showRegisterStudent(Model model) {
-        model.addAttribute("user", new Student());
-        return "StudentRegister";
     }
 
     @PostMapping("/student/register")
-    public String registerStudent(@ModelAttribute("user") Student user, Model model) {
+    public String registerStudent(HttpServletRequest request, @ModelAttribute("user") Student user, Model model) {
         try {
-                user.setRole(UserRole.STUDENT);
-                userService.register(user);
+            user.setRole(UserRole.STUDENT);
+            userService.register(user, request);
+
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             model.addAttribute("errorMessage", e.getMessage());
-            return "StudentRegister";
+            return "redirect:/signup";
         }
-        return "redirect:/login";
+        return "redirect:/";
     }
 
     @GetMapping("/cv")

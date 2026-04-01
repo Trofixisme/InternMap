@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head data-th-src="~{fragments/head}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/head}">
+<head>
     <title>Register Company</title>
     <link rel="stylesheet" th:href="@{/CSS/InternMapSignIn.css}">
 </head>
@@ -19,6 +19,7 @@
 </header>
 
 <body>
+<div th:replace="~{fragments/Notification}"></div>
 <h2 class="form-title">Create a Company</h2>
 <div class="form-container">
 
@@ -78,8 +79,8 @@
     </form>
 
     <p class="form-link">
-        Already registered your company?
-        <a th:href="@{/recruiter/register}">Back to recruiter registration</a>
+        Already have a company?
+        <a th:href="@{/signup}">Back to the sign up</a>
     </p>
 </div>
 

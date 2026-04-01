@@ -1,6 +1,6 @@
 <!Doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="head">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
   <meta charset="UTF-8">
   <title> InternMap </title>
   <link rel="icon" type="image/png" href="/images/Navi/Navi%20Unique%20(Shadow-less).png">
@@ -10,4 +10,7 @@
         rel="stylesheet">
 <!--  <link rel="stylesheet" th:href="@{/CSS/InternMapHomepage.css}">-->
   <meta name="viewport" content="width=device-width">
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+  <script src="/JS/Notification.js"></script>
 </head>

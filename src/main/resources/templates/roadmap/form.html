@@ -195,6 +195,7 @@
         <div class="form-group">
             <label>
                 <input type="text" th:field="*{roadmapName}" required placeholder="Roadmap title">
+                <br><br>
             </label>
         </div>
 
@@ -205,6 +206,7 @@
                 <div class="form-group">
                     <label>
                         <input type="text" th:field="*{modules[0].name}" required placeholder="Name">
+                        <br><br>
                     </label>
                 </div>
 
@@ -220,6 +222,7 @@
                         <div class="form-group">
                             <label>
                                 <input type="text" th:field="*{modules[0].skills[0].name}" required placeholder="Skill name">
+                                <br><br>
                             </label>
                         </div>
                         <div class="form-group">
@@ -230,6 +233,7 @@
                         <div class="form-group">
                             <label>
                                 <input type="url" th:field="*{modules[0].skills[0].links[0]}" placeholder="Resoucrce links (optional)">
+                                <br><br>
                             </label>
                         </div>
                     </div>
@@ -263,8 +267,8 @@
                 </div>
 
                 <div class="form-group">
-
                     <input type="text" name="modules[${moduleIndex}].name" required placeholder="Name">
+                    <br><br>
                 </div>
 
                 <div class="form-group">
@@ -276,6 +280,7 @@
                         <h4>Skill 1</h4>
                         <div class="form-group">
                             <input type="text" name="modules[${moduleIndex}].skills[0].name" required placeholder="Skill">
+                            <br><br>
                         </div>
                         <div class="form-group">
                             <label>Description</label>
@@ -283,6 +288,7 @@
                         </div>
                         <div class="form-group">
                             <input type="url" name="modules[${moduleIndex}].skills[0].links[0]" placeholder="Resoruce links (also optional)">
+                            <br><br>
                         </div>
                     </div>
                 </div>

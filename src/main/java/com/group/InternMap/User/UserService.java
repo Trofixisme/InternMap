@@ -1,8 +1,16 @@
 package com.group.InternMap.User;
 
 import com.group.InternMap.FilePaths;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -12,27 +20,37 @@ import java.util.Optional;
 @Service
 public class UserService implements FilePaths {
 
+    AuthenticationManager authenticationManager;
+
     private PasswordEncoder passwordEncoder;
     private UserRepo userRepo;
 
     public UserService() {}
 
     @Autowired
-    public UserService(UserRepo userRepo, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepo userRepo, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
         this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
     }
 
     public void register(Users u) throws Exception {
         List<Users> users = userRepo.findAll(); // findAll() is built in JPARepository
         if (!users.contains(u)) {
             if(isEmailValid(u.getEmail())) {
+                String plainPassword = u.getPassword();
                 u.setPassword(passwordEncoder.encode(u.getPassword()));
                 userRepo.save(u);
             }
         } else {
             throw new Exception("A user with these credentials already exists.");
         }
+    }
+
+    public void register(Users u, HttpServletRequest request) throws Exception {
+        String plainPassword = u.getPassword();
+        register(u);
+        request.login(u.getEmail(), plainPassword);
     }
 
     public static boolean isEmailValid(String email) {

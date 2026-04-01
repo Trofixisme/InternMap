@@ -237,18 +237,21 @@ input[type=submit] {
 }
 
 .full-width, .container-full-width {
+    display: flex;
 
-    /*width: 100%;*/
-    /*max-width: 100%;*/
-    /*margin: 0 auto;*/
+    max-height: 100%;
 
-    /*height: fit-content;*/
-    /*min-height: fit-content;*/
-    /*width: max-content;*/
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
 
-    /*flex-direction: column;*/
+    height: fit-content;
+    min-height: fit-content;
 
-    /*justify-content: center;*/
+    flex-direction: column;
+
+    justify-content: center;
+
 }
 
 /* Makes an element centered */

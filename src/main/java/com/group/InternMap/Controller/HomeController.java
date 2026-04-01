@@ -46,6 +46,8 @@ public class HomeController {
 
         if (authentication != null && authentication.getAuthorities().toString().equals("[ROLE_ADMIN]")) {
             model.addAttribute("role", "admin");
+        }else if (authentication != null && authentication.getAuthorities().toString().equals("[ROLE_STUDENT]")) {
+            model.addAttribute("role", "STUDENT"); // Use ALL CAPS
         }
 
         model.addAttribute("roadmaps", roadmapService.findAll());

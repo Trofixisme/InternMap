@@ -50,7 +50,7 @@ body {
             border-radius: 60px;
             background: rgba(237, 239, 241, 0.8);
 
-            #bu1, #bu2 {
+            #bu1, #bu2,#bu3 {
                 border-color: transparent;
                 background: transparent;
                 color: rgba(0, 0, 0, 0.80);

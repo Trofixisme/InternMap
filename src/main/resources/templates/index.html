@@ -18,6 +18,9 @@
         <div id="bb2">
             <button id="bu1">Roadmaps</button>
             <button id="bu2" onclick="location.href = '/JobPostings'">Positions</button>
+            <button id="bu3"
+                    th:if="${role == 'STUDENT'}"
+                    onclick="location.href = '/student/applications'">My Applications</button>
         </div>
     </div>
 
@@ -30,6 +33,7 @@
            style="text-decoration: none; font-size: 40px; font-weight: bold; color: #3e3e3e; display: flex; justify-content: center;">
             No roadmaps to show.
         </a>
+
     </div>
     <div th:replace="~{fragments/indexFooter}"></div>
 </div>

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/head}">
 <head data-th-src="~{fragments/head}">
   <title>Sign up</title>
-  <link rel="icon" type="image/png" href="/images/Navi/Navi%20Unique%20(Shadow-less).png">
+  <link rel="icon" type="image/png" href="/Images/Navi/Navi%20Unique%20(Shadow-less).png">
   <link rel="stylesheet" th:href="@{/css/Universal.css}">
   <style>
     div.segmented-control {
@@ -34,6 +34,7 @@
       input[type="radio"] {
         align-self: center;
         display: none;
+
       }
     }
   </style>
@@ -43,8 +44,7 @@
 <body>
 <div th:replace="~{fragments/Notification}"></div>
 <div class="centered">
-  <br><br><br>
-  <a th:href="@{/}" style="border-radius: 200px;" inert><img src="/images/Navi/Navi%20Unique.png" alt="Logo" style="width: 100px; height: 100px;"></a>
+  <a th:href="@{/}" style="border-radius: 200px;" inert><img src="/Images/Navi/Navi%20Unique.png" alt="Logo" style="width: 100px; height: 100px;"></a>
   <br>
 <div class="container">
   <h1>Sign Up</h1>
@@ -76,16 +76,20 @@
     <p th:text="${errorMessage}"></p>
   </div>
 
+  <br>
+
   <!-- STUDENT Sign in VIEW -->
   <div class="signup-view full-width" id="student-view">
     <form class="full-width" th:action="@{/student/register}" th:object="${user}" method="post">
 
-      <label for="student-first-name">First Name:</label>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 20px">
+        <label for="student-first-name">First Name:</label>
+        <label for="student-last-name">Last Name:</label>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 20px;">
         <input type="text" id="student-first-name" th:field="*{FName}" placeholder="Intern" required autocomplete="given-name"/>
-      <br><br>
-
-      <label for="student-last-name">Last Name:</label>
         <input type="text" id="student-last-name" th:field="*{LName}" placeholder="Map" required autocomplete="family-name" />
+      </div>
       <br><br>
 
       <label for="student-email">Email:</label>
@@ -123,12 +127,16 @@
   <!-- RECRUITER Sign in VIEW -->
   <div class="signup-view full-width" id="recruiter-view" style="display: none;">
     <form class="full-width" th:action="@{/recruiter/register}" th:object="${recruiterRegistrationDTO}" method="post">
-      <label for="recruiter-first-name">First Name:</label>
-        <input type="text" id="recruiter-first-name" th:field="*{user.FName}" placeholder="Intern" required autocomplete="given-name"/>
-      <br><br>
 
-      <label for="recruiter-last-name">Last Name:</label>
+      <div style="display: grid; grid-gap: 20px; grid-template-columns: 1fr 1fr;">
+        <label for="recruiter-first-name">First Name:</label>
+        <label for="recruiter-last-name">Last Name:</label>
+      </div>
+
+      <div style="display: grid; grid-gap: 20px; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <input type="text" id="recruiter-first-name" th:field="*{user.FName}" placeholder="Intern" required autocomplete="given-name"/>
         <input type="text" id="recruiter-last-name" th:field="*{user.LName}" placeholder="Map" required autocomplete="family-name"/>
+      </div>
       <br><br>
 
       <label for="recruiter-email">Email:</label>
@@ -160,13 +168,17 @@
 
   <!-- ADMIN Sign in VIEW -->
   <div class="signup-view full-width" id="admin-view" style="display: none;">
-    <form class="full-width" th:action="@{/admin/register}" th:object="${user}" method="post">
-      <label for="admin-first-name">First Name:</label>
-        <input type="text" id="admin-first-name" class="form-input" th:field="*{FName}" placeholder="First name" required autocomplete="given-name"/>
-      <br><br>
+    <form class="full-width" th:action="@{/admin/register}" th:object="${admin}" method="post">
 
-      <label for="admin-last-name">Last Name:</label>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 20px;">
+        <label for="admin-first-name">First Name:</label>
+        <label for="admin-last-name">Last Name:</label>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 20px;">
+        <input type="text" id="admin-first-name" class="form-input" th:field="*{FName}" placeholder="First name" required autocomplete="given-name"/>
         <input type="text" id="admin-last-name" class="form-input" th:field="*{LName}" placeholder="Last name" required autocomplete="family-name"/>
+      </div>
       <br><br>
 
       <label for="admin-email">Email:</label>
@@ -213,13 +225,13 @@
 
       switch (viewId) {
         case 'student-view':
-          document.getElementById('student-segment').style.background = rootStyles.getPropertyValue('--background-color').trim();
+          document.getElementById('student-segment').style.background = rootStyles.getPropertyValue('--background-color');
           break;
         case 'recruiter-view':
-          document.getElementById('recruiter-segment').style.background = rootStyles.getPropertyValue('--background-color').trim();
+          document.getElementById('recruiter-segment').style.background = rootStyles.getPropertyValue('--background-color');
           break;
         case 'admin-view':
-          document.getElementById('admin-segment').style.background = rootStyles.getPropertyValue('--background-color').trim();
+          document.getElementById('admin-segment').style.background = rootStyles.getPropertyValue('--background-color');
       }
 
       // Show the selected view

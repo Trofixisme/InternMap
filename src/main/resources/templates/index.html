@@ -23,7 +23,7 @@
 
     <div class="button-grid">
         <a th:href="@{/new/roadmap}"
-           class="grid-button" th:if="${role == 'admin'}"> <img src="/images/plus.png" alt="Create new Roadmap" width="46" height="46" id="grid-button-plus"></a>
+           class="grid-button" th:if="${role == 'admin'}"> <img src="/Images/plus.png" alt="Create new Roadmap" width="46" height="46" id="grid-button-plus"></a>
         <a th:href="@{/{id}(id=${roadmap.id})}" class="grid-button" th:each="roadmap : ${roadmaps}" th:text="${roadmap.name}" style="text-decoration: none;"></a>
 
         <a th:if="${roadmaps.isEmpty and role != 'admin'}"

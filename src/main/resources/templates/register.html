@@ -3,6 +3,11 @@
 <head data-th-src="~{fragments/head}">
   <title>Sign up</title>
   <link rel="icon" type="image/png" href="/Images/Navi/Navi%20Unique%20(Shadow-less).png">
+  <link rel="stylesheet" href="https://unpkg.com/primevue/resources/themes/lara-light-green/theme.css" />
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://unpkg.com/primevue/umd/primevue.min.js"></script>
+  <script src="https://unpkg.com/@primeuix/themes/umd/aura.js"></script>
+
   <link rel="stylesheet" th:href="@{/css/Universal.css}">
   <style>
     div.segmented-control {
@@ -57,6 +62,8 @@
     </section>
     <br>
 
+
+
     <section class="segment" id="student-segment">
     <input type="radio" id="student" name="role" value="student-view" style="" checked>
     <label for="student">Student</label>
@@ -70,6 +77,12 @@
     <br>
   </div>
   <br>
+
+  <div id="app">
+    <p-datepicker v-model="date"></p-datepicker>
+    <br /><br />
+    {{ date }}
+  </div>
 
   <!--/*@thymesVar id="errorMessage" type="String"*/-->
   <div th:if="${errorMessage}" style="color:red; border:0 solid red; padding:2px; margin-bottom:15px; font-weight: 550;">
@@ -200,7 +213,41 @@
 </div>
 <br>
 
+<script type="importmap">
+    {
+      "imports": {
+        "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+      }
+    }
+</script>
+
 <script>
+  const { createApp, ref } = Vue;
+
+  const app = createApp({
+    setup() {
+      const date = ref();
+
+      return {
+        date
+      };
+    },
+  });
+
+  app.use(PrimeVue.Config, {
+    theme: {
+      preset: PrimeUIX.Themes.Aura
+    }
+  });
+
+  app.component('p-datepicker', PrimeVue.DatePicker);
+
+  app.mount('#app');
+</script>
+
+
+<script>
+
   const rootStyles = window.getComputedStyle(document.documentElement);
 
   document.addEventListener('DOMContentLoaded', () => {

@@ -1,5 +1,6 @@
 package com.group.InternMap.Job;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.group.InternMap.Application.Application;
 import com.group.InternMap.Company.Company;
 import com.group.InternMap.Recruiter.Recruiter;
@@ -27,12 +28,14 @@ public class JobPosting implements Serializable {
     private String jobName;
 
     @ManyToOne
+    @JsonIgnore
     private Recruiter recruiter;
 
     @ManyToOne
     private Company company;
 
     @OneToMany(mappedBy = "jobPosting")
+    @JsonIgnore
     private List<Application> applications = new ArrayList<>();
 
     public void setJobDescription(String jobDescription) {
@@ -92,8 +95,6 @@ public class JobPosting implements Serializable {
         }
     }
 
-
-
     public void setRecruiter(Recruiter recruiter) {
         this.recruiter = recruiter;
     }
@@ -125,6 +126,7 @@ public class JobPosting implements Serializable {
     public void setApplications(List<Application> applications) {
         this.applications = applications;
     }
+
     public void addApplication(Application application) {
         // set the owning side so the application will have the jobPosting foreign key
         application.setJobPosting(this);

@@ -1,5 +1,6 @@
 package com.group.InternMap.Recruiter;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.group.InternMap.Job.JobPosting;
 import com.group.InternMap.Company.Company;
 import com.group.InternMap.User.UserRole;
@@ -60,6 +61,7 @@ public class Recruiter extends Users implements Serializable {
     }
 
     @OneToMany(mappedBy = "recruiter")
+//    @JsonIgnore
     private Collection<JobPosting> jobPosting;
 
     public Collection<JobPosting> getJobPosting() {

@@ -1,8 +1,11 @@
 package com.group.InternMap.User;
 
 import com.group.InternMap.FilePaths;
+import groovy.util.ResourceException;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -34,23 +37,22 @@ public class UserService implements FilePaths {
         this.authenticationManager = authenticationManager;
     }
 
-    public void register(Users u) throws Exception {
-        List<Users> users = userRepo.findAll(); // findAll() is built in JPARepository
-        if (!users.contains(u)) {
-            if(isEmailValid(u.getEmail())) {
-                String plainPassword = u.getPassword();
+    public void register(Users u, HttpServletRequest request) throws ServletException {
+        String plainPassword = u.getPassword();
+        register(u);
+        request.logout();
+        request.login(u.getEmail(), plainPassword);
+    }
+
+    public void register(Users u) {
+        try {
+            if (isEmailValid(u.getEmail())) {
                 u.setPassword(passwordEncoder.encode(u.getPassword()));
                 userRepo.save(u);
             }
-        } else {
-            throw new Exception("A user with these credentials already exists.");
+        } catch (Exception _) {
+            throw new DataIntegrityViolationException("User with this email already exists.");
         }
-    }
-
-    public void register(Users u, HttpServletRequest request) throws Exception {
-        String plainPassword = u.getPassword();
-        register(u);
-        request.login(u.getEmail(), plainPassword);
     }
 
     public static boolean isEmailValid(String email) {

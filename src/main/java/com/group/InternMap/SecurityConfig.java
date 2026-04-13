@@ -24,6 +24,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, RememberMeServices rememberMeServices) throws Exception {
 
         http
+           .csrf().disable()
            .authorizeHttpRequests(auth -> auth
 //                   .requestMatchers("/student/**").hasRole("STUDENT")
 //                   .requestMatchers("/recruiter/**").hasRole("RECRUITER")
@@ -31,7 +32,7 @@ public class SecurityConfig {
                    .anyRequest().permitAll()
            )
            .formLogin(form -> form
-                   .loginPage("/login")              // custom login page
+                   .loginPage("/login") // custom login page
                    .defaultSuccessUrl("/", true)
                    .passwordParameter("password")
                    .usernameParameter("email")

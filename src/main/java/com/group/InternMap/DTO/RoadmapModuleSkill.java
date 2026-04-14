@@ -3,7 +3,6 @@ package com.group.InternMap.DTO;
 import com.group.InternMap.Roadmap.Roadmap;
 import com.group.InternMap.Roadmap.RoadmapModule;
 import com.group.InternMap.Skill.Skill;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class RoadmapModuleSkill {
     }
 
     // Convert to actual models
-    public Roadmap toRoadmap() throws MalformedURLException {
+    public Roadmap toRoadmap() {
         Roadmap roadmap = new Roadmap(this.roadmapName);
 
         for (ModuleData moduleData : this.modules) {
@@ -68,8 +67,7 @@ public class RoadmapModuleSkill {
         private String description;
         private List<SkillData> skills = new ArrayList<>();
 
-        public ModuleData() {
-        }
+        public ModuleData() {}
 
         public String getName() {
             return name;

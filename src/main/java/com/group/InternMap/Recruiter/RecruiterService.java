@@ -5,9 +5,11 @@ import com.group.InternMap.Company.CompanyRepo;
 import com.group.InternMap.DTO.RecruiterRegistrationDTO;
 import com.group.InternMap.User.UserRole;
 import com.group.InternMap.User.UserService;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,7 +29,7 @@ public class RecruiterService extends UserService {
         this.userService = userService;
     }
 
-    public void registerRecruiter(RecruiterRegistrationDTO recruiterRegistrationDTO, HttpServletRequest servletRequest) throws Exception {
+    public void registerRecruiter(RecruiterRegistrationDTO recruiterRegistrationDTO, HttpServletRequest servletRequest) throws DataIntegrityViolationException, ServletException {
         recruiterRegistrationDTO.setCompany(companyRepo.findCompanyByName(recruiterRegistrationDTO.getCompany().getName()));
         Company company = recruiterRegistrationDTO.getCompany();
         Recruiter user = recruiterRegistrationDTO.getUser();

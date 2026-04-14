@@ -1,21 +1,13 @@
 package com.group.InternMap.User;
 
 import com.group.InternMap.FilePaths;
-import groovy.util.ResourceException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
-import java.util.List;
 import java.util.Optional;
 
 //CRUD operations
@@ -50,12 +42,16 @@ public class UserService implements FilePaths {
                 u.setPassword(passwordEncoder.encode(u.getPassword()));
                 userRepo.save(u);
             }
-        } catch (Exception _) {
+        } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityViolationException("User with this email already exists.");
         }
     }
 
     public static boolean isEmailValid(String email) {
+        if (email == null || email.isEmpty()) {
+            throw new IllegalArgumentException("Email cannot be empty.");
+        }
+
         boolean startsWithAt = false;
         for (int i = 0; i < email.length(); i++) {
             if (!startsWithAt && email.charAt(i) == '.' && !email.contains(".") && (email.startsWith("@") && email.startsWith("."))) {

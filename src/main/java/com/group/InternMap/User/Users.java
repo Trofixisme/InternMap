@@ -1,5 +1,6 @@
 package com.group.InternMap.User;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.io.Serializable;
 
@@ -8,6 +9,7 @@ import java.io.Serializable;
 public class Users implements Serializable {
 
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     @Column(nullable = false)

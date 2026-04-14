@@ -3,7 +3,6 @@ package com.group.InternMap.Controller;
 import com.group.InternMap.Admin.Admin;
 import com.group.InternMap.DTO.RecruiterRegistrationDTO;
 import com.group.InternMap.Recruiter.RecruiterService;
-import com.group.InternMap.Roadmap.RoadmapRepo;
 import com.group.InternMap.Roadmap.RoadmapService;
 import com.group.InternMap.User.UserService;
 import com.group.InternMap.User.Users;
@@ -110,7 +109,7 @@ public class HomeController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         // This removes the session and all attributes, including the "loggedInUser"
-        session.setAttribute("loggedInUser", null);
+        session.invalidate();
 
         // Redirect the user back to the login page
         return "redirect:/";

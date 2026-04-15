@@ -2,7 +2,7 @@ package com.group.InternMap.Recruiter;
 
 import com.group.InternMap.Application.Application;
 import com.group.InternMap.Application.ApplicationRepo;
-import com.group.InternMap.Application.CV;
+import com.group.InternMap.cv.CV;
 import com.group.InternMap.Company.Company;
 import com.group.InternMap.Company.CompanyService;
 import com.group.InternMap.DTO.JobPostingFactory;

@@ -2,8 +2,8 @@ package com.group.InternMap.Student;
 
 import com.group.InternMap.Application.Application;
 import com.group.InternMap.Application.ApplicationRepo;
-import com.group.InternMap.Application.CV;
-import com.group.InternMap.Application.CVRepo;
+import com.group.InternMap.cv.CV;
+import com.group.InternMap.cv.CVRepo;
 import com.group.InternMap.DTO.ApplicationAndCVDTO;
 import com.group.InternMap.Job.JobPosting;
 import com.group.InternMap.Job.JobPostingService;
@@ -23,8 +23,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
 import java.util.List;
 
-@RequestMapping("/REST")
 @RestController
+@RequestMapping("/api/student")
 public class RestStudentController {
 
     AuthenticationManager authenticationManager;
@@ -48,49 +48,10 @@ public class RestStudentController {
 
     }
 
-    @PostMapping("/student/register")
+    @PostMapping("/register")
     public void registerStudent(HttpServletRequest request, @ModelAttribute("user") Student user) throws ServletException, IllegalArgumentException {
         user.setRole(UserRole.STUDENT);
         userService.register(user, request);
-    }
-
-    @GetMapping("/cv")
-    public CV cv(Principal principal, Authentication authentication) throws HttpClientErrorException.Unauthorized {
-
-        if (authentication != null && authentication.getAuthorities().toString().equals("[ROLE_" + UserRole.STUDENT + "]")) {
-            Student student = studentRepo.findByEmail(principal.getName());
-
-            return student.getCv();
-        } else {
-            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "User must be of " + UserRole.STUDENT  +" to proceed");
-        }
-    }
-
-    @PostMapping("/cv/save")
-    public void saveCV(@ModelAttribute("cv") CV cv, Principal principal, Authentication authentication) {
-
-        if (authentication != null && authentication.getAuthorities().toString().equals("[ROLE_" + UserRole.STUDENT + "]")) {
-            Student student = studentRepo.findByEmail(principal.getName());
-
-            if (student.getCv() != null) {
-                System.out.println(student.getCv());
-                CV existingCV = student.getCv();
-                existingCV.setDescription(cv.getDescription());
-                existingCV.setPastExperiences(cv.getPastExperiences());
-                existingCV.setProjects(cv.getProjects());
-                student.setCv(existingCV);
-                System.out.println(existingCV);
-                cvRepo.save(existingCV);
-                studentRepo.save(student);
-            } else {
-                student.setCv(cv);
-                cvRepo.save(cv);
-                studentRepo.save(student);
-            }
-
-        } else {
-            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "User must be of role STUDENT to proceed");
-        }
     }
 
     @PostMapping("/application/save")

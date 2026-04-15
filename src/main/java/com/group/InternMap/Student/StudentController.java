@@ -2,8 +2,8 @@ package com.group.InternMap.Student;
 
 import com.group.InternMap.Application.Application;
 import com.group.InternMap.Application.ApplicationRepo;
-import com.group.InternMap.Application.CV;
-import com.group.InternMap.Application.CVRepo;
+import com.group.InternMap.cv.CV;
+import com.group.InternMap.cv.CVRepo;
 import com.group.InternMap.DTO.ApplicationAndCVDTO;
 import com.group.InternMap.Job.JobPosting;
 import com.group.InternMap.Job.JobPostingService;

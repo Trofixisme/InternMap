@@ -1,5 +1,6 @@
 import type {Route} from "./+types/home";
 import Welcome from "~/FrontendWebpages/Welcome";
+import Loading from "~/FrontendWebpages/fragments/Loading";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -15,7 +16,7 @@ export async function clientLoader({params}: Route.ClientLoaderArgs) {
 }
 
 export function HydrateFallback() {
-  return <div>Loading...</div>;
+  return <Loading/>;
 }
 
 export default function home({loaderData}: Route.ComponentProps) {

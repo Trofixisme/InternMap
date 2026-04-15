@@ -1,4 +1,4 @@
-package com.group.InternMap.Application;
+package com.group.InternMap.cv;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

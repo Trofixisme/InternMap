@@ -33,6 +33,6 @@ public class RestErrorController {
 
     @ExceptionHandler(Exception.class)
     public ErrorResponse generalException(Exception e) {
-        return ErrorResponse.create(e, HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        return ErrorResponse.create(e, HttpStatus.NOT_FOUND, e.getMessage());
     }
 }

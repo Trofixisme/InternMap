@@ -1,6 +1,6 @@
 package com.group.InternMap.Student;
 
-import com.group.InternMap.Application.CV;
+import com.group.InternMap.cv.CV;
 import com.group.InternMap.User.UserRole;
 import com.group.InternMap.User.Users;
 import jakarta.persistence.Entity;

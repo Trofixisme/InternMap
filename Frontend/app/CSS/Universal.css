@@ -1,5 +1,6 @@
 * {
     font-family: Inter, system-ui;
+    outline: none;
 }
 
 :root {
@@ -158,9 +159,9 @@ input[type=submit] {
     font-size: 14px;
 }
 
-*:focus {
-    outline: var(--text-color-2) solid 3px;
-}
+/**:focus {*/
+/*    outline: var(--text-color-2) solid 2px;*/
+/*}*/
 
 .fine-context {
     margin-top: -16px;
@@ -226,7 +227,7 @@ input[type=submit] {
     }
 
     width: 500px;
-    max-width: 75%;
+    max-width: 100%;
     height: fit-content;
     min-height: fit-content;
 

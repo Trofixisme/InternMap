@@ -225,13 +225,13 @@
 
 <body>
 <div th:replace="~{fragments/Notification}"></div>
-<!-- Header -->
+<!-- IndexHeaderAndFooter -->
 <header>
     <div class="header-top" style="display: flex; justify-content: space-between; padding-top: 20px; padding-right: 30px; padding-left: 30px; flex-direction: row; align-items: center;">
         <div class="header-brand" style="font-size: 40px; font-weight: 700; letter-spacing: -0.32px; ">InternMap</div>
         <nav class="header-nav" style="display: flex; gap: 10px; align-items: center">
             <a th:href="@{/}">
-                <button class="btn-header transparent">Home</button>
+                <button class="btn-header transparent">Welcome</button>
             </a>
             <a th:href="@{/JobPostings}">
                 <button class="btn-header transparent">All Jobs</button>
@@ -247,7 +247,7 @@
 </header>
 
 <div class="page-container">
-    <!-- Page Header -->
+    <!-- Page IndexHeaderAndFooter -->
     <div th:unless="${jobPosting == null}"  class="page-header">
         <h1 th:text="'Applications for: ' + ${jobPosting.jobName}">Applications List</h1>
 <!--        <p><strong>Company:</strong> <span th:text="${jobPosting.companyName}">Company Name</span></p>-->

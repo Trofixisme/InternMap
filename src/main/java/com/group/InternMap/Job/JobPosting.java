@@ -99,10 +99,6 @@ public class JobPosting implements Serializable {
         this.recruiter = recruiter;
     }
 
-    public List<Application> getApplication() {
-        return applications;
-    }
-
     public void deleteApplication(Application application) {
         this.applications.remove(application);
     }
@@ -133,6 +129,7 @@ public class JobPosting implements Serializable {
         this.applications.add(application);
     }
 
+    @JsonIgnore
     public List<Application> getApplications() {
         return applications;
     }

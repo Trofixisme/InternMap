@@ -1,0 +1,130 @@
+* {
+    font-family: Inter, system-ui;
+    box-sizing: inherit;
+}
+
+html {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper {
+    min-height: 100%;
+    display: grid;
+    flex-direction: column;
+    grid-template-rows: auto 1fr auto;
+}
+
+body {
+
+    height: 100%;
+
+    #bb1 {
+        display: flex;
+        width: auto;
+        padding-top: 60px;
+        flex-direction: column;
+        align-items: center;
+        gap: 26px;
+
+        #bh {
+            color: #000;
+            font-size: clamp(32px, 5vw, 56px);
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+        }
+
+        #bb2 {
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            padding: 9px;
+            border-color: transparent;
+            border-radius: 60px;
+            background: rgba(237, 239, 241, 0.8);
+
+            #bu1, #bu2 {
+                border-color: transparent;
+                background: transparent;
+                color: rgba(0, 0, 0, 0.80);
+                text-align: center;
+                font-size: 22px;
+                font-style: normal;
+                font-weight: 640;
+                line-height: normal;
+                padding: 6px 25px;
+            }
+
+            #bu1 {
+                background: #ffffff;
+                border-radius: 34px;
+                corner-shape: round;
+                cursor: initial;
+                color: rgba(0, 0, 0, 0.80);
+            }
+        }
+    }
+
+    #roadmap-card-title, #roadmap-card-title2, #roadmap-card-title3 {
+        color: #000000;
+        font-size: 32px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        margin-top: 80px;
+        padding-left: 70px;
+        padding-right: 70px;
+    }
+
+    #roadmap-card-title {
+        margin-top: -70px;
+    }
+
+    #grid-button-plus {
+        margin-left: 40%;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        border-radius: 40px;
+        corner-shape: round;
+    }
+
+    .button-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+        gap: 110px;
+        justify-items: center;
+        align-items: center;
+        border-radius: 75px;
+        corner-shape: round;
+        background: rgba(237, 239, 241, 0.8);
+        padding: 35px;
+        margin: 10px max(10px, 5vw);
+    }
+
+    .grid-button {
+        width: 310px;
+        height: 110px;
+        background: linear-gradient(180deg, rgb(79, 161, 255) 0%, #1883fd 100%);
+        border: none;
+        border-radius: 40px;
+        corner-shape: round;
+        color: #FFF;
+        font-size: 20px;
+        font-weight: 700;
+        align-content: center;
+        cursor: pointer;
+        padding-left: 20px;
+    }
+
+    .grid-button:hover {
+        background-color: #70c1ff;
+    }
+}

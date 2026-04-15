@@ -27,7 +27,7 @@ public class ApplicationService {
             throw new IllegalArgumentException("Job posting cannot be null");
         }
         JobPosting posting = jobRepo.findJobPostingById(jobPostingId);
-        return posting.getApplication();
+        return posting.getApplications();
     }
 
     public List<Application> viewAllApplications() {

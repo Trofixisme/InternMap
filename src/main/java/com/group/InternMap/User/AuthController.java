@@ -32,14 +32,19 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginRequest request,
                                    HttpServletRequest httpRequest) {
 
+        // 1. Authenticate
         Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(), request.getPassword())
         );
 
+        // 2. Set in Security Context
         SecurityContextHolder.getContext().setAuthentication(auth);
-        httpRequest.getSession(true);
 
+        // 3. Create session
+        jakarta.servlet.http.HttpSession session = httpRequest.getSession(true);
+
+        // 4. Return user info + roles to React
         UserDetails user = (UserDetails) auth.getPrincipal();
         List<String> roles = user.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -49,13 +54,15 @@ public class AuthController {
                 "username", user.getUsername(),
                 "roles", roles
         ));
+        // JSESSIONID cookie set automatically
     }
 
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser(
             @AuthenticationPrincipal UserDetails user) {
-        if (user == null) return ResponseEntity.status(401).build();
 
+        // Spring Security already validated the session cookie
+        // Just return what we know about the user
         return ResponseEntity.ok(Map.of(
                 "username", user.getUsername(),
                 "roles", user.getAuthorities().stream()

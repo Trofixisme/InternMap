@@ -24,6 +24,7 @@ export function meta({}: Route.MetaArgs) {
 //         return Response.redirect(new URL("/", request.url));
 //     }
 // }
+
 export async function action({ request }: Route.ActionArgs) {
     const formData = await request.formData();
 

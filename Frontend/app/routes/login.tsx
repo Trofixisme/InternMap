@@ -1,6 +1,7 @@
 import type {Route} from "./+types/home";
 import Login from "~/FrontendWebpages/Login";
 import {redirect, useSubmit} from "react-router";
+import Loading from "~/FrontendWebpages/fragments/Loading";
 
 export function meta({}: Route.MetaArgs) {
     return [

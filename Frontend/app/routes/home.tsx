@@ -14,10 +14,14 @@ export function meta({}: Route.MetaArgs) {
 export async function clientLoader({ params }: Route.ClientLoaderArgs) {
 
   // ✅ Check session first — cookie sent automatically by browser
+  // const authResponse = await fetch("http://localhost:8050/api/auth/me", {
+  //   credentials: "include", // ensures cookie is sent
+  // });
   const authResponse = await fetch("http://localhost:8050/api/auth/me", {
-    credentials: "include", // ensures cookie is sent
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   });
-
   // Not logged in → redirect to login
   if (!authResponse.ok) {
     throw redirect("/login");

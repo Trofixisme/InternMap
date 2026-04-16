@@ -18,8 +18,12 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.swing.*;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -36,6 +40,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, RememberMeServices rememberMeServices) throws Exception {
 
         http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
            .csrf(AbstractHttpConfigurer::disable)
            .authorizeHttpRequests(auth -> auth
 //                   .requestMatchers("/student/**").hasRole("STUDENT")
@@ -43,8 +48,8 @@ public class SecurityConfig {
 //                   .requestMatchers("/recruiter/**").hasRole("ADMIN")
                    .anyRequest().permitAll()
            )
-            .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//            .sessionManagement(session ->
+//                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
            .formLogin(form -> form
                    .loginPage("/login") // custom login page
                    .defaultSuccessUrl("/", true)
@@ -59,6 +64,7 @@ public class SecurityConfig {
            ).rememberMe(rememberMe -> rememberMe
                         .rememberMeServices(rememberMeServices))
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
 
         return http.build();
     }
@@ -86,5 +92,20 @@ public class SecurityConfig {
         rememberMe.setCookieName("CreditentialsKey");
         rememberMe.setUseSecureCookie(true);
         return rememberMe;
+    }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+
+        config.setAllowedOrigins(List.of("http://localhost:5173"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+
+        config.setAllowCredentials(true); // 🔥 THIS is the key fix
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+
+        return source;
     }
 }

@@ -11,32 +11,14 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export async function clientLoader({ params }: Route.ClientLoaderArgs) {
+export async function clientLoader() {
 
-  // ✅ Check session first — cookie sent automatically by browser
-  // const authResponse = await fetch("http://localhost:8050/api/auth/me", {
-  //   credentials: "include", // ensures cookie is sent
-  // });
-  const authResponse = await fetch("http://localhost:8050/api/auth/me", {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-  // Not logged in → redirect to login
-  if (!authResponse.ok) {
-    throw redirect("/login");
-  }
-
-  const user = await authResponse.json(); // { username, roles }
-
-  // ✅ Fetch your existing data
   const [roadmapsRes, jobPostingsRes] = await Promise.all([
     fetch("http://localhost:8050/REST/", { credentials: "include" }),
     fetch("http://localhost:8050/REST/jobpostings", { credentials: "include" }),
   ]);
 
   return {
-    user,
     roadmaps: await roadmapsRes.json(),
     jobPostings: await jobPostingsRes.json(),
   };
@@ -47,7 +29,7 @@ export function HydrateFallback() {
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
-  const { user, roadmaps, jobPostings } = loaderData;
+  const { roadmaps, jobPostings } = loaderData;
 
-  return <Welcome user={user} roadmaps={roadmaps} jobPostings={jobPostings} />;
+  return <Welcome roadmaps={roadmaps} jobPostings={jobPostings} />;
 }

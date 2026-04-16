@@ -1,4 +1,16 @@
+import {useState, useEffect} from "react";
+
 export function IndexHeader() {
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const key = localStorage.getItem("creditentialsKey");
+        if (key != null && key.trim() !== "") {
+            setIsLoggedIn(true);
+        }
+    }, []);
+
     return (
         <header className="header">
             <section className="section wide" onClick={() => location.href = '/'}>
@@ -7,12 +19,10 @@ export function IndexHeader() {
                 <h1 className="text-3xl font-bold">InternMap</h1>
             </section>
 
-            <section className="section" /*th:if="${isLoggedIn == false}"*/>
+            {!isLoggedIn ? <section className="section">
                 <button className="button-secondary" onClick={() => location.href = '/login'}>Sign in</button>
                 <button className="button-prominant" onClick={() => location.href = '/signup'}>Sign up</button>
-            </section>
-
-            <section className="section wide" /*th:if="${isLoggedIn == true}"*/>
+            </section> : <section className="section wide">
                 <form method="POST" action={'/logout'}>
                     <button className="button-prominant" type="submit" value="Log out">Log out</button>
                 </form>
@@ -21,12 +31,8 @@ export function IndexHeader() {
                     <img className="icon clickable" src="/images/person_fill.png" alt="Profile"
                          style={{marginTop: "2px", marginLeft: "1px"}}/>
                 </button>
-            </section>
-            {/*<div id="l1">*/}
-            {/*<img id="logo" src="/images/navi/navi%20Unique.png" alt="Logo" onclick="location.href = '/';" style="cursor: pointer; height: 125px; width: 125px;">*/}
-            {/*<span id="p1">InternMap</span>*/}
-            {/*<span id="p2">Welcome to the platform that sets your future for you</span>*/}
-            {/*</div>*/}
+            </section>}
+
         </header>
     )
 }

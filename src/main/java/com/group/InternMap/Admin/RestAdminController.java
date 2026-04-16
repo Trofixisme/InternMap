@@ -37,13 +37,13 @@ public class RestAdminController {
     }
 
     @PostMapping("/admin/register")
-    public void registerAdmin(HttpServletRequest request, @ModelAttribute("user") Admin user) throws ServletException {
+    public void registerAdmin(HttpServletRequest request, @RequestBody Admin user) throws ServletException {
         user.setRole(UserRole.ADMIN);
         userService.register(user, request);
     }
 
     @PostMapping("/new/roadmap")
-    public void createRoadmap(@ModelAttribute("roadmaps") RoadmapModuleSkill dto, Authentication authentication) {
+    public void createRoadmap(@RequestBody RoadmapModuleSkill dto, Authentication authentication) {
 
         if (authentication != null && authentication.getAuthorities().toString().equals("[ROLE_" + UserRole.ADMIN + "]")) {
             Roadmap roadmap = dto.toRoadmap();
@@ -56,7 +56,7 @@ public class RestAdminController {
     //Update roadmap
     //This method most probably doesn't work
     @PostMapping("/{id}")
-    public void updateRoadmap(@PathVariable long id, @ModelAttribute Roadmap roadmap, Authentication authentication) {
+    public void updateRoadmap(@PathVariable long id, @RequestBody Roadmap roadmap, Authentication authentication) {
 
         if (authentication != null && authentication.getAuthorities().toString().equals("[ROLE_" + UserRole.ADMIN + "]")) {
             roadmap.setId(id);

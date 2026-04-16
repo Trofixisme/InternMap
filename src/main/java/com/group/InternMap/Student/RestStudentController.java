@@ -49,13 +49,13 @@ public class RestStudentController {
     }
 
     @PostMapping("/register")
-    public void registerStudent(HttpServletRequest request, @ModelAttribute("user") Student user) throws ServletException, IllegalArgumentException {
+    public void registerStudent(HttpServletRequest request,@RequestBody Student user) throws ServletException, IllegalArgumentException {
         user.setRole(UserRole.STUDENT);
         userService.register(user, request);
     }
 
     @PostMapping("/application/save")
-    public void saveApplication(@RequestParam("jobId") long jobId, @ModelAttribute ApplicationAndCVDTO applicationandCVDTO, Authentication authentication, Principal principal, RedirectAttributes redirectAttributes) {
+    public void saveApplication(@RequestParam("jobId") long jobId, @RequestBody ApplicationAndCVDTO applicationandCVDTO, Authentication authentication, Principal principal, RedirectAttributes redirectAttributes) {
         if (authentication != null && authentication.getAuthorities().toString().equals("[ROLE_" + UserRole.STUDENT + "]")) {
             Student user = studentRepo.findByEmail(principal.getName());
             if (user.getCv() == null) {

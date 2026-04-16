@@ -1,12 +1,18 @@
-import { useState } from "react";
+import {useState, useTransition} from "react";
+import {Alert, CloseButton, Spinner} from "@heroui/react";
 
 export default function Login() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState(null as string | null);
+    const [loading, setLoading] = useState(false);
 
     async function handleLogin(e: React.FormEvent) {
         e.preventDefault();
+
+        setErrorMessage(null);
+        setLoading(true);
 
         const response = await fetch("http://localhost:8050/api/auth/login", {
             method: "POST",
@@ -16,15 +22,17 @@ export default function Login() {
             body: JSON.stringify({ email, password }),
         });
 
-        if (!response.ok) {
-            alert("Invalid credentials");
-            return;
+        setLoading(false);
+
+        if (response.status === 502) {
+         setErrorMessage("Email and password is not valid.")
+            return
         }
 
         const data = await response.json();
 
         // store JWT
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("creditentialsKey", data.creditentialsKey);
 
         // redirect after login
         window.location.href = "/";
@@ -42,13 +50,39 @@ export default function Login() {
             <br/>
 
             <form className="container" onSubmit={handleLogin}>
-                <h1 className="font-bold text-3xl m-2" style={{paddingTop: "12px"}}>Log in</h1>
+
+                {errorMessage && (
+                    <>
+                        <br/>
+                        <Alert className="dark rounded-4xl" style={{background: "var(--secondary-background-color)"}} status="danger">
+                            <Alert.Indicator className="pr-0">
+                            <img src="/images/assets/exclamationmark.circle.fill@4x.png" alt="Logo" style={{width: "20px", height: "20px"}}/>
+                            </Alert.Indicator>
+                            <Alert.Content>
+                                <Alert.Title>
+                                    <p className="font-bold" style={{marginTop: "2.2px", color: "rgb(225, 66, 69)"}}>
+                                        Your Email &/or Password may be incorrect
+                                    </p>
+                                </Alert.Title>
+                            </Alert.Content>
+                            <CloseButton style={{background: "var(--tertiary-background-color)", marginTop: "2.2px"}} onClick={() => setErrorMessage(null)} />
+                        </Alert>
+                        <br/>
+                    </>
+                )}
+
+                {!errorMessage && (
+                    <>
+                        <h1 className="font-bold text-3xl m-2" style={{paddingTop: "12px"}}>Sign in</h1>
+                    </>
+                )}
 
                 <label>Email:</label>
                 <input
                     className="text-sm"
                     type="email"
                     value={email}
+                    placeholder="Craig@Internmap.co"
                     onChange={(e) => setEmail(e.target.value)}
                     required
                 />
@@ -60,13 +94,14 @@ export default function Login() {
                     className="text-sm"
                     type="password"
                     value={password}
+                    placeholder="Anything"
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
 
-                <br /><br />
+                <br />
 
-                <input className="text-lg" type="submit" value="Log In" />
+                { loading ? <Spinner size="lg" color="current" /> : <><br /> <input className="text-lg" type="submit" value="Log In" /></>}
 
                 <br />
 

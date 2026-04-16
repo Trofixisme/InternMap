@@ -5,7 +5,7 @@ import {IndexFooter, IndexHeader} from "./fragments/IndexHeaderAndFooter";
 import {Spinner, Tabs} from "@heroui/react";
 
 // @ts-ignore
-export default function Welcome({user,roadmaps, jobPostings}) {
+export default function Welcome({roadmaps, jobPostings}) {
     return (
 
         <>

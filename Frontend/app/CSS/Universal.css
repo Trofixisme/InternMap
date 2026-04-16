@@ -9,6 +9,7 @@
     --form-background-color: linear-gradient(0deg, #f6f6f6, #f7f7f7);
     --background-color: #ffffff;
     --secondary-background-color: rgba(172, 180, 184, 0.11);
+    --tertiary-background-color: var(--background-color);
     --border-color: #2c2c2c;
     --text-color: #000000;
     --text-color-2: #0771dc;
@@ -20,6 +21,7 @@
         --primary-color-hover: #0771dc;
         --form-background-color: linear-gradient(180deg, #252525, #242424);
         --background-color: #0c0c0c;
+        --tertiary-background-color: var(--secondary-background-color);
         --border-color: #ededed;
         --text-color: #ffffff;
         --text-color-2: #ffffff;
@@ -141,7 +143,7 @@ input[type=password], input[type=email], input[type=text] {
     border-radius: 45px;
     box-sizing: border-box;
 
-    background-color: var(--background-color);
+    background-color: var(--secondary-background-color);
 
     color: var(--text-color);
 }

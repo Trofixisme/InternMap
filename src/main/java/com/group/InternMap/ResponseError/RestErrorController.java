@@ -1,6 +1,7 @@
 package com.group.InternMap.ResponseError;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -11,8 +12,8 @@ import java.util.MissingResourceException;
 @RestControllerAdvice
 public class RestErrorController {
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ErrorResponse processFailed(DataIntegrityViolationException e) {
+    @ExceptionHandler({DataIntegrityViolationException.class, BadCredentialsException.class})
+    public ErrorResponse invalidManipulationOrValidationOfData(Exception e) {
         return ErrorResponse.create(e, HttpStatus.BAD_GATEWAY, e.getMessage());
     }
 

@@ -43,7 +43,12 @@ public class UserService implements FilePaths {
                 userRepo.save(u);
             }
         } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityViolationException("User with this email already exists.");
+            if (!e.getMessage().contains("could")) {
+                throw new DataIntegrityViolationException("User with this email already exists.");
+            } else {
+                throw new DataIntegrityViolationException("Required Data Missing");
+            }
+
         }
     }
 

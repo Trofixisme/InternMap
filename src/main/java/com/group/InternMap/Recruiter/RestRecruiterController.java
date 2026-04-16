@@ -51,13 +51,13 @@ public class RestRecruiterController {
     }
 
     @PostMapping("/recruiter/company/register")
-    public void RegisterCompany(@ModelAttribute("company") Company company) {
+    public void RegisterCompany(@RequestBody Company company) {
 
         companyService.save(company);
     }
 
     @PostMapping("/recruiter/register")
-    public void registerRecruiter(HttpServletRequest request, @ModelAttribute("form") RecruiterRegistrationDTO recruiterRegistrationDTO) throws ServletException, DataIntegrityViolationException {
+    public void registerRecruiter(HttpServletRequest request, @RequestBody RecruiterRegistrationDTO recruiterRegistrationDTO) throws ServletException, DataIntegrityViolationException {
         recruiterService.registerRecruiter(recruiterRegistrationDTO, request);
     }
 

@@ -1,5 +1,7 @@
 package com.group.InternMap;
 
+import com.group.InternMap.User.JwtAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -7,11 +9,14 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 
 import javax.swing.*;
@@ -20,17 +25,26 @@ import javax.swing.*;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @Autowired
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, RememberMeServices rememberMeServices) throws Exception {
 
         http
-           .csrf().disable()
+           .csrf(AbstractHttpConfigurer::disable)
            .authorizeHttpRequests(auth -> auth
 //                   .requestMatchers("/student/**").hasRole("STUDENT")
 //                   .requestMatchers("/recruiter/**").hasRole("RECRUITER")
 //                   .requestMatchers("/recruiter/**").hasRole("ADMIN")
                    .anyRequest().permitAll()
            )
+            .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
            .formLogin(form -> form
                    .loginPage("/login") // custom login page
                    .defaultSuccessUrl("/", true)
@@ -43,7 +57,8 @@ public class SecurityConfig {
                    .logoutSuccessUrl("/")
                    .permitAll()
            ).rememberMe(rememberMe -> rememberMe
-                        .rememberMeServices(rememberMeServices));
+                        .rememberMeServices(rememberMeServices))
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

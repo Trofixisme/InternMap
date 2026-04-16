@@ -2,7 +2,7 @@ import type { Route } from "./+types/login";
 import Login from "~/FrontendWebpages/Login";
 import { redirect } from "react-router";
 import Loading from "~/FrontendWebpages/fragments/Loading";
-// ✅ Add this — prevents the "no loader" error
+
 export function loader() {
     return {};
 }

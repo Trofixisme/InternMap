@@ -34,7 +34,6 @@ export default function Login() {
 
         // store JWT
         localStorage.setItem("token", data.token);
-        await cookieStore.set("CreditentialsKey", data.token);
 
         // redirect after login
         window.location.href = "/";

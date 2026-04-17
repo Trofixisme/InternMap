@@ -1,4 +1,5 @@
 import { Client } from '@stomp/stompjs';
+import {toast} from "@heroui/react";
 // import SockJS from 'sockjs-client';
 
 let client: Client | null = null;
@@ -8,27 +9,30 @@ export function notification() {
         return;
     }
 
-    const token = localStorage.getItem("creditentialsKey");
-
     client = new Client({
+        //Never using SockJS again... WHY DID WE USE IT IN THE FIRST PLACE????
         // webSocketFactory: () => new SockJS('http://localhost:8050/ws'),
-        webSocketFactory: () => new WebSocket('ws://localhost:8050/ws'),
-        connectHeaders: token ? {
-            'Authorization': `Bearer ${token}`
-        } : {},
+        webSocketFactory: () => new WebSocket('http://localhost:8050/websocket/ws'),
         debug: (str) => {
             console.log(str);
         },
-        reconnectDelay: 5000,
-        heartbeatIncoming: 4000,
-        heartbeatOutgoing: 4000,
     });
 
     client.onConnect = (frame) => {
+        console.log("If you're reading this, Have a great day!");
         console.log('Connected: ' + frame);
         client?.subscribe('/user/queue/notifications', (message) => {
-            console.log('Received notification: ' + message.body);
-            showNotification(message.body);
+            console.log('You got mail! -> ' + message.body);
+            toast("You got mail!", {
+                actionProps: {
+                    children: "Dismiss",
+                    onPress: () => toast.clear(),
+                    variant: "tertiary",
+                },
+                indicator: <img src="/images/assets/bell.fill@4x.png" alt="Bell" width={15} height={15}/>,
+                description: message.body,
+                variant: "default",
+            })
         });
     };
 
@@ -38,16 +42,4 @@ export function notification() {
     };
 
     client.activate();
-}
-
-function showNotification(message: string) {
-    const box = document.getElementById("notificationBox");
-    if (box) {
-        box.innerText = message;
-        box.style.display = "block";
-
-        setTimeout(() => {
-            box.style.display = "none";
-        }, 5000);
-    }
 }

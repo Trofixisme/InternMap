@@ -94,6 +94,7 @@ public class SecurityConfig {
         rememberMe.setUseSecureCookie(true);
         return rememberMe;
     }
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();

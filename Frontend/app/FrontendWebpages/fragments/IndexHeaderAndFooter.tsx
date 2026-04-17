@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
 import {notification} from "~/FrontendWebpages/fragments/Notification";
+import {Toast, ToastIndicator} from "@heroui/react";
 
 export function IndexHeader() {
 
@@ -10,8 +11,6 @@ export function IndexHeader() {
         if (key != null && key.trim() !== "") {
             setIsLoggedIn(true);
         }
-
-        notification()
 
     }, []);
 
@@ -37,7 +36,8 @@ export function IndexHeader() {
                 </button>
             </section>}
 
-            <div id="notificationBox" style={{position: "fixed", top: "20px", right: "20px", background: "#333", color: "white", padding: "10px 20px", borderRadius: "30px", display: "none", zIndex: 1000}}></div>
+            <Toast.Provider placement="top end"/>
+
         </header>
     )
 }

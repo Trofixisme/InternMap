@@ -139,7 +139,7 @@ public class StudentController {
             applicationRepo.save(application);
             redirectAttributes.addFlashAttribute("message", "Application saved successfully");
             String recruiterEmail = jobPosting.getRecruiterEmail();
-            notificationService.sendToUser(recruiterEmail, "An application is submitted");
+            notificationService.sendToUser(recruiterEmail, principal.getName() + " has applied to " + applicationandCVDTO.getApplication().getJobPosting().getJobName());
             System.out.println("Notification triggered!");
             return "redirect:/JobPostings";
         } catch (Exception e) {

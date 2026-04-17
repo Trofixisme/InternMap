@@ -1,7 +1,7 @@
 let stompClient = null;
 
 function connect() {
-    stompClient = Stomp.client('ws://localhost:8050/ws');
+    stompClient = Stomp.client('ws://localhost:8050/websocket/ws');
 
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);

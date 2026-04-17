@@ -1,5 +1,6 @@
-import {useState, useTransition} from "react";
+import React, {useEffect, useState, useTransition} from "react";
 import {Alert, CloseButton, Spinner} from "@heroui/react";
+import {createCookie} from "react-router";
 
 export default function Login() {
 
@@ -8,7 +9,7 @@ export default function Login() {
     const [errorMessage, setErrorMessage] = useState(null as string | null);
     const [loading, setLoading] = useState(false);
 
-    async function handleLogin(e: React.FormEvent) {
+    async function handleLogin(e: React.SubmitEvent) {
         e.preventDefault();
 
         setErrorMessage(null);
@@ -33,6 +34,7 @@ export default function Login() {
 
         // store JWT
         localStorage.setItem("token", data.token);
+        await cookieStore.set("CreditentialsKey", data.token);
 
         // redirect after login
         window.location.href = "/";

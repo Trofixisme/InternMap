@@ -73,7 +73,7 @@ public class RestStudentController {
             applicationRepo.save(application);
             redirectAttributes.addFlashAttribute("message", "Application saved successfully");
             String recruiterEmail = jobPosting.getRecruiterEmail();
-            notificationService.sendToUser(recruiterEmail, "An application is submitted");
+            notificationService.sendToUser(recruiterEmail, authentication.getName() + " has applied to " + applicationandCVDTO.getApplication().getJobPosting().getJobName());
             System.out.println("Notification triggered!");
         } else {
             throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "User must be of role STUDENT to proceed");

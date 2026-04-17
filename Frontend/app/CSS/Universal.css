@@ -8,6 +8,7 @@
     --primary-color-hover: #0771dc;
     --form-background-color: linear-gradient(0deg, #f6f6f6, #f7f7f7);
     --background-color: #ffffff;
+    --background-color-st: rgba(255, 255, 255, 0.7);
     --secondary-background-color: rgba(172, 180, 184, 0.11);
     --tertiary-background-color: var(--background-color);
     --border-color: #2c2c2c;
@@ -21,6 +22,7 @@
         --primary-color-hover: #0771dc;
         --form-background-color: linear-gradient(180deg, #252525, #242424);
         --background-color: #0c0c0c;
+        --background-color-st: rgba(50, 50, 50, 0.9);
         --tertiary-background-color: var(--secondary-background-color);
         --border-color: #ededed;
         --text-color: #ffffff;

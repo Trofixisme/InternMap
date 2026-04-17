@@ -13,3 +13,52 @@ body {
     color-scheme: dark;
   }
 }
+
+@layer components {
+  .toast {
+    @apply rounded-4xl shadow-lg;
+    background-color: var(--background-color-st);
+    border-radius: 80px;
+    backdrop-filter: blur(38px);
+
+  }
+
+  .toast__title {
+    color: var(--text-color);
+  }
+
+  .toast__description {
+    @apply text-gray-400;
+  }
+
+  .toast__action {
+    background: rgba(122, 122, 122, 0.2);
+    backdrop-filter: blur(20px);
+    /*color: white;*/
+  }
+  
+  .toast__indicator
+  {
+    @media (prefers-color-scheme: light) {
+      filter: invert(1);
+    }
+  }
+
+  .toast__close-button {
+    display: none;
+  }
+
+  @keyframes toast-slide-top-in {
+    from {
+      translate: 100% 0;
+      opacity: 0;
+    }
+  }
+
+  @keyframes toast-slide-top-out {
+    to {
+      translate: 100% 0;
+      opacity: 0;
+    }
+  }
+}

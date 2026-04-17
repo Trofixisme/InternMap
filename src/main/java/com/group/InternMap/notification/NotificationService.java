@@ -3,7 +3,6 @@ package com.group.InternMap.Notification;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class NotificationService {
 //this smth simple for now . am not done
@@ -20,7 +19,7 @@ public class NotificationService {
         simpMessagingTemplate.convertAndSend("/topic/notifications", message);
     }
 
-    // for spring web sockets it requiers the string username but i noticed in the spring security tje email is identified as the username
+    // for spring web sockets it requiers the string username but I noticed in the spring security tje email is identified as the username
     // in customerUserDetails line 34
     public void sendToUser(String userEmail , String message) {
         //saving it to database

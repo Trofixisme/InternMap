@@ -1,8 +1,6 @@
 import type { Route } from "./+types/home";
 import Welcome from "~/FrontendWebpages/Welcome";
 import Loading from "~/FrontendWebpages/fragments/Loading";
-import { redirect } from "react-router";
-
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -14,8 +12,8 @@ export function meta({}: Route.MetaArgs) {
 export async function clientLoader() {
 
   const [roadmapsRes, jobPostingsRes] = await Promise.all([
-    fetch("http://localhost:8050/REST/", { credentials: "include" }),
-    fetch("http://localhost:8050/REST/jobpostings", { credentials: "include" }),
+    fetch("http://localhost:8050/REST/"),
+    fetch("http://localhost:8050/REST/jobpostings"),
   ]);
 
   return {

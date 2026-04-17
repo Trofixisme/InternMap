@@ -22,7 +22,7 @@ public class ApplicationService {
         return applicationRepo.searchApplications(searchQuery);
     }
 
-    public List<Application> getApplicationsByJobPostingId(Long jobPostingId)throws IllegalArgumentException{
+    public List<Application> getApplicationsByJobPostingId(Long jobPostingId) throws IllegalArgumentException{
         if (jobPostingId == null) {
             throw new IllegalArgumentException("Job posting cannot be null");
         }
@@ -40,7 +40,7 @@ public class ApplicationService {
             applicationRepo.delete(application);
         }
         else {
-            throw new Exception("There is no application with this specification");
+            throw new Exception("No application with this specification could be found.");
         }
 
     }

@@ -1,10 +1,14 @@
 import "~/CSS/jobPosting.css"
 import "~/CSS/InternMapHomepage.css";
 import {IndexFooter, IndexHeader} from "./fragments/IndexHeaderAndFooter";
-import {Tabs} from "@heroui/react";
+import {Tabs, Toast} from "@heroui/react";
+import {notification} from "~/FrontendWebpages/fragments/Notification";
 
 // @ts-ignore
 export default function Welcome({roadmaps, jobPostings}) {
+
+    notification()
+
     return (
 
         <>
@@ -97,8 +101,6 @@ export default function Welcome({roadmaps, jobPostings}) {
               </Tabs>
             </div>
           </div>
-
-            <div id="notificationBox" style={{position: "fixed", top: "20px", right: "20px", background: "#333", color: "white", padding: "10px 20px", borderRadius: "30px", display: "none", zIndex: 1000}}></div>
 
           <IndexFooter/>
         </>

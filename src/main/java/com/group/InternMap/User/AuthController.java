@@ -44,7 +44,7 @@ public class AuthController {
         String token = tokenProvider.generateToken(user);
 
         return ResponseEntity.ok(Map.of(
-                "creditentialsKey", token
+                "token", token
         ));
     }
 

@@ -32,7 +32,7 @@ export default function Login() {
         const data = await response.json();
 
         // store JWT
-        localStorage.setItem("creditentialsKey", data.creditentialsKey);
+        localStorage.setItem("token", data.token);
 
         // redirect after login
         window.location.href = "/";

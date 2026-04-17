@@ -8,6 +8,7 @@ import com.group.InternMap.User.Users;
 import jakarta.servlet.http.HttpSession;
 import org.jboss.logging.Logger;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,10 +42,11 @@ public class RestHomeController {
 
     @GetMapping("/profile")
     @SuppressWarnings("OptionalGetWithoutIsPresent")
-    public Users showProfile(Principal principal) {
+    public Users showProfile(Authentication authentication) {
         Users user;
-        if (principal != null) {
-            user = userService.searchByEmail(principal.getName()).get();
+        if (authentication != null) {
+            user = userService.searchByEmail(authentication.getName()).get();
+            user.setPassword(null);
         } else {
             throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "Must be signed into an account");
         }

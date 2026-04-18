@@ -3,6 +3,8 @@ package com.group.InternMap.cv;
 import com.group.InternMap.Student.Student;
 import com.group.InternMap.Student.StudentRepo;
 import com.group.InternMap.User.UserRole;
+import com.group.InternMap.User.UserService;
+import com.group.InternMap.User.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.client.HttpClientErrorException;
 
 
 import java.security.Principal;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/cv")
@@ -20,14 +23,16 @@ public class cvController {
 
     StudentRepo studentRepo;
     CVRepo cvRepo;
+    UserService userService;
 
     @Autowired
-    cvController(StudentRepo studentRepo,CVRepo cvRepo) {
+    cvController(StudentRepo studentRepo,CVRepo cvRepo,UserService userService) {
         this.studentRepo = studentRepo;
         this.cvRepo = cvRepo;
+        this.userService=userService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public CV cv(Principal principal, Authentication authentication) throws HttpClientErrorException.Unauthorized {
 
         if (authentication != null && authentication.getAuthorities().toString().equals("[ROLE_" + UserRole.STUDENT + "]")) {
@@ -39,7 +44,7 @@ public class cvController {
         }
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Void> saveCV(@ModelAttribute("cv") CV cv,
                                        Principal principal,
                                        Authentication authentication) {
@@ -82,5 +87,20 @@ public class cvController {
         studentRepo.save(student);
 
         return ResponseEntity.ok().build();  // Better than void + no response body
+    }
+    @GetMapping("/{email}")
+    public CV viewCV(@PathVariable String email, Authentication authentication) {
+
+        if (authentication != null && (authentication.getAuthorities().toString().equals("[ROLE_" + UserRole.RECRUITER + "]") || authentication.getAuthorities().toString().equals("[ROLE_" + UserRole.ADMIN + "]"))) {
+            Optional<Users> retrievedStudent = userService.searchByEmail(email);
+            if (retrievedStudent.isEmpty()) {
+                throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Student could not be found");
+            }
+
+            return ((Student) retrievedStudent.get()).getCv();
+
+        } else {
+            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "User must be of role RECRUITER or ADMIN to proceed");
+        }
     }
 }

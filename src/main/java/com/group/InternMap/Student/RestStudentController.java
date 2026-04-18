@@ -54,6 +54,41 @@ public class RestStudentController {
         userService.register(user, request);
     }
 
+    @PostMapping("/application/save")
+    public void saveApplication(@RequestParam("jobId") long jobId, @RequestBody ApplicationAndCVDTO applicationandCVDTO, Authentication authentication, Principal principal, RedirectAttributes redirectAttributes) {
+        if (authentication != null && authentication.getAuthorities().toString().equals("[ROLE_" + UserRole.STUDENT + "]")) {
+            Student user = studentRepo.findByEmail(principal.getName());
+            if (user.getCv() == null) {
+                throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "User does not have a CV");
+            }
 
+            JobPosting jobPosting = jobPostingService.findJobPostingByID(jobId);
+            if (jobPosting == null) {
+                throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Job posting not found");
+            }
+            Application application = applicationandCVDTO.getApplication();
+            applicationandCVDTO.setStudent(user);
+            application.setStudent(user);
+            jobPosting.addApplication(application);
+            applicationRepo.save(application);
+            redirectAttributes.addFlashAttribute("message", "Application saved successfully");
+            String recruiterEmail = jobPosting.getRecruiterEmail();
+            notificationService.sendToUser(recruiterEmail, authentication.getName() + " has applied to " + applicationandCVDTO.getApplication().getJobPosting().getJobName());
+            System.out.println("Notification triggered!");
+        } else {
+            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "User must be of role STUDENT to proceed");
+        }
+    }
+
+    @GetMapping("/student/applications")
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    public List<Application> getStudentApplications(Principal principal, Authentication authentication) {
+
+        if (authentication != null && authentication.getAuthorities().toString().equals("[ROLE_" + UserRole.STUDENT + "]")) {
+            return applicationRepo.findByStudentEmail((userService.searchByEmail(principal.getName()).get()).getEmail());
+        } else {
+            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "User must be of role STUDENT to proceed");
+        }
+    }
 
 }

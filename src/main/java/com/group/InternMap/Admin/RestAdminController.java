@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/REST")
 public class RestAdminController {
 
     RoadmapRepo roadmapRepo;
@@ -36,16 +36,44 @@ public class RestAdminController {
         this.userService = userService;
     }
 
-    @PostMapping
+    @PostMapping("/admin/register")
     public void registerAdmin(HttpServletRequest request, @RequestBody Admin user) throws ServletException {
         user.setRole(UserRole.ADMIN);
         userService.register(user, request);
     }
 
+    @PostMapping("/new/roadmap")
+    public void createRoadmap(@RequestBody RoadmapModuleSkill dto, Authentication authentication) {
 
+        if (authentication != null && authentication.getAuthorities().toString().equals("[ROLE_" + UserRole.ADMIN + "]")) {
+            Roadmap roadmap = dto.toRoadmap();
+            roadmapRepo.save(roadmap);
+        } else {
+            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "User must be of "+ UserRole.ADMIN +" to proceed");
+        }
+    }
 
+    //Update roadmap
+    //This method most probably doesn't work
+    @PostMapping("/{id}")
+    public void updateRoadmap(@PathVariable long id, @RequestBody Roadmap roadmap, Authentication authentication) {
 
+        if (authentication != null && authentication.getAuthorities().toString().equals("[ROLE_" + UserRole.ADMIN + "]")) {
+            roadmap.setId(id);
+            roadmapRepo.save(roadmap);
+        } else {
+            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "User must be of "+ UserRole.ADMIN +" to proceed");
+        }
+    }
 
+    @PostMapping("/roadmaps/{id}/delete")
+    public void deleteRoadmap(@PathVariable Long id, Authentication authentication) {
 
+        if (authentication != null && authentication.getAuthorities().toString().equals("[ROLE_" + UserRole.ADMIN + "]")) {
+            roadmapRepo.deleteById(id);
 
+        } else {
+            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "User must be of "+ UserRole.ADMIN +" to proceed");
+        }
+    }
 }

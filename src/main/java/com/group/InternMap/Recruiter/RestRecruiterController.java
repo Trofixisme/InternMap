@@ -56,16 +56,7 @@ public class RestRecruiterController {
     public void registerRecruiter(HttpServletRequest request, @RequestBody RecruiterRegistrationDTO recruiterRegistrationDTO) throws ServletException, DataIntegrityViolationException {
         recruiterService.registerRecruiter(recruiterRegistrationDTO, request);
     }
-    @GetMapping("/jobpostings")
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
-    public List<JobPosting> getRecruiterJobPostings(Principal principal, Authentication authentication) {
 
-        if (authentication != null && authentication.getAuthorities().toString().equals("[ROLE_" + UserRole.STUDENT + "]")) {
-            return jobPostingService.getJobPostingsByRecruiterId((userService.searchByEmail(principal.getName()).get()).getId());
-        } else {
-            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "User must be of role RECRUITER to proceed");
-        }
-    }
 
 
 

@@ -10,15 +10,12 @@ import com.group.InternMap.User.UserRole;
 import com.group.InternMap.User.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -27,7 +24,8 @@ public class jobPostingController {
     CompanyService companyService;
     UserService userService;
     JobPostingService jobPostingService;
-    @Autowired
+    ApplicationRepo applicationRepo;
+    Logger logger = LoggerFactory.getLogger(RecruiterController.class);
     jobPostingController(
             CompanyService companyService,
     UserService userService,
@@ -57,22 +55,39 @@ public class jobPostingController {
     }
 
 
+    @GetMapping("/{jobId}/applications")
+    public List<Application> viewApplications(@PathVariable long jobId, Authentication authentication) {
 
+        if (authentication != null && authentication.getAuthorities().toString().equals("[ROLE_" + UserRole.STUDENT + "]")) {
+            JobPosting job = jobPostingService.findJobPostingByID(jobId);
+            if (job == null) {
+                logger.warn("Job with ID {} not found", jobId);
+                throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Job not found");
+            }
 
-    @GetMapping("/jobpostings")
-    public List<JobPosting> getAllJobPostings() {
+            List<Application> apps = applicationRepo.findByJobPosting(job);
 
-        ArrayList<JobPosting> jobPostings = (ArrayList<JobPosting>) jobPostingService.getAllJobPostings();
-        System.out.println(jobPostings);
+            logger.info("Fetched applications count: {}", (apps == null ? 0 : apps.size()));
+            if (apps != null) {
+                for (Application a : apps) {
+                    logger.info("Application ID: {}, Job Posting ID: {}", a.getApplicationID(), (a.getJobPosting() == null ? "null" : a.getJobPosting().getId()));
+                }
+            }
 
-        return jobPostings;
+            return apps;
+        } else {
+            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "User must be of role RECRUITER to proceed");
+        }
     }
-    @PostMapping("/jobpostings/search")
-    public List<JobPosting> searchJobPosting(@RequestParam("searchQuery") String searchQuery, Model model) {
-        List<JobPosting> results = jobPostingService.searchJobs(searchQuery);
+    @GetMapping("/jobpostings")
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    public List<JobPosting> getRecruiterJobPostings(Principal principal, Authentication authentication) {
 
-        model.addAttribute("jobPostings", results);
-        return results;
+        if (authentication != null && authentication.getAuthorities().toString().equals("[ROLE_" + UserRole.STUDENT + "]")) {
+            return jobPostingService.getJobPostingsByRecruiterId((userService.searchByEmail(principal.getName()).get()).getId());
+        } else {
+            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "User must be of role RECRUITER to proceed");
+        }
     }
 
 }

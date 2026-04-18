@@ -31,16 +31,7 @@ public class RestUserController {
     }
 
     // Display a specific roadmap with modules and skills
-    @GetMapping("/{id:[0-9]+}")
-    public Roadmap viewRoadmap(@PathVariable long id, Model model, Authentication authentication) {
 
-        Roadmap roadmap = roadmapService.findRoadmapById(id);
-        model.addAttribute("roadmap", roadmap);
-        model.addAttribute("totalSkills", roadmapService.countTotalModules(roadmap));
-        model.addAttribute("userRole", authentication != null ? authentication.getAuthorities().toString() : "");
-
-        return roadmap;
-    }
 
     //MARK: JobPostings
 

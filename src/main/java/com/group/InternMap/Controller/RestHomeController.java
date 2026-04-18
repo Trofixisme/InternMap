@@ -19,7 +19,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/REST")
+@RequestMapping("/")
 public class RestHomeController {
 
     private final UserService userService;
@@ -34,7 +34,7 @@ public class RestHomeController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<Roadmap> home() {
 
         return roadmapService.findAll();

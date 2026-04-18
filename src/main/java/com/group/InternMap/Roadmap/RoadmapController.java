@@ -5,6 +5,7 @@ import com.group.InternMap.User.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -12,10 +13,11 @@ import org.springframework.web.client.HttpClientErrorException;
 @RequestMapping("/api/roadmap")
 public class RoadmapController {
     RoadmapRepo roadmapRepo;
+    RoadmapService roadmapService;
     @Autowired
-    RoadmapController(RoadmapRepo roadmapRepo){
+    RoadmapController(RoadmapRepo roadmapRepo,RoadmapService roadmapService){
         this.roadmapRepo=roadmapRepo;
-
+        this.roadmapService=roadmapService;
     }
 
     @PostMapping("/new")
@@ -28,7 +30,7 @@ public class RoadmapController {
             throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "User must be of "+ UserRole.ADMIN +" to proceed");
         }
     }
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/update")
     public void updateRoadmap(@PathVariable long id, @RequestBody Roadmap roadmap, Authentication authentication) {
 
         if (authentication != null && authentication.getAuthorities().toString().equals("[ROLE_" + UserRole.ADMIN + "]")) {
@@ -38,7 +40,7 @@ public class RoadmapController {
             throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "User must be of "+ UserRole.ADMIN +" to proceed");
         }
     }
-    @PostMapping("/roadmaps/{id}/delete")
+    @PostMapping("/{id}/delete")
     public void deleteRoadmap(@PathVariable Long id, Authentication authentication) {
 
         if (authentication != null && authentication.getAuthorities().toString().equals("[ROLE_" + UserRole.ADMIN + "]")) {
@@ -47,5 +49,9 @@ public class RoadmapController {
         } else {
             throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "User must be of "+ UserRole.ADMIN +" to proceed");
         }
+    }
+    @GetMapping("/{id:[0-9]+}")
+    public Roadmap viewRoadmap(@PathVariable long id) {
+        return  roadmapService.findRoadmapById(id);
     }
 }

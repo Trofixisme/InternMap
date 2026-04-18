@@ -14,8 +14,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -25,8 +23,6 @@ public class RestHomeController {
     private final UserService userService;
     RoadmapService roadmapService;
     RecruiterService recruiterService;
-
-
 
     public RestHomeController(RoadmapService roadmapService, RecruiterService recruiterService, UserService userService) {
         this.roadmapService = roadmapService;

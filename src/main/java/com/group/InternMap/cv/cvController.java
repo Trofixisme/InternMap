@@ -44,7 +44,7 @@ public class cvController {
         }
     }
 
-    @PostMapping("/new")
+    @PostMapping
     public ResponseEntity<Void> saveCV(@ModelAttribute("cv") CV cv,
                                        Principal principal,
                                        Authentication authentication) {

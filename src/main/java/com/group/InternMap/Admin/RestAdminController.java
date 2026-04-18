@@ -36,7 +36,7 @@ public class RestAdminController {
         this.userService = userService;
     }
 
-    @PostMapping("/register")
+    @PostMapping
     public void registerAdmin(HttpServletRequest request, @RequestBody Admin user) throws ServletException {
         user.setRole(UserRole.ADMIN);
         userService.register(user, request);

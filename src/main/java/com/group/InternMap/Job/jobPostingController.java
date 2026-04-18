@@ -59,7 +59,7 @@ public class jobPostingController {
 
 
 
-    @GetMapping
+    @GetMapping("/jobpostings")
     public List<JobPosting> getAllJobPostings() {
 
         ArrayList<JobPosting> jobPostings = (ArrayList<JobPosting>) jobPostingService.getAllJobPostings();
@@ -67,7 +67,7 @@ public class jobPostingController {
 
         return jobPostings;
     }
-    @PostMapping("/search")
+    @PostMapping("/jobpostings/search")
     public List<JobPosting> searchJobPosting(@RequestParam("searchQuery") String searchQuery, Model model) {
         List<JobPosting> results = jobPostingService.searchJobs(searchQuery);
 

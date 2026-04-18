@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/REST")
+@RequestMapping("/api/user")
 public class RestUserController {
 
     UserService userService;
@@ -43,30 +43,6 @@ public class RestUserController {
     }
 
     //MARK: JobPostings
-    @GetMapping("/jobpostings")
-    public List<JobPosting> getAllJobPostings() {
 
-        ArrayList<JobPosting> jobPostings = (ArrayList<JobPosting>) jobPostingService.getAllJobPostings();
-        System.out.println(jobPostings);
 
-        return jobPostings;
-    }
-
-    @PostMapping("/jobpostings/search")
-    public List<JobPosting> searchJobPosting(@RequestParam("searchQuery") String searchQuery, Model model) {
-        List<JobPosting> results = jobPostingService.searchJobs(searchQuery);
-
-        model.addAttribute("jobPostings", results);
-        return results;
-    }
-
-    @PostMapping("/JobPostings/{jobId}/applications/search")
-    public List<Application> searchApplication(@PathVariable Long jobId, @RequestParam("searchQuery") String searchQuery, Model model) {
-        List<Application> results = applicationService.searchApplication(searchQuery);
-        JobPosting job = jobPostingService.findJobPostingByID(jobId);
-        model.addAttribute("applications", results);
-        model.addAttribute("jobPosting", job);
-        model.addAttribute("query", searchQuery);
-        return results;
-    }
 }

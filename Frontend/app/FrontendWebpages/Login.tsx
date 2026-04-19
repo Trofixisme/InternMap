@@ -1,6 +1,5 @@
-import React, {useEffect, useState, useTransition} from "react";
+import React, {use, useEffect, useState} from "react";
 import {Alert, CloseButton, Spinner} from "@heroui/react";
-import {createCookie} from "react-router";
 
 export default function Login() {
 
@@ -9,9 +8,13 @@ export default function Login() {
     const [errorMessage, setErrorMessage] = useState(null as string | null);
     const [loading, setLoading] = useState(false);
 
-    async function handleLogin(e: React.SubmitEvent) {
-        e.preventDefault();
+    async function handleForm(e: React.SubmitEvent) {
+        e.preventDefault()
 
+        await handleLogin()
+    }
+
+    async function handleLogin() {
         setErrorMessage(null);
         setLoading(true);
 
@@ -26,16 +29,14 @@ export default function Login() {
         setLoading(false);
 
         if (response.status === 502) {
-         setErrorMessage("Email and password is not valid.")
+            setErrorMessage("Email and password is not valid.")
             return
         }
 
         const data = await response.json();
 
-        // store JWT
         localStorage.setItem("token", data.token);
 
-        // redirect after login
         window.location.href = "/";
     }
 
@@ -50,14 +51,14 @@ export default function Login() {
             </a>
             <br/>
 
-            <form className="container" onSubmit={handleLogin}>
+            <form className="container" onSubmit={handleForm}>
 
                 {errorMessage && (
                     <>
                         <br/>
                         <Alert className="dark rounded-4xl" style={{background: "var(--secondary-background-color)"}} status="danger">
                             <Alert.Indicator className="pr-0">
-                            <img src="/images/assets/exclamationmark.circle.fill@4x.png" alt="Logo" style={{width: "20px", height: "20px"}}/>
+                                <img src="/images/assets/exclamationmark.circle.fill@4x.png" alt="Logo" style={{width: "20px", height: "20px"}}/>
                             </Alert.Indicator>
                             <Alert.Content>
                                 <Alert.Title>
@@ -80,11 +81,15 @@ export default function Login() {
 
                 <label>Email:</label>
                 <input
+                    id="email"
                     className="text-sm"
                     type="email"
                     value={email}
                     placeholder="Craig@Internmap.co"
                     onChange={(e) => setEmail(e.target.value)}
+                    onInput={() => {setErrorMessage(null)}}
+                    autoFocus={true}
+                    onKeyDownCapture={(e) => {if (e.key === 'Enter') { if (password.length > 0) {return handleLogin()} else { document.getElementById("password")?.focus() }}}}
                     required
                 />
 
@@ -92,17 +97,20 @@ export default function Login() {
 
                 <label>Password:</label>
                 <input
+                    id="password"
                     className="text-sm"
                     type="password"
                     value={password}
                     placeholder="Anything"
                     onChange={(e) => setPassword(e.target.value)}
+                    onInput={() => {setErrorMessage(null)}}
+                    onKeyDownCapture={(e) => {if (e.key === 'Enter') { if (email.length > 0) {return handleLogin()} else { document.getElementById("email")?.focus()} }}}
                     required
                 />
 
                 <br />
 
-                { loading ? <Spinner size="lg" color="current" /> : <><br /> <input className="text-lg" type="submit" value="Log In" /></>}
+                { loading ? <Spinner size="lg" color="current" /> : <><br /> <input className="text-lg" type="submit" onKeyDownCapture={(e) => {if (e.key === 'Enter') {return handleLogin()}}} value="Log In" /></>}
 
                 <br />
 

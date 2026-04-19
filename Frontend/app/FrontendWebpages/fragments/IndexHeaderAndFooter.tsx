@@ -1,10 +1,14 @@
 import {useState, useEffect} from "react";
+import {AlertDialog, Button, Toast} from "@heroui/react";
 import {notification} from "~/FrontendWebpages/fragments/Notification";
-import {Toast, ToastIndicator} from "@heroui/react";
 
 export function IndexHeader() {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    function logout() {
+        location.href = "/logout";
+    }
 
     useEffect(() => {
         const key = localStorage.getItem("token");
@@ -13,6 +17,8 @@ export function IndexHeader() {
         }
 
     }, []);
+
+    notification()
 
     return (
         <header className="header">
@@ -26,9 +32,44 @@ export function IndexHeader() {
                 <button className="button-secondary" onClick={() => location.href = '/login'}>Sign in</button>
                 <button className="button-prominant" onClick={() => location.href = '/signup'}>Sign up</button>
             </section> : <section className="section wide">
-                <form method="POST" action={'/logout'}>
-                    <button className="button-prominant" type="submit" value="Log out">Log out</button>
-                </form>
+
+                <AlertDialog>
+                    <Button className="font-semibold">Sign out</Button>
+                    <AlertDialog.Backdrop variant="blur" isKeyboardDismissDisabled={false} isDismissable={true}>
+                        <AlertDialog.Container>
+                            <AlertDialog.Dialog className="sm:max-w-100 rounded-4xl">
+                                <AlertDialog.Header>
+                                    <img className="w-8" src="/images/assets/exclamationmark.circle.fill@4x.png" alt="Warn"/>
+                                    <AlertDialog.Heading>Sign out?</AlertDialog.Heading>
+                                </AlertDialog.Header>
+                                <AlertDialog.Body>
+                                    <p>Are you sure you want to sign out? You will not be able to track your progression across roadmaps or apply to jobs... </p>
+                                </AlertDialog.Body>
+                                <AlertDialog.Footer>
+                                    <Button slot="close" variant="tertiary">
+                                        Cancel
+                                    </Button>
+
+                                    <Button slot="close" onClick={() => logout()} variant="danger">
+
+                                        {/*  Works but makes clicking Enter after dismissing the dialog to log you out either way */}
+                                        {/*  I could remove the event listener upon dismissing the dialog, but I'm not very sure about the efficiency of doing so  */}
+
+                                        {/*{document.addEventListener("keydown", e => {*/}
+                                        {/*    if (e.key == 'Enter') {*/}
+                                        {/*        logout()*/}
+                                        {/*    }*/}
+                                        {/*} , false)}*/}
+
+                                        Sign out
+                                    </Button>
+                                </AlertDialog.Footer>
+                            </AlertDialog.Dialog>
+                        </AlertDialog.Container>
+                    </AlertDialog.Backdrop>
+                </AlertDialog>
+
+                {/*<button className="button-prominant" onClick={() => } value="Log out">Log out</button>*/}
 
                 <button className="for-icon" onClick={() => location.href = '/profile'}>
                     <img className="icon clickable" src="/images/person_fill.png" alt="Profile"

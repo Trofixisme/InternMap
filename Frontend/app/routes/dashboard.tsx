@@ -23,8 +23,8 @@ export async function clientLoader() {
     if(!idk.ok) {
         throw new Response("Failed to fetch dashboard data", { status: idk.status });
     }
-    return await idk.json()
 
+    return await idk.json()
 }
 
 // @ts-ignore

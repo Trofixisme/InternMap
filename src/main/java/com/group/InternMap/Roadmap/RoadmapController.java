@@ -11,11 +11,12 @@ import org.springframework.web.client.HttpClientErrorException;
 @RestController
 @RequestMapping("/api/roadmap")
 public class RoadmapController {
-    RoadmapRepo roadmapRepo;
-    @Autowired
-    RoadmapController(RoadmapRepo roadmapRepo){
-        this.roadmapRepo=roadmapRepo;
 
+    RoadmapRepo roadmapRepo;
+
+    @Autowired
+    RoadmapController(RoadmapRepo roadmapRepo) {
+        this.roadmapRepo = roadmapRepo;
     }
 
     @PostMapping("/new")
@@ -28,6 +29,7 @@ public class RoadmapController {
             throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "User must be of "+ UserRole.ADMIN +" to proceed");
         }
     }
+
     @PostMapping("/{id}")
     public void updateRoadmap(@PathVariable long id, @RequestBody Roadmap roadmap, Authentication authentication) {
 
@@ -38,6 +40,7 @@ public class RoadmapController {
             throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "User must be of "+ UserRole.ADMIN +" to proceed");
         }
     }
+
     @PostMapping("/roadmaps/{id}/delete")
     public void deleteRoadmap(@PathVariable Long id, Authentication authentication) {
 

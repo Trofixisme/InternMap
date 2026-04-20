@@ -49,18 +49,9 @@ public class RestRecruiterController {
         this.applicationRepo = appRepo;
     }
 
-
-
     @PostMapping("/register")
     public void registerRecruiter(HttpServletRequest request, @RequestBody RecruiterRegistrationDTO recruiterRegistrationDTO) throws ServletException, DataIntegrityViolationException {
         recruiterService.registerRecruiter(recruiterRegistrationDTO, request);
     }
-
-
-
-
-
-
-
 
 }

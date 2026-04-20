@@ -53,7 +53,4 @@ public class RestStudentController {
         user.setRole(UserRole.STUDENT);
         userService.register(user, request);
     }
-
-
-
 }

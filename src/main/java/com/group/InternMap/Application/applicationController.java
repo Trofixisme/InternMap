@@ -20,24 +20,22 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/application")
 public class applicationController {
+
     StudentRepo studentRepo;
     JobPostingService jobPostingService;
     ApplicationRepo applicationRepo;
     NotificationService notificationService;
     UserService userService;
+
     @Autowired
-    applicationController(StudentRepo studentRepo,
-    JobPostingService jobPostingService,
-    ApplicationRepo applicationRep,
-    NotificationService notificationService,
-    UserService userService){
+    applicationController(StudentRepo studentRepo, JobPostingService jobPostingService, ApplicationRepo applicationRep, NotificationService notificationService, UserService userService){
         this.applicationRepo=applicationRep;
         this.studentRepo=studentRepo;
         this.jobPostingService=jobPostingService;
         this.notificationService=notificationService;
         this.userService=userService;
-
     }
+
     @PostMapping("/new")
     public void saveApplication(@RequestParam("jobId") long jobId, @RequestBody ApplicationAndCVDTO applicationandCVDTO, Authentication authentication, Principal principal, RedirectAttributes redirectAttributes) {
         if (authentication != null && authentication.getAuthorities().toString().equals("[ROLE_" + UserRole.STUDENT + "]")) {

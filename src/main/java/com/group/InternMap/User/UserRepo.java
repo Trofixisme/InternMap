@@ -8,5 +8,4 @@ public interface UserRepo extends JpaRepository<Users, Long> {
     // optional means expect zero or more results
     Optional<Users> findByEmail(String email);
 
-
 }

@@ -14,11 +14,12 @@ export function meta() {
 
 export async function clientLoader() {
 
-    const idk = await fetch("http://localhost:8050/REST/dashboard", {
+    const idk = await fetch("http://localhost:8050/api/admin/dashboard", {
         headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
     });
+
     if(!idk.ok) {
         throw new Response("Failed to fetch dashboard data", { status: idk.status });
     }
@@ -26,6 +27,7 @@ export async function clientLoader() {
 
 }
 
+// @ts-ignore
 export async function clientAction({ request }) {
     const formData = await request.formData();
     const emails = formData.getAll("emails");

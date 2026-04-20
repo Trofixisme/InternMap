@@ -28,10 +28,10 @@ export function IndexHeader() {
                 <h1 className="text-3xl font-bold">InternMap</h1>
             </section>
 
-            {!isLoggedIn ? <span className="section wide">
+            {!isLoggedIn ? <section className="section wide">
                 <button className="button-secondary" onClick={() => location.href = '/login'}>Sign in</button>
                 <button className="button-prominant" onClick={() => location.href = '/signup'}>Sign up</button>
-            </span> : <span className="section wide">
+            </section> : <section className="section wide">
 
                 <AlertDialog>
                     <Button className="font-semibold">Sign out</Button>
@@ -75,7 +75,7 @@ export function IndexHeader() {
                     <img className="icon clickable" src="/images/person_fill.png" alt="Profile"
                          style={{marginTop: "2px", marginLeft: "1px"}}/>
                 </button>)}
-            </span>}
+            </section>}
 
             <Toast.Provider placement="top end"/>
 

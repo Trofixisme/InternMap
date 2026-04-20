@@ -10,10 +10,11 @@ import type {Key} from "node:readline";
 import {useFetcher} from "react-router";
 import {AlertDialog} from "@heroui/react";
 
-export default function Dashboard({users , roadmaps  }) {
+
+export default function Dashboard({users , roadmaps}: {users : User[], roadmaps : Roadmap[]}) {
     const fetcher = useFetcher()
     const [selectedKeys, setSelectedKeys] = useState<"all" | Set<Key>>(new Set());
-    notification()
+
     const [showAdminError, setShowAdminError] = useState(false);
     return (
 

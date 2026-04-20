@@ -32,7 +32,6 @@ import java.util.Optional;
 @RequestMapping("/api/recruiter")
 public class RestRecruiterController {
 
-
     CompanyService companyService;
     RecruiterService recruiterService;
     UserService userService;

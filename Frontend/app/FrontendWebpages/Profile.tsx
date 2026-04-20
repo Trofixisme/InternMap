@@ -1,4 +1,4 @@
-import {IndexHeader} from "~/FrontendWebpages/fragments/IndexHeaderAndFooter";
+import {IndexFooter, IndexHeader} from "~/FrontendWebpages/fragments/IndexHeaderAndFooter";
 import {Button, Chip, Table} from "@heroui/react";
 import {ColumnResizer} from "react-aria-components";
 
@@ -6,6 +6,7 @@ export default function Profile({userDetails}: { userDetails: User}) {
 
     return (
         <>
+            <body style={{height: "94vh"}}>
             <IndexHeader/>
 
             <div className="pl-17 pt-8">
@@ -187,6 +188,8 @@ export default function Profile({userDetails}: { userDetails: User}) {
 
                     <br/><br/>
             </div>
+            </body>
+            <IndexFooter/>
         </>
     )
 }

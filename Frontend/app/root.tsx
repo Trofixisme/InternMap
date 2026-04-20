@@ -64,8 +64,9 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 
   return (
       <div className="centered">
-        <a href={"/"} style={{borderRadius: "200px"}} inert><img src="/images/navi/Navi%20Unique.png" alt="Logo"
-                                                                 style={{width: "100px", height: "100px"}}/></a>
+        <a href={"/"} style={{borderRadius: "200px"}} inert>
+            <img src="/images/navi/Navi%20Sad.png" alt="Logo" style={{width: "100px", height: "100px"}}/>
+        </a>
         <br/>
 
       <main className="pt-16 p-4 container mx-auto">

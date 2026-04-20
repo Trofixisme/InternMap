@@ -1,13 +1,10 @@
 import "~/CSS/jobPosting.css"
 import "~/CSS/InternMapHomepage.css";
 import {IndexFooter, IndexHeader} from "./fragments/IndexHeaderAndFooter";
-import {Tabs, Toast} from "@heroui/react";
-import {notification} from "~/FrontendWebpages/fragments/Notification";
+import {Tabs} from "@heroui/react";
 
 // @ts-ignore
 export default function Welcome({roadmaps, jobPostings}) {
-
-    notification()
 
     return (
 

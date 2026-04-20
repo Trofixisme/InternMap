@@ -1,6 +1,5 @@
 import type {Route} from "./+types/home";
-import Login from "~/FrontendWebpages/Login";
-import {redirect, useSubmit} from "react-router";
+import {redirect} from "react-router";
 import Signup from "~/FrontendWebpages/Signup";
 
 export function meta({}: Route.MetaArgs) {
@@ -10,20 +9,7 @@ export function meta({}: Route.MetaArgs) {
     ];
 }
 
-// export async function action({request}: Route.ActionArgs) {
-//     const form = await request.formData();
-//     const response = await fetch("http://localhost:8050/login", {
-//         method: "POST",
-//         body: form,
-//         headers: {
-//             "Content-Type": "application/json; charset=UTF-8"
-//         }
-//     })
-//
-//     if (response.ok) {
-//         return Response.redirect(new URL("/", request.url));
-//     }
-// }
+
 
 export async function action({ request }: Route.ActionArgs) {
     const formData = await request.formData();

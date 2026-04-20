@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import {AlertDialog, Button, Toast} from "@heroui/react";
 import {notification} from "~/FrontendWebpages/fragments/Notification";
+import {useLocation} from "react-router";
 
 export function IndexHeader() {
 
@@ -23,15 +24,14 @@ export function IndexHeader() {
     return (
         <header className="header">
             <section className="section wide" onClick={() => location.href = '/'}>
-                {/*<img src="/Images/Mono/Straight%20Hero.png" alt="Logo" style="height: 55px; width: 55px;">*/}
                 <img className="logo" src="/images/navi/Navi%20Unique.png" alt="Logo"/>
                 <h1 className="text-3xl font-bold">InternMap</h1>
             </section>
 
-            {!isLoggedIn ? <section className="section">
+            {!isLoggedIn ? <span className="section wide">
                 <button className="button-secondary" onClick={() => location.href = '/login'}>Sign in</button>
                 <button className="button-prominant" onClick={() => location.href = '/signup'}>Sign up</button>
-            </section> : <section className="section wide">
+            </span> : <span className="section wide">
 
                 <AlertDialog>
                     <Button className="font-semibold">Sign out</Button>
@@ -69,13 +69,13 @@ export function IndexHeader() {
                     </AlertDialog.Backdrop>
                 </AlertDialog>
 
-                {/*<button className="button-prominant" onClick={() => } value="Log out">Log out</button>*/}
+                {!useLocation().pathname.includes("/profile") && (
 
                 <button className="for-icon" onClick={() => location.href = '/profile'}>
                     <img className="icon clickable" src="/images/person_fill.png" alt="Profile"
                          style={{marginTop: "2px", marginLeft: "1px"}}/>
-                </button>
-            </section>}
+                </button>)}
+            </span>}
 
             <Toast.Provider placement="top end"/>
 

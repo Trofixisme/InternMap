@@ -8,6 +8,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 
 //CRUD operations
@@ -20,7 +22,8 @@ public class UserService implements FilePaths {
     private PasswordEncoder passwordEncoder;
     private UserRepo userRepo;
 
-    public UserService() {}
+    public UserService() {
+    }
 
     @Autowired
     public UserService(UserRepo userRepo, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
@@ -74,22 +77,22 @@ public class UserService implements FilePaths {
     }
 
     public Users login(String email, String password) throws Exception {
-    if (email == null || password == null) {
-        throw new IllegalArgumentException("Neither the email nor the password are allowed to be empty.");
-    }
+        if (email == null || password == null) {
+            throw new IllegalArgumentException("Neither the email nor the password are allowed to be empty.");
+        }
 
-    Optional<Users> optionalUser = userRepo.findByEmail(email);
-    if (optionalUser.isEmpty()) {
-        throw new Exception("No user found with that email.");
-    }
+        Optional<Users> optionalUser = userRepo.findByEmail(email);
+        if (optionalUser.isEmpty()) {
+            throw new Exception("No user found with that email.");
+        }
 
-    Users user = optionalUser.get();
-    if (user.getPassword().equals(password)) {
-        return user;
-    } else {
-        throw new Exception("Provided password is incorrect.");
+        Users user = optionalUser.get();
+        if (user.getPassword().equals(password)) {
+            return user;
+        } else {
+            throw new Exception("Provided password is incorrect.");
+        }
     }
-}
 
     public Optional<Users> searchByEmail(String email) {
         return userRepo.findByEmail(email);
@@ -99,4 +102,16 @@ public class UserService implements FilePaths {
         return userRepo.findById(id);
     }
 
+    public List<Users> findall() {
+        return userRepo.findAll();
+    }
+
+    public void deleteByEmail(String email) {
+        Optional<Users> user = userRepo.findByEmail(email);
+        if (user.isPresent()) {
+            userRepo.delete(user.get());
+        } else {
+            throw new IllegalArgumentException("No user found with that email.");
+        }
+    }
 }

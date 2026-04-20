@@ -1,12 +1,34 @@
 import {IndexFooter, IndexHeader} from "~/FrontendWebpages/fragments/IndexHeaderAndFooter";
 import {Button, Chip, Table} from "@heroui/react";
-import {ColumnResizer} from "react-aria-components";
 
 export default function Profile({userDetails}: { userDetails: User}) {
 
+    let applicationList: Application[] = (userDetails as Student).applications;
+
+
+    applicationList.sort((e, f) => {
+        if (e.applicationDate < f.applicationDate) {
+            return 1;
+        } else if (e.applicationDate === f.applicationDate) {
+            return 0;
+        } else {
+            return -1;
+        }
+    });
+
+    for (let i = 0; i < applicationList.length; i++) {
+        for (let j = applicationList.length - 1; j > i; j--) {
+            if (applicationList[i].jobPosting.jobName == applicationList[j].jobPosting.jobName &&
+                applicationList[i].jobPosting.company.name == applicationList[j].jobPosting.company.name) {
+                applicationList.splice(j, 1);
+            }
+        }
+    }
+
+    console.log(applicationList);
+
     return (
         <>
-            <body style={{height: "94vh"}}>
             <IndexHeader/>
 
             <div className="pl-17 pt-8">
@@ -117,24 +139,59 @@ export default function Profile({userDetails}: { userDetails: User}) {
                             <div className="container-padded">
                             {(userDetails as Student).cv ? (
                                 <>
-                                        <div>
-                                            <label className="label-small">Professional Summary</label>
-                                            <p className="auto-capitalise">{(userDetails as Student).cv.description}</p>
-                                        </div>
+                                    <div>
+                                        <label className="label-small">Professional Summary</label>
+                                        <p className="auto-capitalise">{(userDetails as Student).cv.description}</p>
+                                    </div>
 
-                                        <div>
-                                            <label className="label-small">Past Experiences</label>
-                                            <p style={{whiteSpace: "pre-wrap"}}>{(userDetails as Student).cv.pastExperiences}</p>
-                                        </div>
+                                    <div>
+                                        <label className="label-small">Past Experiences</label>
+                                        <p style={{whiteSpace: "pre-wrap"}}>{(userDetails as Student).cv.pastExperiences}</p>
+                                    </div>
 
-                                        <div>
-                                            <label className="label-small">Projects</label>
-                                            <p style={{whiteSpace: "pre-wrap"}}>{(userDetails as Student).cv.projects}</p>
-                                        </div>
+                                    <div>
+                                        <label className="label-small">Projects</label>
+                                        <p style={{whiteSpace: "pre-wrap"}}>{(userDetails as Student).cv.projects}</p>
+                                    </div>
                                 </>
                             ) : (
                                 <p className="text-muted">You don't have a CV</p>
                             )}
+                            </div>
+
+                            <br/><br/>
+
+                            {/*// <!-- Applications -->*/}
+                            <h4 className="text-3xl font-bold container-label">Jobs You Applied For</h4>
+
+                            <div className="container-padded">
+                                <div className="full-width" style={{display: "grid", justifyContent: "start", gridTemplateColumns: "repeat(auto-fit, minmax(270px, 0.2fr))", gap: "50px"}}>
+                            {(userDetails as Student).applications.length == 0 ? (
+                                <h2 className="text-xl font-bold text-gray-400">You haven't applied for anything.</h2>
+                            ): (
+                                applicationList.map((application: Application) => {
+
+                                    return (
+
+                                <div style={{display: "grid", gap: "10px", background: "var(--secondary-background-color)", gridTemplateColumns: "repeat(2, 1fr)", padding: "20px", borderRadius: "25px"}}>
+                                    <div>
+                                        <label className="label-small">Applied</label>
+                                        <p className="auto-capitalise">{application.applicationDate.toString().substring(0, 10)}</p>
+                                    </div>
+
+                                    <div className="mb-3">
+                                        <label className="label-small">Job Position</label>
+                                        <p className="auto-capitalise">{application.jobPosting.jobName + " - " + application.jobPosting.company.name}</p>
+                                    </div>
+
+                                    <div className="mb-3">
+                                        <label className="label-small">Phone Number</label>
+                                        <p className="auto-capitalise">{application.phoneNumber}</p>
+                                    </div>
+                                </div>
+                                )}
+                            ))}
+                                </div>
                             </div>
                         </>
                     )}
@@ -172,9 +229,9 @@ export default function Profile({userDetails}: { userDetails: User}) {
                                     </Table>
                                     </>
                                 ) : (
-                                    <p className="auto-capitalise">
+                                    <h1 className="text-3xl font-bold text-gray-400">
                                         — You're not working for any company.
-                                    </p>
+                                    </h1>
                                 )}
                             </div>
                         </>
@@ -188,7 +245,6 @@ export default function Profile({userDetails}: { userDetails: User}) {
 
                     <br/><br/>
             </div>
-            </body>
             <IndexFooter/>
         </>
     )

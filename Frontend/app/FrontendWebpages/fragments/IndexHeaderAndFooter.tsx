@@ -1,9 +1,24 @@
 import {useState, useEffect} from "react";
-import {AlertDialog, Button, Toast} from "@heroui/react";
+import {AlertDialog, Button, Modal, Toast, useOverlayState} from "@heroui/react";
 import {notification} from "~/FrontendWebpages/fragments/Notification";
 import {useLocation} from "react-router";
 
 export function IndexHeader() {
+
+    const state = useOverlayState({
+        defaultOpen: false,
+        onOpenChange: () => {
+        }
+    })
+
+    if ((localStorage.getItem("showOnboarding") == null || localStorage.getItem("showOnboarding") == "true") && !state.isOpen) {
+        state.open()
+    }
+
+    function closeOnboarding() {
+        localStorage.setItem("showOnboarding", "false");
+        state.close()
+    }
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -23,6 +38,33 @@ export function IndexHeader() {
 
     return (
         <header className="header">
+
+            <Modal isOpen={state.isOpen}>
+                <Modal.Backdrop className="dark" variant="blur" isKeyboardDismissDisabled={false} isDismissable={true}>
+                    <Modal.Container>
+                        <Modal.Dialog className="sm:max-w-90 rounded-4xl">
+                            <Modal.CloseTrigger onClick={() => closeOnboarding()} />
+                            <Modal.Header>
+                                <img src="/images/navi/Navi%20Beta.png" alt="Logo" style={{height: "60px", width: "60px"}}/>
+                                <Modal.Heading>Welcome to Internmap!</Modal.Heading>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <p>
+                                    Internmap is still in development. It's
+                                    our fourth semester's final project made by four inexperienced developers
+                                    who also happen to be friends.
+                                </p>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button className="w-full" onClick={() => closeOnboarding() } slot="close">
+                                    Continue
+                                </Button>
+                            </Modal.Footer>
+                        </Modal.Dialog>
+                    </Modal.Container>
+                </Modal.Backdrop>
+            </Modal>
+
             <section className="section wide" onClick={() => location.href = '/'}>
                 <img className="logo" src="/images/navi/Navi%20Unique.png" alt="Logo"/>
                 <h1 className="text-3xl font-bold">InternMap</h1>

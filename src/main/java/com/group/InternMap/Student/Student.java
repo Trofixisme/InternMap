@@ -1,13 +1,16 @@
 package com.group.InternMap.Student;
 
+import com.group.InternMap.Application.Application;
 import com.group.InternMap.cv.CV;
 import com.group.InternMap.User.UserRole;
 import com.group.InternMap.User.Users;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 
 @Entity
 public class Student extends Users implements Serializable {
@@ -18,7 +21,10 @@ public class Student extends Users implements Serializable {
     private String faculty;
 
     @OneToOne
-    CV cv; // going to need a DTO
+    CV cv;
+
+    @OneToMany(mappedBy = "student")
+    List<Application> applications;
 
     public Student(String fName, String lName, String email, String plainPassword,int graduatingYear, String uniName, String studentMajor, String faculty) {
         super(fName, lName, email, plainPassword);
@@ -27,7 +33,6 @@ public class Student extends Users implements Serializable {
         this.uniName = uniName;
         this.studentMajor = studentMajor;
         this.faculty = faculty;
-
     }
 
     public Student() {}
@@ -71,4 +76,9 @@ public class Student extends Users implements Serializable {
     public void setCv(CV cv) {
         this.cv = cv;
     }
+
+    public List<Application> getApplications() {
+        return applications;
+    }
+
 }

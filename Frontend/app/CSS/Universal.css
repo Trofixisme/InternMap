@@ -50,7 +50,8 @@ footer {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin: 8px 10%;
+        margin: 0 10%;
+        padding: 10px;
     }
 
     .small-text {

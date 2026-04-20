@@ -56,7 +56,7 @@ public class RecruiterController {
 
         companyService.save(company);
         model.addAttribute("success", "Company created successfully.");
-        return "redirect:/register";
+        return "redirect:/signup";
 
     }
 

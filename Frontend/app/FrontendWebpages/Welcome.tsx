@@ -86,7 +86,12 @@ export default function Welcome({roadmaps, jobPostings}) {
                                   <div id="bottom" /*style="justify-items: right; display: flex; justify-content: flex-end"*/>
                                     <a /*th:href="@{/applications/new(jobId=${job.id})}" style="text-decoration: none"
                                        th:if="${isRecruiter == null && isAdmin == null}"*/>
-                                      <button id="apply-button">Apply</button>
+                                        <button id="apply-button" onClick={
+                                            () => {
+                                                window.location.href = `/apply?jobId=${posting.id}`
+
+                                            }
+                                        }>Apply</button>
                                     </a>
                                   </div>
                                 </div>

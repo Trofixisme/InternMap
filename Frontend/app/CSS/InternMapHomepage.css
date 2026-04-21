@@ -105,7 +105,7 @@ body {
         border-radius: 75px;
         corner-shape: round;
         background: rgba(237, 239, 241, 0.8);
-        padding: 35px;
+          padding: 35px;
         margin: 10px max(10px, 5vw);
     }
 

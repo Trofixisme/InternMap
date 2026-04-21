@@ -1,7 +1,34 @@
 import {useState, useEffect} from "react";
-import {AlertDialog, Button, Modal, Toast, useOverlayState} from "@heroui/react";
+import {
+    AlertDialog,
+    Button,
+    Description,
+    Dropdown,
+    Kbd,
+    Label,
+    Modal,
+    Separator,
+    Toast,
+    useOverlayState
+} from "@heroui/react";
 import {notification} from "~/FrontendWebpages/fragments/Notification";
 import {useLocation} from "react-router";
+
+function TrashBin(props: { className: string }) {
+    return null;
+}
+
+function Pencil(props: { className: string }) {
+    return null;
+}
+
+function SquarePlus(props: { className: string }) {
+    return null;
+}
+
+function EllipsisVertical(props: { className: string }) {
+    return null;
+}
 
 export function IndexHeader() {
 
@@ -74,6 +101,60 @@ export function IndexHeader() {
                 <button className="button-secondary" onClick={() => location.href = '/login'}>Sign in</button>
                 <button className="button-prominant" onClick={() => location.href = '/signup'}>Sign up</button>
             </section> : <section className="section wide">
+
+                <Dropdown>
+                    <Button isIconOnly aria-label="Menu" variant="ghost">
+                        <img src="/images/assets/ellipsis@4x.png" alt="ellipsis" style={{height: "5px"}}/>
+                    </Button>
+                    <Dropdown.Popover>
+                        <Dropdown.Menu onAction={(key) => console.log(`Selected: ${key}`)}>
+                            <Dropdown.Section>
+                                <Dropdown.Item id="new-file" textValue="New file">
+                                    <div className="flex h-8 items-start justify-center pt-px">
+                                        <SquarePlus className="size-4 shrink-0 text-muted" />
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <Label>New file</Label>
+                                        <Description>Create a new file</Description>
+                                    </div>
+                                    <Kbd className="ms-auto" slot="keyboard" variant="light">
+                                        <Kbd.Abbr keyValue="command" />
+                                        <Kbd.Content>N</Kbd.Content>
+                                    </Kbd>
+                                </Dropdown.Item>
+                                <Dropdown.Item id="edit-file" textValue="Edit file">
+                                    <div className="flex h-8 items-start justify-center pt-px">
+                                        <Pencil className="size-4 shrink-0 text-muted" />
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <Label>Edit file</Label>
+                                        <Description>Make changes</Description>
+                                    </div>
+                                    <Kbd className="ms-auto" slot="keyboard" variant="light">
+                                        <Kbd.Abbr keyValue="command" />
+                                        <Kbd.Content>E</Kbd.Content>
+                                    </Kbd>
+                                </Dropdown.Item>
+                            </Dropdown.Section>
+                            <Separator />
+                            <Dropdown.Section>
+                                <Dropdown.Item id="delete-file" textValue="Delete file" variant="danger">
+                                    <div className="flex h-8 items-start justify-center pt-px">
+                                        <TrashBin className="size-4 shrink-0 text-danger" />
+                                    </div>
+                                    <div className="">
+                                        <Label>Sign out</Label>
+                                    </div>
+                                    <Kbd className="ms-auto" slot="keyboard" variant="light">
+                                        <Kbd.Abbr keyValue="command" />
+                                        <Kbd.Abbr keyValue="shift" />
+                                        <Kbd.Content>D</Kbd.Content>
+                                    </Kbd>
+                                </Dropdown.Item>
+                            </Dropdown.Section>
+                        </Dropdown.Menu>
+                    </Dropdown.Popover>
+                </Dropdown>
 
                 <AlertDialog>
                     <Button className="font-semibold">Sign out</Button>

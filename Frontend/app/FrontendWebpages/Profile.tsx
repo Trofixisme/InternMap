@@ -3,7 +3,7 @@ import {Button, Chip, Table} from "@heroui/react";
 
 export default function Profile({userDetails}: { userDetails: User}) {
 
-    let applicationList: Application[] = (userDetails as Student).applications;
+    let applicationList: Application[] = (userDetails as Student).applications ? (userDetails as Student).applications : [];
 
 
     if (applicationList != null) {

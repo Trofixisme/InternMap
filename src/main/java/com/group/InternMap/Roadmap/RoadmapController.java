@@ -8,15 +8,24 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/roadmap")
 public class RoadmapController {
 
+    private final RoadmapService roadmapService;
     RoadmapRepo roadmapRepo;
 
     @Autowired
-    RoadmapController(RoadmapRepo roadmapRepo) {
+    RoadmapController(RoadmapRepo roadmapRepo, RoadmapService roadmapService) {
         this.roadmapRepo = roadmapRepo;
+        this.roadmapService = roadmapService;
+    }
+
+    @GetMapping("/roadmaps")
+    public List<Roadmap> getRoadmaps() {
+        return roadmapService.findAll();
     }
 
     @PostMapping("/new")

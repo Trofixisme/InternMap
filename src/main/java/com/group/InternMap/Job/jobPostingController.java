@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.List;
@@ -54,6 +55,10 @@ public class jobPostingController {
         }
     }
 
+    @GetMapping("/jobform")
+    public List<JobPosting> writing()  {
+        return jobPostingService.getAllJobPostings();
+    }
 
     @GetMapping("/{jobId}/applications")
     public List<Application> viewApplications(@PathVariable long jobId, Authentication authentication) {

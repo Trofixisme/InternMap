@@ -77,7 +77,7 @@ export default function Welcome({roadmaps, jobPostings}: {roadmaps: Roadmap[], j
                 <label className="container-label">Recents</label>
                 <Button style={{width: "32px", height: "32px", background: "var(--secondary-background-color)"}} className="dark" onClick={() => {
                     setRecentsExpanded(!isRecentsExpanded)
-                    document.getElementById("recents-chevron")?.classList.toggle("rotate-180")
+                    document.getElementById("recents-chevron")?.classList.toggle("rotate-270")
 
                 }} isIconOnly>
                     <img id={"recents-chevron"} src={"/images/assets/chevron@4x.png"} style={{width: "16px", filter: "invert(0.3)"}} alt="pencil"/>
@@ -118,7 +118,7 @@ export default function Welcome({roadmaps, jobPostings}: {roadmaps: Roadmap[], j
                             <label className="container-label">All Roadmaps</label>
                             <Button style={{width: "32px", height: "32px", background: "var(--secondary-background-color)"}} className="dark" onClick={() => {
                                 setAllExpanded(!isAllExpanded)
-                                document.getElementById("all-chevron")?.classList.toggle("rotate-180")
+                                document.getElementById("all-chevron")?.classList.toggle("rotate-270")
                             }} isIconOnly>
                                 <img id="all-chevron" src="/images/assets/chevron@4x.png" style={{width: "16px", filter: "invert(0.3)"}} alt="pencil"/>
                             </Button>

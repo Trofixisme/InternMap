@@ -1,30 +1,22 @@
-import {
-    Button,
-    Description,
-    FieldError,
-    FieldGroup,
-    Fieldset,
-    Form,
-    Input,
-    Label,
-    TextArea,
-    TextField,
-} from "@heroui/react";
-function JobPostingForm(){
-    async function handleSubmit(e) {
-        e.preventDefault();
+import "~/CSS/jobPosting.css"
+import "~/CSS/InternMapHomepage.css";
+import {IndexFooter, IndexHeader} from "./fragments/IndexHeaderAndFooter";
+import {Tabs} from "@heroui/react";
 
-        const formData = new FormData(e.currentTarget);
+// @ts-ignore
+export default function JobPosting({jobPostings}) {
 
-        const body = {
-            jobname: formData.get("title"),
-            jobRequirements:  formData.get(""),
-            name: formData.get(""),
-            description: formData.get(""),
-            skills: formData.get(""),
+    return (
 
-        };
+        <>
+            <IndexHeader/>
 
-        console.log(body);
+            <div className="wrapper">
 
+
+            </div>
+
+            <IndexFooter/>
+        </>
+    );
 }

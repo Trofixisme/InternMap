@@ -11,6 +11,7 @@ import com.group.InternMap.User.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
@@ -38,7 +39,7 @@ public class jobPostingController {
 
     @PostMapping("/new")
     @SuppressWarnings("OptionalGetWithoutIsPresent")
-    public void AddJobPosting(@ModelAttribute JobPostingFactory jobPostingFactory, Principal principal, Authentication authentication) {
+    public void AddJobPosting(@RequestBody JobPostingFactory jobPostingFactory, Principal principal, Authentication authentication) {
 
         if (authentication != null && authentication.getAuthorities().toString().equals("[ROLE_" + UserRole.RECRUITER + "]")) {
             jobPostingFactory.setCompany(companyService.findByName(jobPostingFactory.getCompany().getName()));
@@ -58,7 +59,27 @@ public class jobPostingController {
     @GetMapping("/jobform")
     public List<JobPosting> writing()  {
         return jobPostingService.getAllJobPostings();
+
     }
+
+    @PostMapping("/jobform/Create")
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    public ResponseEntity<String> createJobPosting(@RequestBody JobPostingFactory dto, Principal principal) {
+
+        dto.setCompany(companyService.findByName(dto.getCompany().getName()));
+        dto.getJobPosting().setCompany(companyService.findByName(dto.getCompany().getName()));
+        dto.getJobPosting().setRecruiter((Recruiter) userService.searchByEmail(principal.getName()).get());
+//
+        switch (dto.getJobType()) {
+            case "FullTime"         -> jobPostingService.save(dto.toFullTime());
+            case "FreelanceProject" -> jobPostingService.save(dto.toFreelanceProject());
+            case "Internship"       -> jobPostingService.save(dto.toInternship());
+        }
+
+        return ResponseEntity.ok("everything is fine");
+    }
+
+
 
     @GetMapping("/{jobId}/applications")
     public List<Application> viewApplications(@PathVariable long jobId, Authentication authentication) {

@@ -46,43 +46,43 @@ export default function RoadMapCreate({ }) {
         setModules(updated);
     }
 
-    async function handleSubmit(e) {
-        e.preventDefault();
+        async function handleSubmit(e) {
+            e.preventDefault();
 
-        const formData = new FormData(e.currentTarget);
+            const formData = new FormData(e.currentTarget);
 
-        const body = {
-            name: formData.get("title"),
-            modules: modules.map((mod, moduleIndex) => ({
-                name: formData.get(`modules[${moduleIndex}].name`),
-                description: formData.get(`modules[${moduleIndex}].description`),
-                skills: mod.skills.map((_, skillIndex) => ({
-                    name: formData.get(`modules[${moduleIndex}].skills[${skillIndex}].name`),
-                    description: formData.get(`modules[${moduleIndex}].skills[${skillIndex}].description`),
-                    links: [formData.get(`modules[${moduleIndex}].skills[${skillIndex}].links[0]`)]
+            const body = {
+                name: formData.get("title"),
+                modules: modules.map((mod, moduleIndex) => ({
+                    name: formData.get(`modules[${moduleIndex}].name`),
+                    description: formData.get(`modules[${moduleIndex}].description`),
+                    skills: mod.skills.map((_, skillIndex) => ({
+                        name: formData.get(`modules[${moduleIndex}].skills[${skillIndex}].name`),
+                        description: formData.get(`modules[${moduleIndex}].skills[${skillIndex}].description`),
+                        links: [formData.get(`modules[${moduleIndex}].skills[${skillIndex}].links[0]`)]
+                    }))
                 }))
-            }))
-        };
+            };
 
-        console.log(body);
+            console.log(body);
 
-        const res = await fetch(`http://localhost:8050/api/admin/roadmap/create/submit`, {
-            method: "POST",
-            body: JSON.stringify(body),
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-        });
+            const res = await fetch(`http://localhost:8050/api/admin/roadmap/create/submit`, {
+                method: "POST",
+                body: JSON.stringify(body),
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            });
 
-        if (!res.ok) {
-            const errorText = await res.text();
-            console.error("Failed to create roadmap", res.status, errorText);
-            return;
+            if (!res.ok) {
+                const errorText = await res.text();
+                console.error("Failed to create roadmap", res.status, errorText);
+                return;
+            }
+
+            console.log("Roadmap created!");
         }
-
-        console.log("Roadmap created!");
-    }
 
     return (
         <>

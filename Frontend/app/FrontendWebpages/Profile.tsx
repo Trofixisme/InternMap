@@ -6,21 +6,23 @@ export default function Profile({userDetails}: { userDetails: User}) {
     let applicationList: Application[] = (userDetails as Student).applications;
 
 
-    applicationList.sort((e, f) => {
-        if (e.applicationDate < f.applicationDate) {
-            return 1;
-        } else if (e.applicationDate === f.applicationDate) {
-            return 0;
-        } else {
-            return -1;
-        }
-    });
+    if (applicationList != null) {
+        applicationList.sort((e, f) => {
+            if (e.applicationDate < f.applicationDate) {
+                return 1;
+            } else if (e.applicationDate === f.applicationDate) {
+                return 0;
+            } else {
+                return -1;
+            }
+        });
 
-    for (let i = 0; i < applicationList.length; i++) {
-        for (let j = applicationList.length - 1; j > i; j--) {
-            if (applicationList[i].jobPosting.jobName == applicationList[j].jobPosting.jobName &&
-                applicationList[i].jobPosting.company.name == applicationList[j].jobPosting.company.name) {
-                applicationList.splice(j, 1);
+        for (let i = 0; i < applicationList.length; i++) {
+            for (let j = applicationList.length - 1; j > i; j--) {
+                if (applicationList[i].jobPosting.jobName == applicationList[j].jobPosting.jobName &&
+                    applicationList[i].jobPosting.company.name == applicationList[j].jobPosting.company.name) {
+                    applicationList.splice(j, 1);
+                }
             }
         }
     }
@@ -103,7 +105,7 @@ export default function Profile({userDetails}: { userDetails: User}) {
                     {/*// <!-- Student Fields -->*/}
                     {userDetails.role == "STUDENT" && (
                         <>
-                            <h4 className="text-3xl font-bold container-label">About</h4>
+                            <h4 className="container-label">About</h4>
 
                             <div className="container-padded">
                                 <div>
@@ -127,7 +129,7 @@ export default function Profile({userDetails}: { userDetails: User}) {
 
                             {/*// <!-- CV Section -->*/}
                             <div style={{display: "flex", flexDirection: "row", gap: "10px", alignItems: "center"}}>
-                            <h4 className="text-3xl font-bold container-label">Circulmn Vitae</h4>
+                            <h4 className="container-label">Circulmn Vitae</h4>
                                 {(userDetails as Student).cv ? (<Button style={{width: "32px", height: "32px", background: "var(--secondary-background-color)"}} className="dark" isIconOnly>
                                     <img src="/images/assets/pencil@4x.png" style={{width: "16px", filter: "invert(0.3)"}} alt="pencil"/>
                                 </Button>) : (<Button style={{width: "32px", height: "32px", background: "var(--secondary-background-color)"}} className="dark" isIconOnly>
@@ -162,7 +164,7 @@ export default function Profile({userDetails}: { userDetails: User}) {
                             <br/><br/>
 
                             {/*// <!-- Applications -->*/}
-                            <h4 className="text-3xl font-bold container-label">Jobs You Applied For</h4>
+                            <h4 className="container-label">Jobs You Applied For</h4>
 
                             <div className="container-padded">
                                 <div className="full-width" style={{display: "grid", justifyContent: "start", gridTemplateColumns: "repeat(auto-fit, minmax(270px, 0.2fr))", gap: "50px"}}>
@@ -199,7 +201,7 @@ export default function Profile({userDetails}: { userDetails: User}) {
                     {/*// <!-- Recruiter Fields -->*/}
                     {userDetails.role == "RECRUITER" && (
                         <>
-                            <h4 className="text-3xl font-bold container-label">Works At</h4>
+                            <h4 className="container-label">Works At</h4>
 
                             <div className="container-padded">
                                 {/*// <!-- If a recruiter has one or more companies -->*/}
@@ -229,7 +231,7 @@ export default function Profile({userDetails}: { userDetails: User}) {
                                     </Table>
                                     </>
                                 ) : (
-                                    <h1 className="text-3xl font-bold text-gray-400">
+                                    <h1 className="text-gray-400">
                                         — You're not working for any company.
                                     </h1>
                                 )}
@@ -238,14 +240,14 @@ export default function Profile({userDetails}: { userDetails: User}) {
                     )}
 
                     {userDetails.role == "ADMIN" && (
-                        <div className="flex items-center justify-center" style={{height: "50vh"}}>
-                        <h1 className="text-3xl font-bold align-middle justify-center text-gray-400">We don't have anything else to show</h1>
+                        <div className="flex items-center justify-center" style={{height: "52vh"}}>
+                        <h1 className="align-middle justify-center text-gray-400">We don't have anything else to show</h1>
                         </div>
                     )}
 
                     <br/><br/>
             </div>
-            <IndexFooter/>
+            {/*<IndexFooter/>*/}
         </>
     )
 }

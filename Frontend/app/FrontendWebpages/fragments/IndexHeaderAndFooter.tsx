@@ -2,7 +2,6 @@ import {useState, useEffect} from "react";
 import {
     AlertDialog,
     Button,
-    Description,
     Dropdown,
     Kbd,
     Label,
@@ -32,19 +31,21 @@ function EllipsisVertical(props: { className: string }) {
 
 export function IndexHeader() {
 
-    const state = useOverlayState({
+    const onBoardingState = useOverlayState({
         defaultOpen: false,
-        onOpenChange: () => {
-        }
     })
 
-    if ((localStorage.getItem("showOnboarding") == null || localStorage.getItem("showOnboarding") == "true") && !state.isOpen) {
-        state.open()
+    const signOutAlertState = useOverlayState({
+        defaultOpen: false
+    })
+
+    if ((localStorage.getItem("showOnboarding") == null || localStorage.getItem("showOnboarding") == "true") && !onBoardingState.isOpen) {
+        onBoardingState.open()
     }
 
     function closeOnboarding() {
         localStorage.setItem("showOnboarding", "false");
-        state.close()
+        onBoardingState.close()
     }
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -66,7 +67,7 @@ export function IndexHeader() {
     return (
         <header className="header">
 
-            <Modal isOpen={state.isOpen}>
+            <Modal isOpen={onBoardingState.isOpen}>
                 <Modal.Backdrop className="dark" variant="blur" isKeyboardDismissDisabled={false} isDismissable={true}>
                     <Modal.Container>
                         <Modal.Dialog className="sm:max-w-90 rounded-4xl">
@@ -104,43 +105,44 @@ export function IndexHeader() {
 
                 <Dropdown>
                     <Button isIconOnly aria-label="Menu" variant="ghost">
-                        <img src="/images/assets/ellipsis@4x.png" alt="ellipsis" style={{height: "5px"}}/>
+                        <img src="/images/assets/ellipsis@4x.png" className="theme-adaptive-icon" alt="ellipsis" style={{height: "5px"}}/>
                     </Button>
-                    <Dropdown.Popover>
+                    <Dropdown.Popover className="w-60">
                         <Dropdown.Menu onAction={(key) => console.log(`Selected: ${key}`)}>
                             <Dropdown.Section>
-                                <Dropdown.Item id="new-file" textValue="New file">
-                                    <div className="flex h-8 items-start justify-center pt-px">
-                                        <SquarePlus className="size-4 shrink-0 text-muted" />
+                                {!useLocation().pathname.includes("/profile") && (
+                                <Dropdown.Item id="profile" textValue="Profile" onAction={() => location.href = '/profile' }>
+                                    <div className="">
+                                        <img src="/images/person_fill.png" style={{width: "14px", filter: "invert(1)"}} alt="Profile"/>
                                     </div>
-                                    <div className="flex flex-col">
-                                        <Label>New file</Label>
-                                        <Description>Create a new file</Description>
+                                    <div>
+                                        <Label>Profile</Label>
                                     </div>
                                     <Kbd className="ms-auto" slot="keyboard" variant="light">
                                         <Kbd.Abbr keyValue="command" />
-                                        <Kbd.Content>N</Kbd.Content>
+                                        <Kbd.Content>P</Kbd.Content>
                                     </Kbd>
                                 </Dropdown.Item>
-                                <Dropdown.Item id="edit-file" textValue="Edit file">
-                                    <div className="flex h-8 items-start justify-center pt-px">
-                                        <Pencil className="size-4 shrink-0 text-muted" />
+                                    )}
+                                <Dropdown.Item id="show-onboarding" textValue="Show onboarding" onAction={() => onBoardingState.open()}>
+                                    <div>
+                                        <img src="/images/Mono/Twisted%20Hero.png" style={{width: "16px"}} alt="Show onboarding"/>
                                     </div>
-                                    <div className="flex flex-col">
-                                        <Label>Edit file</Label>
-                                        <Description>Make changes</Description>
+                                    <div>
+                                        <Label>Show Onboarding (Again)</Label>
                                     </div>
                                     <Kbd className="ms-auto" slot="keyboard" variant="light">
                                         <Kbd.Abbr keyValue="command" />
                                         <Kbd.Content>E</Kbd.Content>
                                     </Kbd>
                                 </Dropdown.Item>
+
                             </Dropdown.Section>
                             <Separator />
                             <Dropdown.Section>
-                                <Dropdown.Item id="delete-file" textValue="Delete file" variant="danger">
-                                    <div className="flex h-8 items-start justify-center pt-px">
-                                        <TrashBin className="size-4 shrink-0 text-danger" />
+                                <Dropdown.Item id="sign-out" textValue="Sign Out" variant="danger" onAction={() =>  signOutAlertState.open()}>
+                                    <div>
+                                        <img src="/images/assets/door.left.hand.open@4x.png" style={{width: "14px"}} alt="Exit"/>
                                     </div>
                                     <div className="">
                                         <Label>Sign out</Label>
@@ -148,7 +150,7 @@ export function IndexHeader() {
                                     <Kbd className="ms-auto" slot="keyboard" variant="light">
                                         <Kbd.Abbr keyValue="command" />
                                         <Kbd.Abbr keyValue="shift" />
-                                        <Kbd.Content>D</Kbd.Content>
+                                        <Kbd.Content>S</Kbd.Content>
                                     </Kbd>
                                 </Dropdown.Item>
                             </Dropdown.Section>
@@ -156,8 +158,7 @@ export function IndexHeader() {
                     </Dropdown.Popover>
                 </Dropdown>
 
-                <AlertDialog>
-                    <Button className="font-semibold">Sign out</Button>
+                <AlertDialog isOpen={signOutAlertState.isOpen} >
                     <AlertDialog.Backdrop variant="blur" isKeyboardDismissDisabled={false} isDismissable={true}>
                         <AlertDialog.Container>
                             <AlertDialog.Dialog className="sm:max-w-100 rounded-4xl">
@@ -169,7 +170,7 @@ export function IndexHeader() {
                                     <p>Are you sure you want to sign out? You will not be able to track your progression across roadmaps or apply to jobs... </p>
                                 </AlertDialog.Body>
                                 <AlertDialog.Footer>
-                                    <Button slot="close" variant="tertiary">
+                                    <Button slot="close" variant="tertiary" onClick={() => signOutAlertState.close()} >
                                         Cancel
                                     </Button>
 
@@ -192,12 +193,6 @@ export function IndexHeader() {
                     </AlertDialog.Backdrop>
                 </AlertDialog>
 
-                {!useLocation().pathname.includes("/profile") && (
-
-                <button className="for-icon" onClick={() => location.href = '/profile'}>
-                    <img className="icon clickable" src="/images/person_fill.png" alt="Profile"
-                         style={{marginTop: "2px", marginLeft: "1px"}}/>
-                </button>)}
             </section>}
 
             <Toast.Provider placement="top end"/>

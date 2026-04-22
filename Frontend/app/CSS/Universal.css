@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 * {
     font-family: Inter, system-ui;
     outline: none;
@@ -152,6 +154,12 @@ input[type=password], input[type=email], input[type=text] {
     color: var(--text-color);
 }
 
+img[class=theme-adaptive-icon] {
+    @media (prefers-color-scheme: dark) {
+        filter: invert(1);
+    }
+}
+
 input[type=submit] {
     width: 100%;
     background-color: var(--primary-color);
@@ -274,6 +282,8 @@ input[type=submit] {
 
 .container-label {
     padding-left: 70px;
+    font-weight: bold;
+    font-size: var(--text-3xl);
 }
 
 .container-padded {

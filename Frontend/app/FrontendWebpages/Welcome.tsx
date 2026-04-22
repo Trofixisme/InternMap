@@ -1,13 +1,14 @@
 import "~/CSS/jobPosting.css"
-import "~/CSS/InternMapHomepage.css";
-import {IndexFooter, IndexHeader} from "./fragments/IndexHeaderAndFooter";
-import {ComboBox, Description, Header, Input, Label, ListBox, SearchField, Tabs} from "@heroui/react";
+import "~/CSS/Roadmap.css";
+import {IndexHeader} from "./fragments/IndexHeaderAndFooter";
+import {ComboBox, Input, ListBox, SearchField} from "@heroui/react";
 import {useState} from "react";
 import type {Key} from "node:readline";
 
 // @ts-ignore
 export default function Welcome({roadmaps, jobPostings}) {
 
+    // @ts-ignore
     const [selectedKey, setSelectedKey] = useState<Key | null>("Roadmaps");
 
     return (
@@ -51,24 +52,44 @@ export default function Welcome({roadmaps, jobPostings}) {
             {
                 selectedKey == "Roadmaps" ? (
                     <>
-                        <div className="button-grid">
-
-                            {/*<a /*th:href="@{/new/roadmap}" className="grid-button" /*th:if="${role == 'admin'}"></a>
-                      <a th:href="@{/{id}(id=${roadmap.id})}" class="grid-button" th:each="roadmap : ${roadmaps}" th:text="${roadmap.name}" /*style="text-decoration: none;"></a>
-                      <a th:if="${roadmaps.isEmpty and role != 'admin'}"*/ /*style="text-decoration: none; font-size: 40px; font-weight: bold; color: #3e3e3e; display: flex; justify-content: center;"></a>*/}
+                        <label className="container-label">Recents</label>
+                        <div className="container-padded rounded-full" style={{display: "grid", justifyContent: "start", gridTemplateColumns: "repeat(auto-fit, minmax(270px, 1fr))", gap: "50px", borderRadius: "80px"}}>
 
                             {roadmaps.length == 0 ?
                                 <a> No roadmaps to show </a> :
                                 <>
                                     {roadmaps.map((roadmap: Roadmap) => (
-                                        <a className="grid-button" key={roadmap.id} style={{textDecoration: "none"}}>{roadmap.name}</a>
+                                        <div className="roadmap-button" key={roadmap.id} >
+                                            <a href={`/roadmap/${roadmap.id}`}>
+                                                {roadmap.name}
+                                            </a>
+                                        </div>
                                     ))}
                                 </>
                             }
 
                         </div>
-                    <div /*th:replace="~{fragments/indexFooter}"*/></div>
-                </>
+
+                        <br/><br/><br/>
+
+                        <label className="container-label">All Roadmaps</label>
+
+                        <div className="container-padded rounded-full" style={{borderRadius: "80px"}}>
+                        {roadmaps.length == 0 ?
+                            <a> No roadmaps to show </a> :
+                            <>
+                                {roadmaps.map((roadmap: Roadmap) => (
+                                    <div className="roadmap-button" key={roadmap.id} >
+                                        <a href={`/roadmap/${roadmap.id}`}>
+                                            {roadmap.name}
+                                        </a>
+                                    </div>
+                                ))}
+                            </>
+                        }
+                        </div>
+
+                    </>
                 ) : (
                     <div id="box">
 
@@ -76,12 +97,6 @@ export default function Welcome({roadmaps, jobPostings}) {
                             <>
                                 <div id="Title">{posting.jobName}</div>
                                 <div id="info">
-                                    {/*"Here's to the crazy ones, the misfits, the rebels, the troublemakers, the round pegs in the square*/}
-                                    {/*holes... the ones who see things differently – they're not fond of rules... You can quote them,*/}
-                                    {/*disagree with them, glorify or vilify them, but the only thing you can't do is ignore them because*/}
-                                    {/*they change things... they push the human race forward, and while some may see them as the crazy ones,*/}
-                                    {/*we see genius, because the ones who are crazy enough to think that they can change the world, are the*/}
-                                    {/*ones who do."*/}
                                     {posting.jobDescription}
                                 </div>
                                 <hr id="separator"/>
@@ -96,28 +111,9 @@ export default function Welcome({roadmaps, jobPostings}) {
                                         <li>Requirements: <span>{posting.jobRequirements}</span></li>
                                         {/*<li>Job ID: <span>UUID</span></li>*/}
                                     </ul>
-                                    <div id="bottom" /*style="justify-items: right; display: flex; justify-content: flex-end"*/>
-                                        <a /*th:href="@{/applications/new(jobId=${job.id})}" style="text-decoration: none"
-                                       th:if="${isRecruiter == null && isAdmin == null}"*/>
-                                        <button id="apply-button" onClick={
-                                            () => {
-                                                window.location.href = `/apply?jobId=${posting.id}`
-
-                                            }
-                                        }>Apply</button>
-                                    </a>
-                                  </div>
                                 </div>
-                              </>
-                        ))}
-
-                      </div>
-                  </Tabs.Panel>
-              </Tabs>
-            </div>
-          </div>
-
-          <IndexFooter/>
+                            </>))}
+                    </div>)}
         </>
   );
 }

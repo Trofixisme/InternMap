@@ -13,22 +13,6 @@ import {
 import {notification} from "~/FrontendWebpages/fragments/Notification";
 import {useLocation} from "react-router";
 
-function TrashBin(props: { className: string }) {
-    return null;
-}
-
-function Pencil(props: { className: string }) {
-    return null;
-}
-
-function SquarePlus(props: { className: string }) {
-    return null;
-}
-
-function EllipsisVertical(props: { className: string }) {
-    return null;
-}
-
 export function IndexHeader() {
 
     const onBoardingState = useOverlayState({

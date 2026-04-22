@@ -288,7 +288,7 @@ input[type=submit] {
 
 .container-padded {
     display: flex;
-    margin: 10px 50px;
+    margin: 0 50px;
     padding: 24px;
     height: fit-content;
     min-height: fit-content;
@@ -333,6 +333,22 @@ input[type=submit] {
     border-radius: 12px;
     border-color: var(--border-color);
     padding: 10px;
+}
+
+.label-placeholder {
+
+    display: flex;
+    align-self: center;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+    justify-self: center;
+    align-content: center;
+
+    font-size: 32px;
+    font-weight: bold;
+    @apply text-gray-400
+
 }
 
 .label-large {

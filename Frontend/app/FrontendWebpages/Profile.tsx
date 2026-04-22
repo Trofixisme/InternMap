@@ -5,7 +5,6 @@ export default function Profile({userDetails}: { userDetails: User}) {
 
     let applicationList: Application[] = (userDetails as Student).applications ? (userDetails as Student).applications : [];
 
-
     if (applicationList != null) {
         applicationList.sort((e, f) => {
             if (e.applicationDate < f.applicationDate) {
@@ -241,7 +240,7 @@ export default function Profile({userDetails}: { userDetails: User}) {
 
                     {userDetails.role == "ADMIN" && (
                         <div className="flex items-center justify-center" style={{height: "52vh"}}>
-                        <h1 className="align-middle justify-center text-gray-400">We don't have anything else to show</h1>
+                        <h1 className="label-placeholder">We don't have anything else to show</h1>
                         </div>
                     )}
 

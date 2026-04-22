@@ -2,6 +2,8 @@ package com.group.InternMap.Admin;
 
 import com.group.InternMap.DTO.DashboardResponse;
 import com.group.InternMap.DTO.RoadmapModuleSkill;
+import com.group.InternMap.Job.JobPosting;
+import com.group.InternMap.Job.JobPostingService;
 import com.group.InternMap.Roadmap.Roadmap;
 import com.group.InternMap.Roadmap.RoadmapModuleRepo;
 import com.group.InternMap.Roadmap.RoadmapRepo;
@@ -16,9 +18,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -31,7 +35,7 @@ public class RestAdminController {
     RoadmapModuleRepo roadmapModuleRepo;
     UserService userService;
     RoadmapService roadmapService;
-
+    JobPostingService jobPostingService;
     Logger logger = LoggerFactory.getLogger(AdminController.class);
 
     @Autowired
@@ -66,4 +70,24 @@ public class RestAdminController {
         userService.deleteByEmail(email);
     }
 
-}
+    @PostMapping("/dashboard/delete/roadmap")
+    public void deleteUser(@RequestParam long id) {
+        roadmapRepo.deleteById(id);
+    }
+
+
+
+    @GetMapping("/roadmap/create")
+    public List<Roadmap> getRoadmaps() {
+        return roadmapService.findAll();
+    }
+
+    @PostMapping("/roadmap/create/submit")
+    public ResponseEntity<String> createRoadmap(@RequestBody Roadmap roadmap) {
+        roadmapRepo.save(roadmap);
+        System.out.println(roadmap.getName());
+        return ResponseEntity.ok("It works");
+    }
+
+    }
+

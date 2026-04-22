@@ -46,7 +46,12 @@ export default function Welcome({roadmaps, jobPostings}) {
                         <a> No roadmaps to show </a> :
                         <>
                           {roadmaps.map((roadmap: Roadmap) => (
-                              <a className="grid-button" key={roadmap.id} style={{textDecoration: "none"}}>{roadmap.name}</a>
+                              <a onClick={
+                                  () => {
+                                      window.location.href = `/roadmaps?roadmapID=${roadmap.id}`
+
+                                  }
+                              } className="grid-button" key={roadmap.id} style={{textDecoration: "none"}}>{roadmap.name}</a>
                           ))}
                         </>
                     }

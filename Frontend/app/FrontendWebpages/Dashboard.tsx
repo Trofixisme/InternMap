@@ -14,6 +14,7 @@ import {AlertDialog} from "@heroui/react";
 export default function Dashboard({users , roadmaps}: {users : User[], roadmaps : Roadmap[]}) {
     const fetcher = useFetcher()
     const [selectedKeys, setSelectedKeys] = useState<"all" | Set<Key>>(new Set());
+    const [selectedRoadmapKeys, setSelectedRoadmapKeys] = useState<"all" | Set<Key>>(new Set());
 
     const [showAdminError, setShowAdminError] = useState(false);
     return (
@@ -156,13 +157,13 @@ export default function Dashboard({users , roadmaps}: {users : User[], roadmaps 
 
                                                         const selectedUsers =
                                                             selectedKeys === "all" ? users : users.filter(u => (selectedKeys as Set<string>).has(u.email));
-                                                               if(selectedUsers.some (u => u.role === "ADMIN")) {
-                                                                   setShowAdminError(true);
-                                                                   setTimeout(() => {
-                                                                       setShowAdminError(false);
-                                                                   }, 3000);
-                                                                   return;
-                                                               }
+                                                        if(selectedUsers.some (u => u.role === "ADMIN")) {
+                                                            setShowAdminError(true);
+                                                            setTimeout(() => {
+                                                                setShowAdminError(false);
+                                                            }, 3000);
+                                                            return;
+                                                        }
 
                                                         const selectedEmails = selectedKeys === "all"
                                                             ? users.map(u => <u className="email"></u>)
@@ -193,9 +194,8 @@ export default function Dashboard({users , roadmaps}: {users : User[], roadmaps 
 
                             <div >
 
-
-                                {users.length == 0 ?
-                                    <a> No users to show </a> :
+                                {roadmaps.length == 0 ?
+                                    <a> No roadmaps to show </a> :
                                     <div>
 
                                         <div  className="flex flex-col gap-3">
@@ -205,9 +205,9 @@ export default function Dashboard({users , roadmaps}: {users : User[], roadmaps 
 
                                                         aria-label="Table with selection"
                                                         className="min-w-[600px]"
-                                                        selectedKeys={selectedKeys}
+                                                        selectedKeys={selectedRoadmapKeys}
                                                         selectionMode="multiple"
-                                                        onSelectionChange={setSelectedKeys}>
+                                                        onSelectionChange={setSelectedRoadmapKeys}>
                                                         <Table.Header>
                                                             <Table.Column className="pr-0">
                                                                 <Checkbox aria-label="Select all" slot="selection">
@@ -216,17 +216,15 @@ export default function Dashboard({users , roadmaps}: {users : User[], roadmaps 
                                                                     </Checkbox.Control>
                                                                 </Checkbox>
                                                             </Table.Column>
-                                                            <Table.Column isRowHeader>FName</Table.Column>
+                                                            <Table.Column isRowHeader>Name</Table.Column>
                                                             <Table.Column isRowHeader>ID</Table.Column>
-
-
                                                         </Table.Header>
                                                         <Table.Body>
-                                                            {roadmaps.map((roadmaps) => (
-                                                                <Table.Row key={roadmaps.name} id={roadmaps.id}>
+                                                            {roadmaps.map((roadmap) => (
+                                                                <Table.Row key={roadmap.id} id={String(roadmap.id)}>
                                                                     <Table.Cell className="pr-0">
                                                                         <Checkbox
-                                                                            aria-label={`Select ${roadmaps.name}`}
+                                                                            aria-label={`Select ${roadmap.name}`}
                                                                             slot="selection"
                                                                             variant="secondary"
                                                                         >
@@ -235,9 +233,8 @@ export default function Dashboard({users , roadmaps}: {users : User[], roadmaps 
                                                                             </Checkbox.Control>
                                                                         </Checkbox>
                                                                     </Table.Cell>
-                                                                    <Table.Cell>{roadmaps.name}</Table.Cell>
-                                                                    <Table.Cell>{roadmaps.id}</Table.Cell>
-
+                                                                    <Table.Cell>{roadmap.name}</Table.Cell>
+                                                                    <Table.Cell>{roadmap.id}</Table.Cell>
                                                                 </Table.Row>
                                                             ))}
                                                         </Table.Body>
@@ -249,16 +246,12 @@ export default function Dashboard({users , roadmaps}: {users : User[], roadmaps 
                                     </div>
                                 }
 
-
-
-
                             </div>
                             <p className="text-sm text-muted">
-                                Users Selected:{" "}
+                                Roadmaps Selected:{" "}
                                 <span className="font-medium">
-                                                     {selectedKeys === "all"  ? "All"  : selectedKeys.size > 0  ? selectedKeys.size : "None"}
-                                                </span>
-
+                                    {selectedRoadmapKeys === "all" ? "All" : selectedRoadmapKeys.size > 0 ? selectedRoadmapKeys.size : "None"}
+                                </span>
                             </p>
                             <div>
 
@@ -270,11 +263,11 @@ export default function Dashboard({users , roadmaps}: {users : User[], roadmaps 
                                                 <AlertDialog.CloseTrigger />
                                                 <AlertDialog.Header>
                                                     <AlertDialog.Icon status="danger" />
-                                                    <AlertDialog.Heading>Delete project permanently?</AlertDialog.Heading>
+                                                    <AlertDialog.Heading>Delete roadmap permanently?</AlertDialog.Heading>
                                                 </AlertDialog.Header>
                                                 <AlertDialog.Body>
                                                     <p>
-                                                        This will permanently delete <strong>This user</strong> and all of his
+                                                        This will permanently delete <strong>This roadmap</strong> and all of its
                                                         data. This action cannot be undone.
                                                     </p>
                                                 </AlertDialog.Body>
@@ -283,27 +276,16 @@ export default function Dashboard({users , roadmaps}: {users : User[], roadmaps 
                                                         Cancel
                                                     </Button>
 
-                                                    <Button slot="close" variant="danger"   onPress={() => {
-
-                                                        const selectedUsers =
-                                                            selectedKeys === "all" ? users : users.filter(u => (selectedKeys as Set<string>).has(u.email));
-                                                        if(selectedUsers.some (u => u.role === "ADMIN")) {
-                                                            setShowAdminError(true);
-                                                            setTimeout(() => {
-                                                                setShowAdminError(false);
-                                                            }, 3000);
-                                                            return;
-                                                        }
-
-                                                        const selectedEmails = selectedKeys === "all"
-                                                            ? users.map(u => <u className="email"></u>)
-                                                            : Array.from(selectedKeys as Set<string>);
+                                                    <Button slot="close" variant="danger" onPress={() => {
+                                                        const selectedRoadmaps = selectedRoadmapKeys === "all"
+                                                            ? roadmaps.map(r => String(r.id))
+                                                            : Array.from(selectedRoadmapKeys as Set<string>);
 
                                                         const formData = new FormData();
-                                                        selectedEmails.forEach(email => formData.append("emails", email));
+                                                        selectedRoadmaps.forEach(id => formData.append("roadmaps", id));
                                                         fetcher.submit(formData, { method: "POST" });
 
-                                                        setSelectedKeys(new Set())
+                                                        setSelectedRoadmapKeys(new Set());
                                                     }}>
                                                         Smite!
                                                     </Button>

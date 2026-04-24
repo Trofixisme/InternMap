@@ -42,7 +42,7 @@ export default function Login() {
 
     return (
         <div className="centered">
-            <a href="/frontend/public" style={{ borderRadius: "200px" }}>
+            <a href="/" style={{ borderRadius: "200px" }}>
                 <img
                     src="/images/navi/Navi%20Unique.png"
                     alt="Logo"

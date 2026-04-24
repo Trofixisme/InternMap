@@ -26,6 +26,8 @@ public class JobPosting implements Serializable {
 
     @Column(nullable = false)
     private String jobName;
+    @Enumerated(EnumType.STRING)
+    private PostingType type;
 
     @ManyToOne
     @JsonIgnore
@@ -132,5 +134,13 @@ public class JobPosting implements Serializable {
     @JsonIgnore
     public List<Application> getApplications() {
         return applications;
+    }
+
+    public PostingType getType() {
+        return type;
+    }
+
+    public void setType(PostingType type) {
+        this.type = type;
     }
 }

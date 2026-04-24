@@ -77,7 +77,7 @@ public class AdminController {
 //            return "redirect:/roadmaps/" + roadmap.getId();
             return "redirect:/";
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            e.printStackTrace();
             return "redirect:/admin/roadmaps/new?error=true";
         }
     }

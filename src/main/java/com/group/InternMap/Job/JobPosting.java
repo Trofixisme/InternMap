@@ -28,7 +28,6 @@ public class JobPosting implements Serializable {
     private String jobName;
 
     @ManyToOne
-    @JsonIgnore
     private Recruiter recruiter;
 
     @ManyToOne

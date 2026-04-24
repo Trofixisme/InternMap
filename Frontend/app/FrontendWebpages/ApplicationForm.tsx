@@ -19,6 +19,7 @@ import {
 export default function ApplicationForm({ jobPostings}) {
     const jobId = new URL(window.location.href).searchParams.get("jobId");
 
+    // @ts-ignore
     async function handleSubmit(e) {
         e.preventDefault();
 

@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.List;
@@ -23,18 +22,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/jobposting")
 public class jobPostingController {
+
     CompanyService companyService;
     UserService userService;
     JobPostingService jobPostingService;
     ApplicationRepo applicationRepo;
+
     Logger logger = LoggerFactory.getLogger(RecruiterController.class);
-    jobPostingController(
-            CompanyService companyService,
-    UserService userService,
-    JobPostingService jobPostingService){
-        this.companyService=companyService;
-        this.userService=userService;
-        this.jobPostingService=jobPostingService;
+
+    jobPostingController(CompanyService companyService, UserService userService, JobPostingService jobPostingService) {
+        this.companyService = companyService;
+        this.userService = userService;
+        this.jobPostingService = jobPostingService;
     }
 
     @PostMapping("/new")
@@ -79,8 +78,6 @@ public class jobPostingController {
         return ResponseEntity.ok("everything is fine");
     }
 
-
-
     @GetMapping("/{jobId}/applications")
     public List<Application> viewApplications(@PathVariable long jobId, Authentication authentication) {
 
@@ -105,6 +102,7 @@ public class jobPostingController {
             throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "User must be of role RECRUITER to proceed");
         }
     }
+
     @GetMapping("/jobpostings")
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public List<JobPosting> getRecruiterJobPostings(Principal principal, Authentication authentication) {

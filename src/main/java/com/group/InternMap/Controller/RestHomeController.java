@@ -41,6 +41,7 @@ public class RestHomeController {
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public Users showProfile(Authentication authentication) {
         Users user;
+
         if (authentication != null) {
             user = userService.searchByEmail(authentication.getName()).get();
             user.setPassword(null);

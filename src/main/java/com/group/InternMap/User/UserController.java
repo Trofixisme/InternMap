@@ -62,6 +62,7 @@ public class UserController {
         }
 
         ArrayList<JobPosting> jobPosting = (ArrayList<JobPosting>) jobPostingService.getAllJobPostings();
+        jobPosting.forEach(job -> job.getRecruiter().setPassword(""));
         model.addAttribute("jobPostings", jobPosting);
 
         return "JobPosting"; // Thymeleaf template

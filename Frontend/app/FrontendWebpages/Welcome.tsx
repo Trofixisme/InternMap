@@ -1,7 +1,7 @@
 import "~/CSS/jobPosting.css"
 import "~/CSS/Roadmap.css";
 import {IndexHeader} from "./fragments/IndexHeaderAndFooter";
-import {Button, ComboBox, Disclosure, Input, ListBox, SearchField} from "@heroui/react";
+import {Button, ComboBox, Disclosure, Input, ListBox, SearchField, Separator} from "@heroui/react";
 import React, {useState} from "react";
 import type {Key} from "node:readline";
 
@@ -12,7 +12,7 @@ let constRoadmaps: Roadmap[] = [];
 export default function Welcome({roadmaps, jobPostings}: {roadmaps: Roadmap[], jobPostings: JobPosting[]}) {
 
     constRoadmaps = roadmaps.slice(0, roadmaps.length);
-    constJobPostings = jobPostings.slice(0, jobPostings.length);
+    // constJobPostings = jobPostings.slice(0, jobPostings.length);
 
     roadmaps = constRoadmaps;
     jobPostings = constJobPostings;
@@ -73,44 +73,45 @@ export default function Welcome({roadmaps, jobPostings}: {roadmaps: Roadmap[], j
                 <br/>
             </div>
 
-            {constRoadmaps.length != 0 && (<div style={{display: "flex", flexDirection: "row", gap: "10px", alignItems: "center"}}>
-                <label className="container-label">Recents</label>
-                <Button style={{width: "32px", height: "32px", background: "var(--secondary-background-color)"}} className="dark" onClick={() => {
-                    setRecentsExpanded(!isRecentsExpanded)
-                    document.getElementById("recents-chevron")?.classList.toggle("rotate-270")
-
-                }} isIconOnly>
-                    <img id={"recents-chevron"} src={"/images/assets/chevron@4x.png"} style={{width: "16px", filter: "invert(0.3)"}} alt="pencil"/>
-                </Button>
-            </div>)}
 
             {selectedKey == "Roadmaps" ? (
                     <>
-                            {roadmaps.length == 0 ?
-                                <div className="flex items-center justify-center" style={{height: "47vh"}}>
-                                <a className="label-placeholder"> No roadmaps to show </a>
-                                </div> :
-                                <>
+                        {constRoadmaps.length != 0 && (<div style={{display: "flex", flexDirection: "row", gap: "10px", alignItems: "center"}}>
+                            <label className="container-label">Recents</label>
+                            <Button style={{width: "32px", height: "32px", background: "var(--secondary-background-color)"}} className="dark" onClick={() => {
+                                setRecentsExpanded(!isRecentsExpanded)
+                                document.getElementById("recents-chevron")?.classList.toggle("rotate-270")
 
-                                    <Disclosure isExpanded={isRecentsExpanded}>
-                                        <Disclosure.Content className="overflow-visible">
-                                            <Disclosure.Body className="overflow-visible">
+                            }} isIconOnly>
+                                <img id={"recents-chevron"} src={"/images/assets/chevron@4x.png"} style={{width: "16px", filter: "invert(0.3)"}} alt="pencil"/>
+                            </Button>
+                        </div>)}
 
-                                            <div className="container-padded" style={{display: "grid", justifyContent: "start", gridTemplateColumns: "repeat(auto-fit, minmax(270px, 1fr))", gap: "50px", borderRadius: "50px"}}>
-                                    {recentRoadmaps.map((roadmap: Roadmap) => (
-                                        <div className="roadmap-button min-w-72" key={roadmap.id} >
-                                            <a href={`/roadmap/${roadmap.id}`}>
-                                                {roadmap.name}
-                                            </a>
-                                        </div>
-                                    ))}
+                        {roadmaps.length == 0 ?
+                            <div className="flex items-center justify-center" style={{height: "47vh"}}>
+                            <a className="label-placeholder"> No roadmaps to show </a>
+                            </div> :
+                            <>
+
+                                <Disclosure isExpanded={isRecentsExpanded}>
+                                    <Disclosure.Content className="overflow-visible">
+                                        <Disclosure.Body className="overflow-visible">
+
+                                        <div className="container-padded" style={{display: "grid", justifyContent: "start", gridTemplateColumns: "repeat(auto-fit, minmax(270px, 1fr))", gap: "50px", borderRadius: "50px"}}>
+                                {recentRoadmaps.map((roadmap: Roadmap) => (
+                                    <div className="roadmap-button min-w-72" key={roadmap.id} >
+                                        <a href={`/roadmaps/${roadmap.id}`}>
+                                            {roadmap.name}
+                                        </a>
                                     </div>
+                                ))}
+                                </div>
 
-                                            </Disclosure.Body>
-                                        </Disclosure.Content>
-                                    </Disclosure>
-                                </>
-                            }
+                                        </Disclosure.Body>
+                                    </Disclosure.Content>
+                                </Disclosure>
+                            </>
+                        }
 
                         <br/><br/><br/>
 
@@ -150,29 +151,32 @@ export default function Welcome({roadmaps, jobPostings}: {roadmaps: Roadmap[], j
                         <br/><br/><br/>
                     </>
                 ) : (
-                    <div id="box">
+
+                    <div style={{display: "grid", justifyContent: "start", gridTemplateColumns: "repeat(auto-fit, minmax(270px, 1fr))", gap: "50px", borderRadius: "50px"}}>
 
                         {jobPostings.map((posting: JobPosting) => (
-                            <>
-                                <div id="Title">{posting.jobName}</div>
-                                <div id="info">
+                            <div className="container">
+                                <div>{posting.jobName}</div>
+                                <h2 style={{lineClamp: 1, display: "-webkit-box", WebkitLineClamp: 1, WebkitBoxOrient: "vertical", overflow: "hidden"}}>
                                     {posting.jobDescription}
-                                </div>
-                                <hr id="separator"/>
+                                </h2>
+                                <Separator className="border-1" />
                                 <div id="details" /*style="font-weight: bold; font-size: 20px;"*/>Details</div>
                                 <div className="unordered-list" id="details-specifics">
                                     <ul>
-                                        <li>Email: <span>{posting.recruiterEmail}</span></li>
+                                        <li>Email: <span>{posting.recruiter.email}</span></li>
                                         <li>Company: <span>{posting.company.name}</span></li>
                                         {/*// <!--                    <li>Posting Type: <span th:text="${job.jobPostingType}">Full Time</span></li>-->*/}
                                         {/*@ts-ignore*/}
-                                        <li>Date Posted: <span>{posting.postingDate}</span></li>
+                                        <li>Posted <span>{((Date.now() - Date.parse(posting.datePosted).valueOf()) / 1000 / 60 / 60 / 24).toFixed(0)}</span> days ago</li>
                                         <li>Requirements: <span>{posting.jobRequirements}</span></li>
                                         {/*<li>Job ID: <span>UUID</span></li>*/}
                                     </ul>
                                 </div>
-                            </>))}
-                    </div>)}
+                            </div>
+                        ))}
+                    </div>
+            )}
         </>
   );
 }

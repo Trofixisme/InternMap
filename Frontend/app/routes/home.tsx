@@ -14,7 +14,7 @@ export async function clientLoader() {
   const [roadmapsRes, jobPostingsRes] = await Promise.all([
     fetch("http://localhost:8050/REST"),
     fetch("http://localhost:8050/REST/jobpostings"),
-  ]);
+  ])
 
   return {
     roadmaps: await roadmapsRes.json(),

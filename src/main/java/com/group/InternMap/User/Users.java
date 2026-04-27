@@ -30,7 +30,7 @@ public class Users implements Serializable {
     private UserRole role;
 
     @Column(nullable = false)
-    private final Date created_at  = Date.from(Instant.now());
+    private final Date createdAt  = Date.from(Instant.now());
 
     public Users() {}
 
@@ -86,8 +86,8 @@ public class Users implements Serializable {
         }
     }
 
-    public Date getCreated_at() {
-        return created_at;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
     public Long getId() {

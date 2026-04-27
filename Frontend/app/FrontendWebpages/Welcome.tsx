@@ -156,7 +156,7 @@ export default function Welcome({roadmaps, jobPostings}: {roadmaps: Roadmap[], j
 
                         {jobPostings.map((posting: JobPosting) => (
                             <div className="container">
-                                <div>{posting.jobName}</div>
+                                <div>{posting.jobname}</div>
                                 <h2 style={{lineClamp: 1, display: "-webkit-box", WebkitLineClamp: 1, WebkitBoxOrient: "vertical", overflow: "hidden"}}>
                                     {posting.jobDescription}
                                 </h2>

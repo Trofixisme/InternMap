@@ -2,10 +2,6 @@ import {Tabs} from "@heroui/react";
 
 export default function Signup() {
 
-    if (localStorage.getItem("token") != null) {
-
-    }
-
     return (
         <div className="centered">
             <a href={"/"} style={{borderRadius: "200px"}} inert>

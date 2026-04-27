@@ -1,7 +1,7 @@
 import Dashboard from "~/FrontendWebpages/Dashboard";
 import type { Route } from "../+types/root";
 import {useLoaderData} from "react-router";
-//  step one delete whatever the first line was
+// step one delete whatever the first line was
 // step two create the webpage and get the clientLoader to fetch the data from the controller and pass it to the webpage
 // and then create the dashboard function that will return the webpage with the data from the clientLoader and then create the clientAction function that will handle the delete action and then create the meta function that will set the title and description of the page
 

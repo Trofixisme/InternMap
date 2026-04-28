@@ -73,6 +73,4 @@ public class Recruiter extends Users implements Serializable {
         this.jobPosting = jobPosting;
     }
 
-
-
 }

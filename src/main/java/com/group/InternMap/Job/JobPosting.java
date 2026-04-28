@@ -1,6 +1,8 @@
 package com.group.InternMap.Job;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.group.InternMap.Application.Application;
 import com.group.InternMap.Company.Company;
 import com.group.InternMap.Recruiter.Recruiter;
@@ -26,10 +28,12 @@ public class JobPosting implements Serializable {
 
     @Column(nullable = false)
     private String jobName;
+
     @Enumerated(EnumType.STRING)
     private PostingType type;
 
     @ManyToOne
+    @JsonIgnore
     private Recruiter recruiter;
 
     @ManyToOne
@@ -130,7 +134,7 @@ public class JobPosting implements Serializable {
         this.applications.add(application);
     }
 
-    @JsonIgnore
+    @JsonBackReference
     public List<Application> getApplications() {
         return applications;
     }

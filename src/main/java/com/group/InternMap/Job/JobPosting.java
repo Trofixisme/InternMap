@@ -33,14 +33,14 @@ public class JobPosting implements Serializable {
     private PostingType type;
 
     @ManyToOne
-    @JsonIgnore
+//    @JsonIgnore
     private Recruiter recruiter;
 
     @ManyToOne
     private Company company;
 
     @OneToMany(mappedBy = "jobPosting")
-    @JsonIgnore
+//    @JsonIgnore
     private List<Application> applications = new ArrayList<>();
 
     public void setJobDescription(String jobDescription) {

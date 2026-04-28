@@ -3,7 +3,7 @@ class JobPosting {
     id: bigint;
     jobDescription: String;
     jobRequirements: String;
-    jobname: String;
+    jobName: String;
 
     company: Company;
 
@@ -11,12 +11,12 @@ class JobPosting {
     datePosted: Date;
     recruiter: Recruiter;
 
-    constructor(id: bigint, jobDescription: String, jobRequirements: String, jobname: String, company: Company,
+    constructor(id: bigint, jobDescription: String, jobRequirements: String, jobName: String, company: Company,
                 jobLocation: String, postingDate: Date, recruiter: Recruiter) {
         this.id = id;
         this.jobDescription = jobDescription;
         this.jobRequirements = jobRequirements;
-        this.jobname = jobname;
+        this.jobName = jobName;
         this.company = company;
         this.jobLocation = jobLocation;
         this.datePosted = postingDate;

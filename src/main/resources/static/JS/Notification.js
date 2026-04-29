@@ -1,15 +1,13 @@
-
 let stompClient = null;
 
 function connect() {
-    let socket = new SockJS('/ws'); // must match your config
-    stompClient = Stomp.over(socket);
+    stompClient = Stomp.client('ws://localhost:8050/websocket/ws');
 
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
 
         // VERY IMPORTANT
-        stompClient.subscribe('/user/queue/notifications', function (notification) {
+        stompClient.subscribe('http://localhost:8050/user/queue/notifications', function (notification) {
             showNotification(notification.body);
         });
     });

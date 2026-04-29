@@ -1,13 +1,17 @@
 package com.group.InternMap.User;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.time.Instant;
+import java.util.Date;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Users implements Serializable {
 
     @Column(nullable = false)
+//    @JsonIgnore
     private String password;
 
     @Column(nullable = false)
@@ -24,6 +28,9 @@ public class Users implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    @Column(nullable = false)
+    private final Date createdAt  = Date.from(Instant.now());
 
     public Users() {}
 
@@ -77,6 +84,10 @@ public class Users implements Serializable {
         if (email.contains("@") && email.contains(".")) {
             this.email = email;
         }
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
     public Long getId() {

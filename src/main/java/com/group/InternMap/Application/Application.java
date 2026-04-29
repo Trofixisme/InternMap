@@ -1,5 +1,8 @@
 package com.group.InternMap.Application;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.group.InternMap.Job.JobPosting;
 import com.group.InternMap.Student.Student;
 import jakarta.persistence.*;
@@ -30,6 +33,7 @@ public class Application implements Serializable, Comparable<Application> {
     private Date applicationDate = Date.from(Instant.now());
 
     @ManyToOne //@JoinColumn(name = "student_id", referencedColumnName = "id")
+    @JsonIgnore
     Student student;
 
     @ManyToOne

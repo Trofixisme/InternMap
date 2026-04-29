@@ -2,8 +2,8 @@ package com.group.InternMap.Student;
 
 import com.group.InternMap.Application.Application;
 import com.group.InternMap.Application.ApplicationRepo;
-import com.group.InternMap.Application.CV;
-import com.group.InternMap.Application.CVRepo;
+import com.group.InternMap.cv.CV;
+import com.group.InternMap.cv.CVRepo;
 import com.group.InternMap.DTO.ApplicationAndCVDTO;
 import com.group.InternMap.Job.JobPosting;
 import com.group.InternMap.Job.JobPostingService;
@@ -139,7 +139,7 @@ public class StudentController {
             applicationRepo.save(application);
             redirectAttributes.addFlashAttribute("message", "Application saved successfully");
             String recruiterEmail = jobPosting.getRecruiterEmail();
-            notificationService.sendToUser(recruiterEmail, "An application is submitted");
+            notificationService.sendToUser(recruiterEmail, principal.getName() + " has applied to " + applicationandCVDTO.getApplication().getJobPosting().getJobName());
             System.out.println("Notification triggered!");
             return "redirect:/JobPostings";
         } catch (Exception e) {

@@ -1,5 +1,8 @@
 package com.group.InternMap.Recruiter;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.group.InternMap.Job.JobPosting;
 import com.group.InternMap.Company.Company;
 import com.group.InternMap.User.UserRole;
@@ -24,6 +27,13 @@ public class Recruiter extends Users implements Serializable {
     //@JoinTable(name = "recruiters_companies", joinColumns = @JoinColumn(name = "recruiter_id"), inverseJoinColumns = @JoinColumn(name = "company_id"))
     @ManyToMany
     private List<Company> companies = new ArrayList<>();
+
+    @OneToMany(mappedBy = "recruiter")
+    private Collection<JobPosting> jobPosting;
+
+    public Collection<JobPosting> getJobPosting() {
+        return jobPosting;
+    }
 
     public Recruiter() {}
 
@@ -59,17 +69,8 @@ public class Recruiter extends Users implements Serializable {
         this.companies = companies;
     }
 
-    @OneToMany(mappedBy = "recruiter")
-    private Collection<JobPosting> jobPosting;
-
-    public Collection<JobPosting> getJobPosting() {
-        return jobPosting;
-    }
-
     public void setJobPosting(Collection<JobPosting> jobPosting) {
         this.jobPosting = jobPosting;
     }
-
-
 
 }

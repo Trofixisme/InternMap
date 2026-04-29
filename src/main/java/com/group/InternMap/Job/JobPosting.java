@@ -1,5 +1,8 @@
 package com.group.InternMap.Job;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.group.InternMap.Application.Application;
 import com.group.InternMap.Company.Company;
 import com.group.InternMap.Recruiter.Recruiter;
@@ -26,13 +29,18 @@ public class JobPosting implements Serializable {
     @Column(nullable = false)
     private String jobName;
 
+    @Enumerated(EnumType.STRING)
+    private PostingType type;
+
     @ManyToOne
+    @JsonIgnore
     private Recruiter recruiter;
 
     @ManyToOne
     private Company company;
 
     @OneToMany(mappedBy = "jobPosting")
+    @JsonIgnore
     private List<Application> applications = new ArrayList<>();
 
     public void setJobDescription(String jobDescription) {
@@ -92,14 +100,8 @@ public class JobPosting implements Serializable {
         }
     }
 
-
-
     public void setRecruiter(Recruiter recruiter) {
         this.recruiter = recruiter;
-    }
-
-    public List<Application> getApplication() {
-        return applications;
     }
 
     public void deleteApplication(Application application) {
@@ -125,13 +127,23 @@ public class JobPosting implements Serializable {
     public void setApplications(List<Application> applications) {
         this.applications = applications;
     }
+
     public void addApplication(Application application) {
         // set the owning side so the application will have the jobPosting foreign key
         application.setJobPosting(this);
         this.applications.add(application);
     }
 
+    @JsonBackReference
     public List<Application> getApplications() {
         return applications;
+    }
+
+    public PostingType getType() {
+        return type;
+    }
+
+    public void setType(PostingType type) {
+        this.type = type;
     }
 }

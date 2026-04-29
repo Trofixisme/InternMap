@@ -15,7 +15,7 @@ public class JobPostingService {
     }
 
     public List<JobPosting> getAllJobPostings()  {
-        return  jobRepo.findAll();
+        return jobRepo.findAll();
     }
 
     public List<JobPosting> getJobPostingsByRecruiterId(long recruiterId)  {

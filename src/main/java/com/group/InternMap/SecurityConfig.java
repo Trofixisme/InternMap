@@ -1,5 +1,7 @@
 package com.group.InternMap;
 
+import com.group.InternMap.User.JwtAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -7,31 +9,50 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.swing.*;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @Autowired
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, RememberMeServices rememberMeServices) throws Exception {
 
         http
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+           .csrf(AbstractHttpConfigurer::disable)
            .authorizeHttpRequests(auth -> auth
+                   .requestMatchers("/ws/**", "/ws").permitAll()
 //                   .requestMatchers("/student/**").hasRole("STUDENT")
 //                   .requestMatchers("/recruiter/**").hasRole("RECRUITER")
 //                   .requestMatchers("/recruiter/**").hasRole("ADMIN")
                    .anyRequest().permitAll()
            )
+//            .sessionManagement(session ->
+//                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
            .formLogin(form -> form
-                   .loginPage("/login")              // custom login page
+                   .loginPage("/login") // custom login page
                    .defaultSuccessUrl("/", true)
                    .passwordParameter("password")
                    .usernameParameter("email")
@@ -42,7 +63,9 @@ public class SecurityConfig {
                    .logoutSuccessUrl("/")
                    .permitAll()
            ).rememberMe(rememberMe -> rememberMe
-                        .rememberMeServices(rememberMeServices));
+                        .rememberMeServices(rememberMeServices))
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
 
         return http.build();
     }
@@ -70,5 +93,22 @@ public class SecurityConfig {
         rememberMe.setCookieName("CreditentialsKey");
         rememberMe.setUseSecureCookie(true);
         return rememberMe;
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+
+        config.setAllowedOriginPatterns(List.of("http://localhost:5173", "http://localhost:8050", "*"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setExposedHeaders(List.of("Authorization"));
+
+        config.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+
+        return source;
     }
 }

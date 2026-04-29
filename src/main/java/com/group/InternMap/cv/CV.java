@@ -1,4 +1,4 @@
-package com.group.InternMap.Application;
+package com.group.InternMap.cv;
 
 import com.group.InternMap.Student.Student;
 import jakarta.persistence.Entity;

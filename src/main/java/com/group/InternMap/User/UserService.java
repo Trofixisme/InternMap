@@ -1,17 +1,14 @@
 package com.group.InternMap.User;
 
 import com.group.InternMap.FilePaths;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +22,8 @@ public class UserService implements FilePaths {
     private PasswordEncoder passwordEncoder;
     private UserRepo userRepo;
 
-    public UserService() {}
+    public UserService() {
+    }
 
     @Autowired
     public UserService(UserRepo userRepo, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
@@ -34,26 +32,34 @@ public class UserService implements FilePaths {
         this.authenticationManager = authenticationManager;
     }
 
-    public void register(Users u) throws Exception {
-        List<Users> users = userRepo.findAll(); // findAll() is built in JPARepository
-        if (!users.contains(u)) {
-            if(isEmailValid(u.getEmail())) {
-                String plainPassword = u.getPassword();
-                u.setPassword(passwordEncoder.encode(u.getPassword()));
-                userRepo.save(u);
-            }
-        } else {
-            throw new Exception("A user with these credentials already exists.");
-        }
-    }
-
-    public void register(Users u, HttpServletRequest request) throws Exception {
+    public void register(Users u, HttpServletRequest request) throws ServletException {
         String plainPassword = u.getPassword();
         register(u);
+        request.logout();
         request.login(u.getEmail(), plainPassword);
     }
 
+    public void register(Users u) {
+        try {
+            if (isEmailValid(u.getEmail())) {
+                u.setPassword(passwordEncoder.encode(u.getPassword()));
+                userRepo.save(u);
+            }
+        } catch (DataIntegrityViolationException e) {
+            if (!e.getMessage().contains("could")) {
+                throw new DataIntegrityViolationException("User with this email already exists.");
+            } else {
+                throw new DataIntegrityViolationException("Required Data Missing");
+            }
+
+        }
+    }
+
     public static boolean isEmailValid(String email) {
+        if (email == null || email.isEmpty()) {
+            throw new IllegalArgumentException("Email cannot be empty.");
+        }
+
         boolean startsWithAt = false;
         for (int i = 0; i < email.length(); i++) {
             if (!startsWithAt && email.charAt(i) == '.' && !email.contains(".") && (email.startsWith("@") && email.startsWith("."))) {
@@ -71,22 +77,22 @@ public class UserService implements FilePaths {
     }
 
     public Users login(String email, String password) throws Exception {
-    if (email == null || password == null) {
-        throw new IllegalArgumentException("Neither the email nor the password are allowed to be empty.");
-    }
+        if (email == null || password == null) {
+            throw new IllegalArgumentException("Neither the email nor the password are allowed to be empty.");
+        }
 
-    Optional<Users> optionalUser = userRepo.findByEmail(email);
-    if (optionalUser.isEmpty()) {
-        throw new Exception("No user found with that email.");
-    }
+        Optional<Users> optionalUser = userRepo.findByEmail(email);
+        if (optionalUser.isEmpty()) {
+            throw new Exception("No user found with that email.");
+        }
 
-    Users user = optionalUser.get();
-    if (user.getPassword().equals(password)) {
-        return user;
-    } else {
-        throw new Exception("Provided password is incorrect.");
+        Users user = optionalUser.get();
+        if (user.getPassword().equals(password)) {
+            return user;
+        } else {
+            throw new Exception("Provided password is incorrect.");
+        }
     }
-}
 
     public Optional<Users> searchByEmail(String email) {
         return userRepo.findByEmail(email);
@@ -96,4 +102,16 @@ public class UserService implements FilePaths {
         return userRepo.findById(id);
     }
 
+    public List<Users> findall() {
+        return userRepo.findAll();
+    }
+
+    public void deleteByEmail(String email) {
+        Optional<Users> user = userRepo.findByEmail(email);
+        if (user.isPresent()) {
+            userRepo.delete(user.get());
+        } else {
+            throw new IllegalArgumentException("No user found with that email.");
+        }
+    }
 }

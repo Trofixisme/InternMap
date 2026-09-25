@@ -2,7 +2,7 @@
 <h1>Internmap</h1>
 
 
-InternMap is a work-in-progress application designed to help students and recruiters connect through an interactive internship discovery experience. Built with a Spring Boot backend and an Angular frontend.
+InternMap is a work-in-progress application designed to help students and recruiters connect through an interactive internship discovery experience. Built with a Spring Boot backend and an React frontend.
 
 ---
 
